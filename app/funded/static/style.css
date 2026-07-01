@@ -47,7 +47,8 @@ body {
 label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.98rem; }
 .hint { color: var(--muted); font-size: 0.84rem; margin: 0 0 10px; }
 
-textarea {
+textarea,
+input[type="text"] {
   width: 100%;
   background: #0c0a07;
   color: var(--text);
@@ -58,7 +59,8 @@ textarea {
   font-size: 0.95rem;
   resize: vertical;
 }
-textarea:focus { outline: none; border-color: var(--accent); }
+textarea:focus,
+input[type="text"]:focus { outline: none; border-color: var(--accent); }
 
 .examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0 4px; }
 .examples span { color: var(--muted); font-size: 0.82rem; }
