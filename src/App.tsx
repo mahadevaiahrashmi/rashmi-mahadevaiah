@@ -30,6 +30,7 @@ const RESUME_TAILOR_URL = "/resume-tailor";
 const DISCOVERY_GUIDE_URL = "/product-discovery";
 const VOICE_SKILL_URL = "/personal-voice";
 const FUNDED_AGENT_URL = "/funded-companies";
+const LEARN_AI_URL = "/learn-ai";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -65,8 +66,9 @@ const projects = [
   {
     title: "Duolingo-Style AI Learning App",
     description:
-      "Gamified, bite-sized learning powered by AI — adaptive lessons, streaks, and instant feedback that keep you coming back and actually retaining what you learn.",
-    tags: ["LLMs", "EdTech", "Personalization"],
+      "Learn AI concepts the Duolingo way — a gamified lesson path with XP, hearts, streaks, and instant feedback across 8 bite-sized lessons (tokens, embeddings, RAG, agents, and more). Product usage is tracked with PostHog analytics.",
+    tags: ["EdTech", "Gamification", "PostHog"],
+    live: LEARN_AI_URL,
   },
   {
     title: "GTM with AI-Generated Videos",

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn AI — the fun way</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+  {% if posthog_key %}
+  <!-- PostHog analytics (enabled because POSTHOG_KEY is set) -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init({{ posthog_key | tojson }}, { api_host: {{ posthog_host | tojson }}, capture_pageview: true, persistence: "localStorage" });
+  </script>
+  {% endif %}
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🦉</span>
+      <div>
+        <h1>Learn AI</h1>
+        <p class="tagline">Master AI concepts, one bite-sized lesson at a time.</p>
+      </div>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <div class="hud">
+    <div class="hud-item streak" title="Day streak">🔥 <b id="streak">0</b></div>
+    <div class="hud-item xp" title="Total XP">⭐ <b id="xp">0</b></div>
+    <div class="hud-item hearts" id="hearts-hud" title="Hearts">❤️ <b id="hearts">5</b></div>
+  </div>
+
+  <!-- Home: the lesson path -->
+  <main id="home" class="home"></main>
+
+  <!-- Lesson player -->
+  <section id="lesson" class="lesson hidden">
+    <div class="lesson-top">
+      <button class="quit" id="quit-btn" aria-label="Quit">✕</button>
+      <div class="lprogress"><div class="lprogress-bar" id="lprogress-bar"></div></div>
+      <div class="lhearts">❤️ <b id="lesson-hearts">5</b></div>
+    </div>
+    <div class="q-area">
+      <div class="q-count" id="q-count"></div>
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div class="lesson-foot">
+      <button class="btn primary" id="check-btn" disabled>Check</button>
+      <button class="btn primary hidden" id="continue-btn">Continue</button>
+    </div>
+  </section>
+
+  <!-- Result screen -->
+  <section id="result" class="result hidden"></section>
+
+  <script>
+    window.APP_ROOT = {{ root_path | tojson }};
+    window.UNITS = {{ units_json | safe }};
+    window.ANALYTICS_ON = {{ 'true' if posthog_key else 'false' }};
+  </script>
+  <script src="{{ root_path }}/static/learn.js"></script>
+</body>
+</html>
