@@ -32,7 +32,7 @@ class OpenRouterProvider(LLMProvider):
         "google/gemini-2.0-flash-001",
     ]
 
-    def __init__(self, model: str | None = None, timeout: int = 180):
+    def __init__(self, model: str | None = None, timeout: int = 55):
         self.api_key = os.environ.get("OPENROUTER_API_KEY", "")
         self.model = model or os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
         self.timeout = timeout

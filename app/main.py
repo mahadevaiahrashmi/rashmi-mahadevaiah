@@ -58,6 +58,7 @@ FREE_MODELS = [
         "OPENROUTER_MODELS",
         "meta-llama/llama-3.3-70b-instruct:free,"
         "qwen/qwen3-next-80b-a3b-instruct:free,"
+        "openai/gpt-oss-120b:free,"
         "google/gemma-4-31b-it:free",
     ).split(",")
     if m.strip()
