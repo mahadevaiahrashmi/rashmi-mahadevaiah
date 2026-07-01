@@ -88,6 +88,100 @@ const projects = [
   },
 ];
 
+const experience = [
+  {
+    title: "Product Owner / AI-ML Engineer",
+    company: "KOGO.ai",
+    period: "Jan 2025 – Jul 2025",
+    description: [
+      "Owned an agentic AI product (LLM, OCR, RAG, MCP) that automated CRM lead processing and company-hierarchy mapping, which cut lead turnaround from ~2 days to minutes and turned more follow-ups into deals.",
+      "Drove product definition for Asimov, a multi-agent NL2SQL analytics platform with pluggable LLM/data-source integrations, which 6 teams adopted to turn ~2-day data questions into self-serve answers in seconds.",
+      "Shipped an LLM solution mining call-center logs to surface top recurring issues and auto-recommend a curated knowledge base, which cut handling time 30% and repeat calls 40%.",
+    ],
+  },
+  {
+    title: "Co-Founder",
+    company: "RichFeyn.com",
+    period: "Aug 2021 – Jul 2024",
+    description: [
+      "Owned strategy, roadmap, and go-to-market for an AI imaging product (transformers) that turns phone photos into catalogue images, which cut production cost ~90% vs. a studio shoot for 5 early SME customers.",
+      "Defined and validated an IoT auto-reorder concept (hardware + LLM prompt-to-cart): ran discovery with ~20 shop owners, secured 4 B2B pre-orders, and prioritized the roadmap across engineering and supply partners before scaling.",
+      "Owned iOS and Android companion apps for quantity tracking and automated ordering, which 4 retailers adopted for real-time inventory visibility and on-time delivery.",
+    ],
+  },
+  {
+    title: "Senior Manager, Data Science (Wholesale Banking)",
+    company: "Axis Bank",
+    period: "Apr 2017 – Dec 2020",
+    description: [
+      "Drove sector-wise campaigns via web-scraping and N-gram NLP, lifting new-customer acquisition 25%.",
+      "Built an NLP attrition model on transaction and interaction logs, lifting retention 18% and balances 10%.",
+      "Converted competitor-bank customers via NER on supply-chain position (+17% balances) and raised products-per-customer from 2.3 to 3.1, leading cross-functional delivery for senior stakeholders.",
+    ],
+  },
+  {
+    title: "Senior Business Analyst",
+    company: "Tata Consultancy Services",
+    period: "Jul 2015 – Mar 2017",
+    description: [
+      "Built a web-crawler + data-science product for lead and market intelligence by geography and client that cut lead-activation time 50% (POS tagging, topic mining).",
+      "Delivered predictive solutions for industrial clients: plant-safety near-miss detection for a specialty-chemicals firm and a battery-degradation model that cut warranty cost 40% for a Japanese EV manufacturer.",
+    ],
+  },
+  {
+    title: "Associate, Fashion Business Analytics",
+    company: "Snapdeal",
+    period: "Oct 2014 – Feb 2015",
+    description: [
+      "Built the promo-code and cashback rule engine for Fashion, taking 50% of categories to $6M/month.",
+    ],
+  },
+  {
+    title: "Algorithm Engineer, Semiconductor Wafer Inspection",
+    company: "KLA Corporation",
+    period: "Mar 2011 – Mar 2013",
+    description: [
+      "Built image-processing and computer-vision products that raised rare-defect capture rate from 80% to 90% and eliminated manual inspection across semiconductor fabs in Korea, Taiwan, and the USA.",
+    ],
+  },
+];
+
+const skillGroups = [
+  {
+    label: "Product",
+    items: "Product vision & roadmapping · Discovery, user research & feedback · Prioritization & backlog management · MVP & demand validation · A/B testing & experimentation · Go-to-market · Agile/Scrum · KPI/metrics definition · Requirements & stakeholder management",
+  },
+  {
+    label: "AI/ML",
+    items: "LLMs · Agents & agentic workflows · RAG · MCP · NL2SQL · OCR/document extraction · Recommendation & multi-objective optimization · Predictive modeling",
+  },
+  {
+    label: "NLP & Vision",
+    items: "NER · Topic modeling (LDA) · Sentiment analysis · Text mining · Image processing · Captioning · Transformers · Automated inspection",
+  },
+  {
+    label: "Tools & Data",
+    items: "Jira/Linear · Figma · Amplitude/Mixpanel · Python · SQL · Data visualization · Web scraping · CRM integration · iOS/Android · IoT",
+  },
+  {
+    label: "Leadership",
+    items: "Cross-functional teams (DS, engineering, design, IT) · Senior-stakeholder & offshore management · SQDC outcome ownership",
+  },
+];
+
+const certifications = [
+  "How Diffusion Models Work",
+  "Getting Started with Mistral",
+  "Understanding and Applying Text Embeddings",
+  "Attention in Transformers (PyTorch)",
+  "Building Generative AI Applications with Gradio",
+  "Building Live Voice Agents with Google’s ADK",
+  "Event-Driven Agentic Document Workflows",
+  "Building AI Voice Agents for Production",
+  "Build AI Apps with MCP Server (Box Files)",
+  "MCP: Build Rich-Context AI Apps with Anthropic",
+];
+
 const ExperienceItem = ({ title, company, companyUrl, period, impact, description, links }: any) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -353,82 +447,47 @@ function HomePage() {
             <h2 className="text-4xl font-serif italic">Experience</h2>
             <div className="h-[1px] flex-1 bg-anthropic-text/10" />
           </div>
-
           <div className="space-y-4">
-            <ExperienceItem
-              title="AI/ML Engineer"
-              company="KOGO.ai"
-              companyUrl="https://kogo.ai/"
-              period="Jan 2025 — Jul 2025"
-              impact="Built multi-agent AI systems processing 1000s of sales leads via LLM-powered pipelines"
-              description={[
-                "Designed and deployed AI agents using Large Language Models (LLMs) for OCR, Retrieval-Augmented Generation (RAG), Model Context Protocol (MCP), and web search workflows to process sales leads and map parent company hierarchies.",
-                "Developed 'Asimov', an AI-powered data science platform streamlining business analytics via NL2SQL with modular agents for statistical analysis, data visualization, and automated reporting.",
-                "Created AI solutions using NLP and machine learning for call center log analysis and automated sales improvement plans for the automotive sector."
-              ]}
-            />
+            {experience.map((e, idx) => (
+              <ExperienceItem key={idx} {...e} />
+            ))}
+          </div>
+        </section>
 
-            <ExperienceItem
-              title="Co-Founder & Technical Lead"
-              company="RichFeyn.com"
-              companyUrl="https://www.richfeyn.com/"
-              period="Aug 2021 — Jul 2024"
-              impact="Founded AI startup — shipped 3 products from 0→1 across computer vision, IoT, and mobile"
-              description={[
-                "Launched an AI product transforming phone camera images into professional catalogue visuals for SMEs using semantic analysis, image captioning, and computer vision models.",
-                "Developed an IoT-based smart jar with auto-reordering functionality, featuring an AI-powered cart generator using natural language processing and text prompt understanding.",
-                "Built cross-platform mobile applications with Python and React Native to track inventory and automate orders for busy households."
-              ]}
-            />
+        {/* Skills Section */}
+        <section id="skills" className="mb-32">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-4xl font-serif italic">Skills</h2>
+            <div className="h-[1px] flex-1 bg-anthropic-text/10" />
+          </div>
+          <div className="space-y-6 max-w-4xl">
+            {skillGroups.map((g) => (
+              <motion.div
+                key={g.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-sm font-sans uppercase tracking-widest text-anthropic-accent mb-2">{g.label}</h3>
+                <p className="text-lg leading-relaxed opacity-85">{g.items}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
 
-            <ExperienceItem
-              title="Senior Manager — Data Science"
-              company="Axis Bank"
-              companyUrl="https://www.axis.bank.in/"
-              period="Apr 2017 — Dec 2020"
-              impact="25% new customer acquisition growth · 18% retention improvement · 10% balance increase"
-              description={[
-                "Led data science initiatives for wholesale banking, increasing new customer acquisition by 25% through sector-wise NLP campaigns using N-gram models and text classification.",
-                "Built predictive models for high-value customer attrition using NLP text mining and machine learning, increasing retention by 18% and account balances by 10%.",
-                "Identified competitor bank users using Named Entity Recognition (NER) and knowledge graphs to map supply chain positions and increase wallet share."
-              ]}
-            />
-
-            <ExperienceItem
-              title="Senior Business Analyst — Data Science"
-              company="Tata Consultancy Services"
-              companyUrl="https://www.tcs.com/"
-              period="Jul 2015 — Mar 2017"
-              impact="50% reduction in lead activation time · Published white paper on NLP + sentiment analysis"
-              description={[
-                "Built automated web crawlers and scrapers to identify leads, decreasing lead activation time by 50% using topic mining and NLP techniques with Python.",
-                "Optimized search results for a US airline using information retrieval algorithms and built predictive maintenance models using machine learning for medical equipment manufacturers.",
-                "Developed battery degradation models for Japanese EV firms using statistical modeling and time-series analysis to formulate improved warranty services.",
-                "Published White Paper: 'Transforming social media marketing by analyzing weather patterns and Twitter activity using sentiment analysis and NLP'."
-              ]}
-            />
-
-            <ExperienceItem
-              title="Associate — Fashion Business Analytics"
-              company="Snapdeal"
-              companyUrl="https://www.snapdeal.com/"
-              period="Oct 2014 — Feb 2015"
-              impact="Drove fashion vertical to $6M monthly revenue"
-              description={[
-                "Developed promo code and cashback rule engines using data analytics and Python for the Fashion vertical, driving categories to reach $6M monthly revenue through data-driven pricing strategies."
-              ]}
-            />
-
-            <ExperienceItem
-              title="Algorithm Engineer"
-              company="KLA Corporation"
-              companyUrl="https://www.kla.com/"
-              period="Mar 2011 — Mar 2013"
-              impact="Improved defect capture rate from 80% to 90% — eliminated manual inspection"
-              description={[
-                "Built image processing and computer vision products for semiconductor wafer inspection using signal processing and machine learning algorithms, increasing defect capture rates from 80% to 90% and eliminating manual inspection workflows."
-              ]}
-            />
+        {/* Certifications Section */}
+        <section id="certifications" className="mb-32">
+          <div className="flex items-center gap-4 mb-8">
+            <h2 className="text-4xl font-serif italic">Certifications</h2>
+            <div className="h-[1px] flex-1 bg-anthropic-text/10" />
+          </div>
+          <p className="text-sm font-sans uppercase tracking-widest opacity-60 mb-5">DeepLearning.AI · 2025–2026</p>
+          <div className="flex flex-wrap gap-2">
+            {certifications.map((c) => (
+              <span key={c} className="px-4 py-2 bg-anthropic-text/5 border border-anthropic-text/10 rounded-lg text-sm">
+                {c}
+              </span>
+            ))}
           </div>
         </section>
 
@@ -438,7 +497,6 @@ function HomePage() {
             <h2 className="text-4xl font-serif italic">Education</h2>
             <div className="h-[1px] flex-1 bg-anthropic-text/10" />
           </div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -446,52 +504,11 @@ function HomePage() {
             className="flex flex-col md:flex-row justify-between items-start md:items-center p-8 border border-anthropic-text/10 rounded-2xl"
           >
             <div>
-              <h3 className="text-2xl font-serif font-medium mb-1">Bachelor of Technology in Electrical Engineering</h3>
+              <h3 className="text-2xl font-serif font-medium mb-1">B.Tech, Electrical Engineering</h3>
               <p className="text-lg opacity-80">Indian Institute of Technology Madras</p>
             </div>
-            <span className="text-sm font-sans uppercase tracking-widest opacity-60 mt-4 md:mt-0">Class of 2011</span>
+            <span className="text-sm font-sans uppercase tracking-widest opacity-60 mt-4 md:mt-0">2011</span>
           </motion.div>
-        </section>
-
-        {/* Technical Skills — Categorized */}
-        <section className="mb-32">
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-4xl font-serif italic">Technical Skills</h2>
-            <div className="h-[1px] flex-1 bg-anthropic-text/10" />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-sm font-sans uppercase tracking-widest opacity-60 mb-4">AI & Machine Learning</h3>
-              <div className="flex flex-wrap gap-2">
-                {["LLMs", "NLP", "RAG", "Agentic AI", "Deep Learning", "Computer Vision", "NER", "NL2SQL", "Sentiment Analysis", "Text Mining", "Image Captioning", "Predictive Modeling"].map(skill => (
-                  <span key={skill} className="px-4 py-2 bg-anthropic-text/5 rounded-lg text-sm font-sans uppercase tracking-wider">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-sm font-sans uppercase tracking-widest opacity-60 mb-4">Languages & Tools</h3>
-              <div className="flex flex-wrap gap-2">
-                {["Python", "SQL", "TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "React", "Node.js", "Git", "Docker", "REST APIs"].map(skill => (
-                  <span key={skill} className="px-4 py-2 bg-anthropic-text/5 rounded-lg text-sm font-sans uppercase tracking-wider">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-sm font-sans uppercase tracking-widest opacity-60 mb-4">Domain & Strategy</h3>
-              <div className="flex flex-wrap gap-2">
-                {["Product Management", "Data Science", "ML Pipelines", "IoT", "Financial Services", "E-Commerce", "Statistical Modeling", "A/B Testing", "Data Visualization"].map(skill => (
-                  <span key={skill} className="px-4 py-2 bg-anthropic-text/5 rounded-lg text-sm font-sans uppercase tracking-wider">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* Interests */}
