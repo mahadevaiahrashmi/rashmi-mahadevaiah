@@ -46,14 +46,35 @@ GEN.mkdir(parents=True, exist_ok=True)
 # hand the browser inline base64 data: URLs so downloads need no second request.
 INLINE_DOWNLOADS = ON_VERCEL
 
-# The UI has no engine picker: the server decides. Use the hosted OpenRouter free
-# model when a key is configured, otherwise fall back to the offline Mock preview
-# so the page still works.
-FORCED_PROVIDER = "openrouter" if os.environ.get("OPENROUTER_API_KEY") else "mock"
+# The UI has no engine picker: the server decides. When an OpenRouter key is
+# configured we try a list of $0 ("free") models in order — free models are
+# shared and frequently rate-limited (HTTP 429), so we fail over to the next one
+# and finally to the offline Mock preview, so the page never hard-fails.
+HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
 
-# Default to a $0 OpenRouter model so adding only OPENROUTER_API_KEY stays free.
-# Override by setting OPENROUTER_MODEL in the environment.
-os.environ.setdefault("OPENROUTER_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
+FREE_MODELS = [
+    m.strip()
+    for m in os.environ.get(
+        "OPENROUTER_MODELS",
+        "meta-llama/llama-3.3-70b-instruct:free,"
+        "qwen/qwen3-next-80b-a3b-instruct:free,"
+        "google/gemma-4-31b-it:free",
+    ).split(",")
+    if m.strip()
+]
+
+
+def tailor(jd: str, resume: str, instructions: str):
+    """Return (docs, engine_label). Try free models in order, else Mock."""
+    errors = []
+    if HAS_OPENROUTER:
+        for model in FREE_MODELS:
+            try:
+                return generate_documents(jd, resume, instructions, "openrouter", model), model
+            except GenerationError as exc:
+                errors.append(f"{model}: {exc}")
+    # Offline fallback — always available, so the user still gets a document.
+    return generate_documents(jd, resume, instructions, "mock", None), "mock (offline preview)"
 
 # Generated output accumulates one dir per run; sweep dirs older than this on each
 # request. Set GENERATED_TTL_HOURS=0 to disable cleanup and keep everything.
@@ -117,11 +138,10 @@ def generate(
     resume: str = Form(...),
     instructions: str = Form(""),
 ):
-    # No picker in the UI — the server picks the engine (FORCED_PROVIDER) and the
-    # model comes from OPENROUTER_MODEL. Any client-sent engine is ignored.
+    # No picker in the UI — the server picks the engine (free models, else Mock).
     cleanup_generated(GEN, GENERATED_TTL_HOURS)
     try:
-        docs = generate_documents(jd, resume, instructions, FORCED_PROVIDER, None)
+        docs, engine = tailor(jd, resume, instructions)
     except GenerationError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
@@ -164,6 +184,7 @@ def generate(
             entry("Cover Letter — Word", "cover_docx"),
         ],
         "preview": docs.model_dump(),
+        "engine": engine,
     }
 
 
