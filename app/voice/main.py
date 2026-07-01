@@ -72,7 +72,11 @@ def _draft(samples: str, kind: str, context: str, instruction: str, refine: str,
             f"{refine.strip()[:200]}. Keep the same voice.\n\nPrevious draft:\n"
             + previous.strip()[:MAX_FIELD]
         )
-    prompt = "".join(parts) + "\n\nWrite it now:"
+    # Re-assert output rules at the very end — models drift chatty on revisions.
+    prompt = "".join(parts) + (
+        "\n\nOutput ONLY the finished text itself — no preamble, no explanation, "
+        "no dividers, no surrounding quotes. Write it now:"
+    )
 
     if HAS_OPENROUTER:
         for model in MODELS:
