@@ -50,11 +50,20 @@ async function generateVideo(i) {
   status.textContent = "Starting Veo… (a clip takes ~1–3 min)";
 
   try {
-    const fd = new FormData();
-    fd.set("prompt", promptEl.innerText);
-    fd.set("aspect", "9:16");
-    const startRes = await fetch(ROOT + "/video/start", { method: "POST", body: fd });
-    const start = await startRes.json();
+    const doStart = async () => {
+      const fd = new FormData();
+      fd.set("prompt", promptEl.innerText);
+      fd.set("aspect", "9:16");
+      fd.set("passcode", localStorage.getItem("veo-pass") || "");
+      return (await fetch(ROOT + "/video/start", { method: "POST", body: fd })).json();
+    };
+    let start = await doStart();
+    if (start.need_passcode) {
+      const entered = window.prompt("This generates a paid Veo video. Enter the passcode:");
+      if (!entered) { status.textContent = ""; btn.disabled = false; return; }
+      localStorage.setItem("veo-pass", entered.trim());
+      start = await doStart();
+    }
     if (!start.ok) { status.textContent = "⚠ " + (start.error || "Could not start."); btn.disabled = false; return; }
 
     const op = start.op;

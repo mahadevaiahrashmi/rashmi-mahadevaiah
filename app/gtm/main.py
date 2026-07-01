@@ -48,8 +48,11 @@ MAX_FIELD = 1200
 
 # ---- Video (Google Veo via Gemini API) ----
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
-VEO_MODEL = os.environ.get("GEMINI_VEO_MODEL", "veo-3.0-fast-generate-001")
+VEO_MODEL = os.environ.get("GEMINI_VEO_MODEL", "veo-3.1-fast-generate-preview")
 GENAI = "https://generativelanguage.googleapis.com/v1beta"
+# Optional passcode: when set, only people who know it can trigger (paid) Veo
+# generation, so a public visitor can't burn through the owner's video credits.
+VEO_PASSCODE = os.environ.get("VEO_PASSCODE", "")
 
 SYSTEM = (
     "You are a scrappy founder-mode go-to-market strategist who specializes in "
@@ -188,9 +191,11 @@ def plan(product: str = Form(...), audience: str = Form(""), channel: str = Form
 
 
 @app.post("/video/start")
-def video_start(prompt: str = Form(...), aspect: str = Form("9:16")):
+def video_start(prompt: str = Form(...), aspect: str = Form("9:16"), passcode: str = Form("")):
     if not GEMINI_KEY:
         return JSONResponse({"ok": False, "error": "Video generation isn't configured. Add a GEMINI_API_KEY (with billing) to enable Veo."}, status_code=200)
+    if VEO_PASSCODE and passcode.strip() != VEO_PASSCODE:
+        return {"ok": False, "need_passcode": True, "error": "This generates a paid video. Enter the passcode to continue."}
     if len(prompt.strip()) < 8:
         return {"ok": False, "error": "Prompt too short."}
     body = {
