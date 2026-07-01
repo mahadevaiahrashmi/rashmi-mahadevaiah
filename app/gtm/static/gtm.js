@@ -18,6 +18,9 @@ function setStatus(cls, msg) {
 
 function videoCard(v, i) {
   const tags = Array.isArray(v.hashtags) ? v.hashtags : [];
+  const genBtn = window.VEO_ON
+    ? `<button class="btn tiny gen" data-gen="${i}" title="Generate this clip with Google Veo (costs a few $)">🎥 Generate video</button>`
+    : `<button class="btn tiny" disabled title="Add a Gemini API key to enable Veo generation">🎥 Generate (needs Veo key)</button>`;
   return `
     <div class="vid">
       <div class="vtitle">🎬 ${esc(v.title || "Video " + (i + 1))}</div>
@@ -30,7 +33,54 @@ function videoCard(v, i) {
       ${v.caption ? `<div class="line"><span class="k">Caption:</span> ${esc(v.caption)}</div>` : ""}
       ${v.cta ? `<div class="line"><span class="k">CTA:</span> ${esc(v.cta)}</div>` : ""}
       ${tags.length ? `<div class="tags">${tags.map((t) => `<span class="tag">${esc(t.replace(/^#/, "#"))}</span>`).join("")}</div>` : ""}
+      <div class="vid-gen">${genBtn}<span class="gen-status" id="gs${i}"></span></div>
+      <div class="vid-out" id="vo${i}"></div>
     </div>`;
+}
+
+// Kick off Veo generation for concept i, poll, then embed the MP4.
+async function generateVideo(i) {
+  const promptEl = document.getElementById("v" + i);
+  const status = document.getElementById("gs" + i);
+  const out = document.getElementById("vo" + i);
+  const btn = document.querySelector(`[data-gen="${i}"]`);
+  if (!promptEl) return;
+  btn.disabled = true;
+  out.innerHTML = "";
+  status.textContent = "Starting Veo… (a clip takes ~1–3 min)";
+
+  try {
+    const fd = new FormData();
+    fd.set("prompt", promptEl.innerText);
+    fd.set("aspect", "9:16");
+    const startRes = await fetch(ROOT + "/video/start", { method: "POST", body: fd });
+    const start = await startRes.json();
+    if (!start.ok) { status.textContent = "⚠ " + (start.error || "Could not start."); btn.disabled = false; return; }
+
+    const op = start.op;
+    const t0 = Date.now();
+    // Poll every 8s, up to ~4 minutes.
+    for (let n = 0; n < 30; n++) {
+      await new Promise((r) => setTimeout(r, 8000));
+      const secs = Math.round((Date.now() - t0) / 1000);
+      status.textContent = `Generating… ${secs}s elapsed`;
+      const st = await (await fetch(`${ROOT}/video/status?op=${encodeURIComponent(op)}`)).json();
+      if (st.done && st.ok) {
+        status.textContent = "✓ Done — loading video…";
+        out.innerHTML = `<video controls playsinline preload="metadata" src="${ROOT}/video/file?op=${encodeURIComponent(op)}"></video>
+          <a class="dl" href="${ROOT}/video/file?op=${encodeURIComponent(op)}" download="veo-clip-${i + 1}.mp4">Download MP4</a>`;
+        status.textContent = "";
+        btn.disabled = false;
+        return;
+      }
+      if (st.done && !st.ok) { status.textContent = "⚠ " + (st.error || "Generation failed."); btn.disabled = false; return; }
+    }
+    status.textContent = "⚠ Timed out waiting for the video. It may still finish in Google AI Studio.";
+    btn.disabled = false;
+  } catch (err) {
+    status.textContent = "⚠ Network error — try again.";
+    btn.disabled = false;
+  }
 }
 
 function render(plan) {
@@ -58,6 +108,9 @@ function render(plan) {
         setTimeout(() => (b.textContent = "Copy"), 1500);
       } catch (_) { /* clipboard blocked */ }
     })
+  );
+  $("result").querySelectorAll("[data-gen]").forEach((b) =>
+    b.addEventListener("click", () => generateVideo(Number(b.dataset.gen)))
   );
 }
 

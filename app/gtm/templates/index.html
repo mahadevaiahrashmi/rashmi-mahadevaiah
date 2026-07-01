@@ -42,7 +42,10 @@
     <p class="disclaimer">🎬 This generates the plan and paste-ready video prompts — take them to Higgsfield or Google Veo to render, then post per the plan. AI-assisted; adapt to your voice.</p>
   </main>
 
-  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script>
+    window.APP_ROOT = {{ root_path | tojson }};
+    window.VEO_ON = {{ 'true' if veo_on else 'false' }};
+  </script>
   <script src="{{ root_path }}/static/gtm.js"></script>
 </body>
 </html>

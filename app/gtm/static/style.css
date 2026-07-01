@@ -109,5 +109,14 @@ textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--ac
 .list li { margin-bottom: 6px; }
 .metric { font-size: 1.05rem; color: var(--good); font-weight: 600; }
 
+.vid-gen { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.btn.gen { background: var(--good); color: #0c2417; border: none; }
+.btn.gen:hover { filter: brightness(1.06); }
+.gen-status { color: var(--muted); font-size: 0.82rem; }
+.vid-out { margin-top: 10px; }
+.vid-out video { width: 100%; max-width: 280px; border-radius: 12px; border: 1px solid var(--border); display: block; }
+.vid-out .dl { display: inline-block; margin-top: 8px; color: var(--muted); font-size: 0.82rem; text-decoration: none; }
+.vid-out .dl:hover { color: var(--accent); }
+
 .disclaimer { color: var(--muted); font-size: 0.8rem; margin-top: 26px; text-align: center; }
 .hidden { display: none !important; }
