@@ -126,7 +126,7 @@ async function onSubmit(ev) {
     setStatus(
       "done",
       viaMock
-        ? "Free models are busy right now — showing the offline layout preview. Try again shortly for full AI tailoring."
+        ? "The AI is busy right now — showing the offline layout preview. Try again shortly for full AI tailoring."
         : "Done. Download your 1-page resume and cover letter below."
     );
   } catch (err) {

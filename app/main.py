@@ -46,20 +46,19 @@ GEN.mkdir(parents=True, exist_ok=True)
 # hand the browser inline base64 data: URLs so downloads need no second request.
 INLINE_DOWNLOADS = ON_VERCEL
 
-# The UI has no engine picker: the server decides. When an OpenRouter key is
-# configured we try a list of $0 ("free") models in order — free models are
-# shared and frequently rate-limited (HTTP 429), so we fail over to the next one
-# and finally to the offline Mock preview, so the page never hard-fails.
+# The UI has no engine picker: the server decides. With an OpenRouter key we try
+# these models in order and fail over to the next, finally to the offline Mock
+# preview, so the page never hard-fails. The first is a cheap PAID model with
+# dedicated capacity (reliable); the free ones are shared backups (often 429).
 HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
 
 FREE_MODELS = [
     m.strip()
     for m in os.environ.get(
         "OPENROUTER_MODELS",
-        "meta-llama/llama-3.3-70b-instruct:free,"
-        "qwen/qwen3-next-80b-a3b-instruct:free,"
-        "openai/gpt-oss-120b:free,"
-        "google/gemma-4-31b-it:free",
+        "deepseek/deepseek-chat,"                      # paid, ~cents/run, reliable
+        "meta-llama/llama-3.3-70b-instruct:free,"      # free backup
+        "openai/gpt-oss-120b:free",                    # free backup
     ).split(",")
     if m.strip()
 ]
