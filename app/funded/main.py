@@ -1,13 +1,13 @@
-"""FastAPI sub-app: Funded Companies Agent.
+"""FastAPI sub-app: Funded Companies Agent (job-hunting mode).
 
-Mounted under /funded-companies. The user gives an ideal-customer profile (sector,
-stage, geography, what they sell); the agent searches the live web (via OpenRouter's
-web plugin) for recently funded companies that fit, and returns an enriched,
-sourced prospect list with an outreach angle for each.
+Mounted under /funded-companies. A weekly agent: it searches the live web for
+startups that raised funding in the last ~7 days, then for each proposes the
+user's "way in" — a tailored application path for landing a job there, based on
+the user's own background.
 
-Grounding matters here: an ungrounded LLM will happily invent plausible-but-fake
-companies. So we prefer web-sourced results, flag when results are NOT from live
-search, and always tell the user to verify before reaching out.
+Grounding matters: an ungrounded LLM will invent plausible-but-fake companies
+and rounds. So we prefer web-sourced results (OpenRouter's web plugin), flag when
+results are NOT from live search, and tell the user to verify before applying.
 """
 from __future__ import annotations
 
@@ -31,21 +31,30 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 MODEL = os.environ.get("FUNDED_MODEL", "deepseek/deepseek-chat")
-MAX_FIELD = 600
+MAX_BG = 2500
+MAX_PREF = 400
 
 SYSTEM = (
-    "You are a B2B prospecting analyst. Using the web search results provided, "
-    "identify RECENTLY funded startups that match the user's ideal-customer "
-    "profile. Only include companies that actually appear in the search results — "
-    "never invent companies, funding amounts, investors, or URLs. If the results "
-    "are thin, return fewer rather than fabricating. For each company, write why "
-    "it fits this specific user and a concrete, non-generic outreach angle.\n\n"
+    "You are a sharp job-search agent for ONE candidate. Using the web search "
+    "results provided, find startups that ANNOUNCED FUNDING IN THE LAST ~7 DAYS "
+    "and would plausibly be hiring for the candidate's skills. Freshly funded "
+    "startups hire fast — that is the candidate's opening.\n\n"
+    "Rules: only include companies that actually appear in the search results — "
+    "never invent companies, funding rounds, investors, or URLs. If results are "
+    "thin, return fewer rather than fabricating. Tailor everything to THIS "
+    "candidate's real background — the target role, why they fit, and the pitch "
+    "must reference their actual experience, and must never claim experience they "
+    "don't have.\n\n"
     "Respond with ONLY a JSON array (no prose, no code fences). Each item:\n"
-    '{"company": str, "description": str (one line), "round": str (e.g. "Seed", '
-    '"Series A"), "amount": str (e.g. "$8M" or "undisclosed"), "date": str '
-    '(e.g. "2026-06" or "recent"), "investors": [str], "fit": str (why it fits '
-    'THIS user), "angle": str (a specific opening line/angle), "source": str '
-    "(a URL from the search results)}"
+    '{"company": str, "what": str (one line on what they do), "round": str '
+    '(e.g. "Seed","Series A"), "amount": str (e.g. "$8M"), "date": str '
+    '(e.g. "2026-06-30" or "this week"), "investors": [str], "role": str (the '
+    "specific role at this company to target, given their stage and the "
+    'candidate), "why_fit": str (why THIS candidate fits, citing their real '
+    'experience), "who": str (who to contact — a title like "Founder/CTO" or a '
+    'named person if in the results), "pitch": str (a 2-3 sentence tailored '
+    'outreach message the candidate could send), "steps": [str] (2-3 concrete '
+    'next actions), "source": str (a URL from the search results)}'
 )
 
 
@@ -90,7 +99,7 @@ def _chat(prompt: str, use_web: bool):
     payload = {
         "model": MODEL,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
-        "max_tokens": 1600,
+        "max_tokens": 2200,
     }
     if use_web:
         # OpenRouter web plugin: injects live search results into context.
@@ -103,32 +112,39 @@ def _chat(prompt: str, use_web: bool):
     resp = httpx.post(API_URL, headers=headers, json=payload, timeout=55)
     resp.raise_for_status()
     msg = resp.json()["choices"][0]["message"]
-    had_sources = bool(msg.get("annotations"))
-    return (msg.get("content") or "").strip(), had_sources
+    return (msg.get("content") or "").strip(), bool(msg.get("annotations"))
 
 
-def find_prospects(profile: str):
-    """Return (prospects, meta). meta.sourced True when grounded in live web search."""
-    prompt = f"Ideal customer profile / what I'm selling:\n{profile}\n\nFind matching recently funded companies now."
+def find_openings(background: str, prefs: str):
+    """Return (openings, meta). meta.sourced True when grounded in live web search."""
+    prompt = (
+        "CANDIDATE BACKGROUND:\n" + background.strip()[:MAX_BG] + "\n\n"
+        "PREFERENCES (role type / location / sectors / stage): "
+        + (prefs.strip()[:MAX_PREF] or "open") + "\n\n"
+        "Find startups funded in the last ~7 days and propose this candidate's way in for each."
+    )
     if not API_KEY:
         return None, {"error": "The agent is unavailable (no model configured). Add an OpenRouter API key to enable it."}
 
-    # 1) Preferred: web-grounded search.
+    # 1) Preferred: web-grounded search of last week's fundings.
     try:
         content, had_sources = _chat(prompt, use_web=True)
-        prospects = extract_json_array(content)
-        if prospects:
-            return prospects, {"sourced": True, "live": had_sources}
+        openings = extract_json_array(content)
+        if openings:
+            return openings, {"sourced": True, "live": had_sources}
     except httpx.HTTPError:
-        pass  # fall through to ungrounded attempt
+        pass
 
     # 2) Fallback: model knowledge only — clearly flagged as not live.
     try:
-        content, _ = _chat(prompt + "\n\n(Web search is unavailable; use only what you reliably know, and keep the list short.)", use_web=False)
-        prospects = extract_json_array(content)
-        if prospects:
-            return prospects, {"sourced": False, "live": False}
-        return None, {"error": "The agent couldn't produce a clean result this time. Try tightening your criteria and run it again."}
+        content, _ = _chat(
+            prompt + "\n\n(Web search is unavailable; use only companies you reliably know raised funding recently, and keep the list short.)",
+            use_web=False,
+        )
+        openings = extract_json_array(content)
+        if openings:
+            return openings, {"sourced": False, "live": False}
+        return None, {"error": "The agent couldn't produce a clean result this time. Try again in a moment."}
     except httpx.HTTPError:
         return None, {"error": "The AI agent is unavailable right now (model error). Please try again shortly."}
 
@@ -140,13 +156,12 @@ def index(request: Request):
     )
 
 
-@app.post("/find")
-def find(profile: str = Form(...)):
-    profile = profile.strip()[: MAX_FIELD]
-    if len(profile) < 12:
-        return {"ok": False, "error": "Describe who you want to reach — sector, stage, geography, and what you sell (e.g. 'seed-stage US fintech startups; I sell fraud-detection APIs')."}
-    prospects, meta = find_prospects(profile)
-    if not prospects:
+@app.post("/scan")
+def scan(background: str = Form(...), prefs: str = Form("")):
+    background = background.strip()
+    if len(background) < 40:
+        return {"ok": False, "error": "Paste a bit more about your background — a short resume or a few lines on your experience and skills — so it can tailor your way in."}
+    openings, meta = find_openings(background, prefs)
+    if not openings:
         return {"ok": False, "error": meta.get("error", "No results.")}
-    # Keep the payload tidy and bounded.
-    return {"ok": True, "prospects": prospects[:8], "sourced": meta.get("sourced", False)}
+    return {"ok": True, "openings": openings[:8], "sourced": meta.get("sourced", False)}

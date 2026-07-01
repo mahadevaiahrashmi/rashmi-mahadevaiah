@@ -58,7 +58,7 @@ const projects = [
   {
     title: "Funded Companies Agent",
     description:
-      "Describe your ideal customer and what you sell; the agent searches the live web for recently funded companies that fit, enriches each with round, investors, and a why-reach-out signal, and drafts a tailored outreach angle — a prospecting list from funding news.",
+      "A weekly agent that scrapes the web for startups that raised funding this week — the moment they're hiring — and proposes your way in: for each, a target role, why you fit, who to contact, a tailored pitch, and an application path, mapped to your background.",
     tags: ["Agentic AI", "RAG", "Web Search"],
     live: FUNDED_AGENT_URL,
   },

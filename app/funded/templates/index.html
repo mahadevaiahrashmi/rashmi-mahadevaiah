@@ -3,36 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Funded Companies Agent</title>
+  <title>Funded Companies Agent — Your Way In</title>
   <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
 </head>
 <body>
   <header class="topbar">
     <div>
       <h1>Funded Companies Agent</h1>
-      <p class="tagline">Describe who you want to reach — it searches the web for recently funded companies that fit, and drafts an outreach angle for each.</p>
+      <p class="tagline">A weekly agent that finds startups that raised money <em>this week</em> and proposes <em>your way in</em> — a tailored application path for each.</p>
     </div>
     <a class="back" href="/#projects">&larr; Back to portfolio</a>
   </header>
 
   <main class="wrap">
     <section class="panel">
-      <label for="profile">Your ideal customer &amp; what you sell</label>
-      <p class="hint">The more specific — sector, funding stage, geography, and your offering — the better the matches.</p>
-      <textarea id="profile" rows="4" placeholder="e.g. Seed to Series A US fintech startups. I sell a fraud-detection API and want to reach founders or heads of risk right after they raise."></textarea>
-      <div class="examples">
-        <span>Try:</span>
-        <button class="chip" type="button">Series A climate-tech in Europe; I sell carbon-accounting software</button>
-        <button class="chip" type="button">Seed AI startups in the US; I offer fractional MLOps engineering</button>
-      </div>
-      <button class="btn primary" id="find-btn">Find funded companies</button>
+      <label for="background">Your background</label>
+      <p class="hint">Paste your resume or a few lines on your experience &amp; skills. Freshly funded startups hire fast — this tailors an approach to each. Saved on this device.</p>
+      <textarea id="background" rows="6" placeholder="Your experience, skills, and what roles you want…"></textarea>
+
+      <label for="prefs" style="margin-top:16px">Preferences <span class="opt">(optional)</span></label>
+      <p class="hint">Role type, location, sectors, or stage you're targeting.</p>
+      <input type="text" id="prefs" placeholder="e.g. AI/ML or founding-engineer roles · remote or Bengaluru · AI/fintech · seed–Series A" />
+
+      <button class="btn primary" id="scan-btn">Scan this week's funded startups</button>
     </section>
 
     <div id="status" class="status hidden"></div>
     <div id="sourced-note" class="sourced-note hidden"></div>
     <section id="results" class="results"></section>
 
-    <p class="disclaimer">⚠️ AI-assisted and may be incomplete or out of date — always verify a company's funding, people, and details before reaching out.</p>
+    <p class="disclaimer">⚠️ AI-assisted and may be incomplete or out of date — verify each company's funding, open roles, and the right contact before you apply or reach out.</p>
   </main>
 
   <script>window.APP_ROOT = {{ root_path | tojson }};</script>
