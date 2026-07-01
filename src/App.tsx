@@ -28,6 +28,7 @@ import ThemeToggle from "./components/ThemeToggle";
 // Apps embedded in this same site (Vercel Python functions). Cards open these.
 const RESUME_TAILOR_URL = "/resume-tailor";
 const DISCOVERY_GUIDE_URL = "/product-discovery";
+const VOICE_SKILL_URL = "/personal-voice";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -42,8 +43,9 @@ const projects = [
   {
     title: "Personal Voice Skill",
     description:
-      "A skill that learns your personal writing and speaking voice, then drafts replies, posts, and messages that actually sound like you — not like a generic model.",
+      "Paste a few things you've written and it learns your voice, then drafts replies, posts, and messages that actually sound like you — with one-tap tweaks (shorter, warmer, more formal) — not like a generic model.",
     tags: ["LLMs", "Personalization", "Agents"],
+    live: VOICE_SKILL_URL,
   },
   {
     title: "JD-to-Resume Customizer",

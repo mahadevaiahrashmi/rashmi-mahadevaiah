@@ -17,6 +17,8 @@
     { "source": "/resume-tailor/(.*)", "destination": "/api/index" },
     { "source": "/product-discovery", "destination": "/api/index" },
     { "source": "/product-discovery/(.*)", "destination": "/api/index" },
+    { "source": "/personal-voice", "destination": "/api/index" },
+    { "source": "/personal-voice/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Voice Skill</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Personal Voice Skill</h1>
+      <p class="tagline">Teach it your writing voice, then draft replies, posts, and messages that sound like <em>you</em>.</p>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="field">
+        <label for="samples">1 · Your voice <span class="req">*</span></label>
+        <p class="hint">Paste a few things you've written — emails, messages, posts. The more genuine samples, the closer the match. Saved on this device only.</p>
+        <textarea id="samples" rows="8" placeholder="Paste 2–5 examples of your own writing here…"></textarea>
+        <div class="saved-note" id="saved-note"></div>
+      </div>
+
+      <div class="field">
+        <label>2 · What do you want to write?</label>
+        <div class="kinds" id="kinds">
+          <button type="button" class="kind active" data-kind="reply">Reply</button>
+          <button type="button" class="kind" data-kind="email">Email</button>
+          <button type="button" class="kind" data-kind="post">Post</button>
+          <button type="button" class="kind" data-kind="message">Message</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="context">Context <span class="opt">(optional)</span></label>
+        <p class="hint">Paste the message or post you're responding to, if any.</p>
+        <textarea id="context" rows="4" placeholder="The email/message you're replying to…"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="instruction">What it should say</label>
+        <textarea id="instruction" rows="3" placeholder="e.g. Politely decline the meeting but offer async notes instead."></textarea>
+      </div>
+
+      <button class="btn primary" id="draft-btn">Draft in my voice</button>
+    </section>
+
+    <section class="panel result">
+      <div class="result-head">
+        <h2>Draft</h2>
+        <button class="btn tiny ghost hidden" id="copy-btn">Copy</button>
+      </div>
+      <div id="status" class="status idle">Fill in your voice and what to write, then click <strong>Draft</strong>.</div>
+      <div id="draft" class="draft hidden" contenteditable="true" spellcheck="true"></div>
+
+      <div class="tweaks hidden" id="tweaks">
+        <span class="tweaks-label">Tweak:</span>
+        <button class="btn tiny" data-refine="Make it shorter and tighter.">Shorter</button>
+        <button class="btn tiny" data-refine="Make it warmer and friendlier.">Warmer</button>
+        <button class="btn tiny" data-refine="Make it more formal and professional.">More formal</button>
+        <button class="btn tiny" data-refine="Make it more casual and relaxed.">More casual</button>
+        <button class="btn tiny" data-refine="Rewrite it fresh, same voice.">Regenerate</button>
+      </div>
+    </section>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/voice.js"></script>
+</body>
+</html>
