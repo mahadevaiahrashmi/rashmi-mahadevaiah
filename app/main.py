@@ -48,8 +48,12 @@ INLINE_DOWNLOADS = ON_VERCEL
 
 # The UI has no engine picker: the server decides. Use the hosted OpenRouter free
 # model when a key is configured, otherwise fall back to the offline Mock preview
-# so the page still works. The specific free model comes from OPENROUTER_MODEL.
+# so the page still works.
 FORCED_PROVIDER = "openrouter" if os.environ.get("OPENROUTER_API_KEY") else "mock"
+
+# Default to a $0 OpenRouter model so adding only OPENROUTER_API_KEY stays free.
+# Override by setting OPENROUTER_MODEL in the environment.
+os.environ.setdefault("OPENROUTER_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
 
 # Generated output accumulates one dir per run; sweep dirs older than this on each
 # request. Set GENERATED_TTL_HOURS=0 to disable cleanup and keep everything.
