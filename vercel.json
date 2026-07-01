@@ -19,6 +19,8 @@
     { "source": "/product-discovery/(.*)", "destination": "/api/index" },
     { "source": "/personal-voice", "destination": "/api/index" },
     { "source": "/personal-voice/(.*)", "destination": "/api/index" },
+    { "source": "/funded-companies", "destination": "/api/index" },
+    { "source": "/funded-companies/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

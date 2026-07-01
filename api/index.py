@@ -7,6 +7,7 @@ Starlette strips the prefix and the child routes stay unchanged.
   /resume-tailor      -> Resume Tailor
   /product-discovery  -> Product Discovery interactive guide
   /personal-voice     -> Personal Voice Skill
+  /funded-companies   -> Funded Companies Agent
 """
 import sys
 from pathlib import Path
@@ -17,10 +18,12 @@ from fastapi import FastAPI  # noqa: E402
 from app.main import app as tailor_app  # noqa: E402
 from app.discovery.guide import app as discovery_app  # noqa: E402
 from app.voice.main import app as voice_app  # noqa: E402
+from app.funded.main import app as funded_app  # noqa: E402
 
 app = FastAPI()
 app.mount("/resume-tailor", tailor_app)
 app.mount("/product-discovery", discovery_app)
 app.mount("/personal-voice", voice_app)
+app.mount("/funded-companies", funded_app)
 
 __all__ = ["app"]

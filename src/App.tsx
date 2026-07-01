@@ -29,6 +29,7 @@ import ThemeToggle from "./components/ThemeToggle";
 const RESUME_TAILOR_URL = "/resume-tailor";
 const DISCOVERY_GUIDE_URL = "/product-discovery";
 const VOICE_SKILL_URL = "/personal-voice";
+const FUNDED_AGENT_URL = "/funded-companies";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -57,8 +58,9 @@ const projects = [
   {
     title: "Funded Companies Agent",
     description:
-      "An agent that continuously discovers recently funded companies, enriches them with signals, and surfaces the ones worth reaching out to — turning funding news into a live prospecting list.",
+      "Describe your ideal customer and what you sell; the agent searches the live web for recently funded companies that fit, enriches each with round, investors, and a why-reach-out signal, and drafts a tailored outreach angle — a prospecting list from funding news.",
     tags: ["Agentic AI", "RAG", "Web Search"],
+    live: FUNDED_AGENT_URL,
   },
   {
     title: "Duolingo-Style AI Learning App",
