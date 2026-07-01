@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PM AI Agent</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>PM AI Agent</h1>
+      <p class="tagline">Your Product Manager co-pilot — draft PRDs, user stories, roadmaps, and pressure-test ideas.</p>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <main class="chat-wrap">
+    <div class="messages" id="messages">
+      <div class="msg agent">
+        <div class="bubble">
+          <p>👋 I'm your PM co-pilot. Tell me about a product, feature, or problem — or pick a starting point below.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick" id="quick">
+      <button class="chip" data-q="Draft a PRD for this idea: ">📄 Draft a PRD</button>
+      <button class="chip" data-q="Break this feature into user stories with acceptance criteria: ">🧩 User stories</button>
+      <button class="chip" data-q="Help me prioritize this backlog using RICE: ">📊 Prioritize (RICE)</button>
+      <button class="chip" data-q="Draft a 2-quarter roadmap for: ">🗺️ Roadmap</button>
+      <button class="chip" data-q="Pressure-test this product idea — what are the riskiest assumptions and what would kill it? ">🔍 Critique my idea</button>
+    </div>
+
+    <div class="composer">
+      <textarea id="input" rows="1" placeholder="Message your PM agent…  (Enter to send, Shift+Enter for newline)"></textarea>
+      <button class="send" id="send" title="Send">➤</button>
+    </div>
+    <div class="composer-note" id="note">Multi-turn — it remembers this conversation. Nothing is stored on our servers.</div>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/pm.js"></script>
+</body>
+</html>

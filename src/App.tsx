@@ -32,6 +32,7 @@ const VOICE_SKILL_URL = "/personal-voice";
 const FUNDED_AGENT_URL = "/funded-companies";
 const LEARN_AI_URL = "/learn-ai";
 const GTM_URL = "/gtm-videos";
+const PM_AGENT_URL = "/pm-agent";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -81,8 +82,9 @@ const projects = [
   {
     title: "Your Own PM AI Agent",
     description:
-      "A personal product-manager agent that drafts specs, grooms backlogs, and pressure-tests decisions — an always-on PM co-pilot tuned to how you build.",
+      "A conversational Product Manager co-pilot — chat to draft PRDs, break features into user stories, prioritize a backlog with RICE, sketch a roadmap, and pressure-test ideas. Keeps context across the conversation.",
     tags: ["Agentic AI", "Product", "LLMs"],
+    live: PM_AGENT_URL,
   },
 ];
 
