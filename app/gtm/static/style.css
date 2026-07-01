@@ -113,6 +113,10 @@ textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--ac
 .btn.gen { background: var(--good); color: #0c2417; border: none; }
 .btn.gen:hover { filter: brightness(1.06); }
 .gen-status { color: var(--muted); font-size: 0.82rem; }
+.handoff { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.ho-label { color: var(--muted); font-size: 0.78rem; }
+.btn.ho { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn.ho:hover { border-color: var(--accent); color: var(--accent); }
 .vid-out { margin-top: 10px; }
 .vid-out video { width: 100%; max-width: 280px; border-radius: 12px; border: 1px solid var(--border); display: block; }
 .vid-out .dl { display: inline-block; margin-top: 8px; color: var(--muted); font-size: 0.82rem; text-decoration: none; }

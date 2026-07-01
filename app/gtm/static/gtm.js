@@ -34,8 +34,27 @@ function videoCard(v, i) {
       ${v.cta ? `<div class="line"><span class="k">CTA:</span> ${esc(v.cta)}</div>` : ""}
       ${tags.length ? `<div class="tags">${tags.map((t) => `<span class="tag">${esc(t.replace(/^#/, "#"))}</span>`).join("")}</div>` : ""}
       <div class="vid-gen">${genBtn}<span class="gen-status" id="gs${i}"></span></div>
+      <div class="handoff">
+        <span class="ho-label">Or render free — copies the prompt &amp; opens the tool:</span>
+        <button class="btn tiny ho" data-ho="${i}" data-tool="Kling" data-url="https://klingai.com/">Kling ↗</button>
+        <button class="btn tiny ho" data-ho="${i}" data-tool="Hailuo" data-url="https://hailuoai.video/">Hailuo ↗</button>
+        <button class="btn tiny ho" data-ho="${i}" data-tool="Higgsfield" data-url="https://higgsfield.ai/">Higgsfield ↗</button>
+      </div>
       <div class="vid-out" id="vo${i}"></div>
     </div>`;
+}
+
+// Free hand-off: open the tool (in a user gesture, so it isn't popup-blocked),
+// then copy the prompt so the user just pastes it there.
+function handoff(i, tool, url) {
+  window.open(url, "_blank", "noopener,noreferrer");
+  const promptEl = document.getElementById("v" + i);
+  if (promptEl) navigator.clipboard.writeText(promptEl.innerText).catch(() => {});
+  const s = document.getElementById("gs" + i);
+  if (s) {
+    s.textContent = `Prompt copied — paste it into ${tool}.`;
+    setTimeout(() => { if (s.textContent.startsWith("Prompt copied")) s.textContent = ""; }, 4000);
+  }
 }
 
 // Kick off Veo generation for concept i, poll, then embed the MP4.
@@ -120,6 +139,9 @@ function render(plan) {
   );
   $("result").querySelectorAll("[data-gen]").forEach((b) =>
     b.addEventListener("click", () => generateVideo(Number(b.dataset.gen)))
+  );
+  $("result").querySelectorAll("[data-ho]").forEach((b) =>
+    b.addEventListener("click", () => handoff(Number(b.dataset.ho), b.dataset.tool, b.dataset.url))
   );
 }
 
