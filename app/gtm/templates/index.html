@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTM with AI Video</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>GTM with AI Video</h1>
+      <p class="tagline">Turn what you're launching into a full go-to-market plan — with paste-ready <em>Higgsfield</em> / <em>Google Veo</em> video prompts — to land your first 10 users.</p>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <label for="product">What are you launching? <span class="req">*</span></label>
+      <p class="hint">A sentence or two on the product and what it does.</p>
+      <textarea id="product" rows="3" placeholder="e.g. A local-first resume tailor that rewrites your resume to any job description in one click."></textarea>
+
+      <label for="audience" style="margin-top:16px">Who is it for?</label>
+      <input type="text" id="audience" placeholder="e.g. Job-seeking engineers and new grads" />
+
+      <label style="margin-top:16px">Channel</label>
+      <div class="channels" id="channels">
+        <button type="button" class="channel active" data-channel="Instagram">📸 Instagram</button>
+        <button type="button" class="channel" data-channel="LinkedIn">💼 LinkedIn</button>
+      </div>
+
+      <label for="angle" style="margin-top:16px">Angle / goal <span class="opt">(optional)</span></label>
+      <input type="text" id="angle" placeholder="e.g. Bold, founder-in-public tone" />
+
+      <button class="btn primary" id="plan-btn">Build my GTM plan</button>
+    </section>
+
+    <div id="status" class="status hidden"></div>
+    <section id="result" class="result"></section>
+
+    <p class="disclaimer">🎬 This generates the plan and paste-ready video prompts — take them to Higgsfield or Google Veo to render, then post per the plan. AI-assisted; adapt to your voice.</p>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/gtm.js"></script>
+</body>
+</html>

@@ -31,6 +31,7 @@ const DISCOVERY_GUIDE_URL = "/product-discovery";
 const VOICE_SKILL_URL = "/personal-voice";
 const FUNDED_AGENT_URL = "/funded-companies";
 const LEARN_AI_URL = "/learn-ai";
+const GTM_URL = "/gtm-videos";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -73,8 +74,9 @@ const projects = [
   {
     title: "GTM with AI-Generated Videos",
     description:
-      "A go-to-market engine that turns a product brief into AI-generated marketing videos at scale — script, voice, and visuals — so campaigns ship in hours, not weeks.",
-    tags: ["Multimodal", "Generative AI", "GTM"],
+      "Turn what you're launching into a full go-to-market plan built on short-form AI video — 3–5 concepts with paste-ready Higgsfield / Google Veo prompts, scripts, captions, a 2-week posting schedule, and an Instagram-or-LinkedIn playbook to land your first 10 users.",
+    tags: ["Generative AI", "GTM", "Video"],
+    live: GTM_URL,
   },
   {
     title: "Your Own PM AI Agent",

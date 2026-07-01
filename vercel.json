@@ -23,6 +23,8 @@
     { "source": "/funded-companies/(.*)", "destination": "/api/index" },
     { "source": "/learn-ai", "destination": "/api/index" },
     { "source": "/learn-ai/(.*)", "destination": "/api/index" },
+    { "source": "/gtm-videos", "destination": "/api/index" },
+    { "source": "/gtm-videos/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
