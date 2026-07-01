@@ -1,0 +1,13 @@
+node_modules
+dist
+.venv
+generated
+__pycache__
+.pytest_cache
+.git
+tests
+docs
+samples
+warehouse-routing-blog
+.codex
+README-template.md
