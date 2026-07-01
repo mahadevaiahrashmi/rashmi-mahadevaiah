@@ -15,6 +15,8 @@
   "rewrites": [
     { "source": "/resume-tailor", "destination": "/api/index" },
     { "source": "/resume-tailor/(.*)", "destination": "/api/index" },
+    { "source": "/product-discovery", "destination": "/api/index" },
+    { "source": "/product-discovery/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

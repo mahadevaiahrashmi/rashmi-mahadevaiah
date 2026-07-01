@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Discovery — Interactive Guide</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Product Discovery</h1>
+      <p class="tagline">An interactive guide — learn to build the right thing before you build it.</p>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <nav class="stepper" id="stepper" aria-label="Lessons"></nav>
+
+  <main class="stage">
+    <section class="lesson-card">
+      <div class="eyebrow"><span id="step-num">1</span> / <span id="step-total">6</span> · <span id="step-title">…</span></div>
+      <div class="lesson" id="lesson"></div>
+
+      <div class="example">
+        <div class="example-label">Example</div>
+        <p id="example"></p>
+      </div>
+
+      <div class="practice">
+        <div class="practice-label">Your turn</div>
+        <p class="practice-prompt" id="practice-prompt"></p>
+        <textarea id="answer" rows="4" placeholder="Type your answer here…"></textarea>
+        <div class="practice-actions">
+          <button class="btn primary" id="coach-btn">Get coach feedback</button>
+          <span class="coach-note" id="coach-status"></span>
+        </div>
+        <div class="coach hidden" id="coach-output"></div>
+      </div>
+    </section>
+
+    <div class="nav-row">
+      <button class="btn ghost" id="prev-btn">&larr; Previous</button>
+      <button class="btn primary" id="next-btn">Next &rarr;</button>
+    </div>
+
+    <section class="done hidden" id="done-card">
+      <h2>🎉 You've finished the guide</h2>
+      <p>You now know the backbone of product discovery: separate discovery from delivery,
+        frame the problem, learn from real user behavior, attack your riskiest assumption,
+        test it cheaply, and decide on evidence.</p>
+      <p class="done-cta">The best next step isn't more reading — go run the smallest experiment
+        for a real idea you care about.</p>
+      <button class="btn primary" id="restart-btn">Start over</button>
+    </section>
+  </main>
+
+  <script>
+    window.APP_ROOT = {{ root_path | tojson }};
+    window.MODULES = {{ modules_json | safe }};
+  </script>
+  <script src="{{ root_path }}/static/guide.js"></script>
+</body>
+</html>

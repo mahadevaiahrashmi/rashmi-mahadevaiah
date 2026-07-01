@@ -25,9 +25,9 @@ import BlogList from "./components/BlogList";
 import BlogPost from "./components/BlogPost";
 import ThemeToggle from "./components/ThemeToggle";
 
-// Resume Tailor is embedded in this same site (Vercel Python function served
-// under /resume-tailor). Card #3 opens it.
+// Apps embedded in this same site (Vercel Python functions). Cards open these.
 const RESUME_TAILOR_URL = "/resume-tailor";
+const DISCOVERY_GUIDE_URL = "/product-discovery";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -35,8 +35,9 @@ const projects = [
   {
     title: "Product Discovery Interactive Guide",
     description:
-      "An interactive, step-by-step guide that walks product teams through discovery — framing problems, testing assumptions, and pressure-testing ideas before a line of code is written.",
+      "An interactive, step-by-step guide that teaches product discovery — framing problems, learning from real user behavior, testing your riskiest assumption, and deciding on evidence. Includes an AI coach that gives feedback on your practice answers.",
     tags: ["Product", "LLMs", "Interactive"],
+    live: DISCOVERY_GUIDE_URL,
   },
   {
     title: "Personal Voice Skill",
