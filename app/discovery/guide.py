@@ -17,6 +17,7 @@ from fastapi.templating import Jinja2Templates
 
 from .content import MODULES, MODULE_IDS
 from .. import llm
+from ..shared import skills as skill_lib
 
 BASE = Path(__file__).resolve().parent
 
@@ -36,14 +37,26 @@ SYSTEM = (
 
 
 def _coach(module: dict, answer: str) -> str | None:
-    """Ask the model for feedback; return None if no engine is available."""
+    """Ask the model for feedback; return None if no engine is available.
+
+    Grounds the feedback in the shared Pro-PM skill library: retrieve the most
+    relevant PM skill(s) for this lesson and let the model draw on them.
+    """
     prompt = (
         f"Lesson: {module['title']}\n"
         f"What to look for: {module['coach_focus']}\n"
         f"The learner's practice answer:\n\"\"\"\n{answer.strip()}\n\"\"\"\n\n"
         "Give your feedback now."
     )
-    return llm.complete(prompt, system=SYSTEM, max_tokens=400)
+    system = SYSTEM
+    hits = skill_lib.retrieve(f"{module['title']} {module['coach_focus']}", k=2)
+    if hits:
+        refs = "\n\n".join(f"— {h['title']} —\n{skill_lib.load(h['path'], cap=1500)}" for h in hits)
+        system = SYSTEM + (
+            "\n\nDraw on these relevant PM skills as background (don't quote them "
+            "verbatim or dump their headers — use them to sharpen your advice):\n\n" + refs
+        )
+    return llm.complete(prompt, system=system, max_tokens=400)
 
 
 @app.get("/", response_class=HTMLResponse)

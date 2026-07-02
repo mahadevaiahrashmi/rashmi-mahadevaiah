@@ -1,0 +1,565 @@
+# Pro-PM Skill Library — Index
+
+Shared PM skill corpus used by **project 1 (Product Discovery Guide)** and **project 7 (PM AI Agent)** via `app/shared/skills.py` (lexical retrieval).
+Source: https://github.com/rahulgoyal1001/Pro-PM (MIT). See `LICENSE` and `NOTICE.md`.
+
+
+**Totals:** skills 330 · agents 20 · playbooks 23 · templates 62 · frameworks 107 · **542 files**
+
+
+## Skills (330)
+
+- **Global Skill Behavior (All Skills)** — `skills/_GLOBAL-BEHAVIOR.md`
+- **Router Aliases — Legacy Path → Canonical Skill File** — `skills/_ROUTER-ALIASES.md`
+- **AI Build vs Buy** — `skills/ai-pm/ai-build-vs-buy.md`
+- **AI Cost Optimization** — `skills/ai-pm/ai-cost-optimization.md`
+- **AI Ethics Review** — `skills/ai-pm/ai-ethics-review.md`
+- **AI Feature Spec** — `skills/ai-pm/ai-feature-spec.md`
+- **AI Opportunity Scanner** — `skills/ai-pm/ai-opportunity-scanner.md`
+- **AI Product Metrics** — `skills/ai-pm/ai-product-metrics.md`
+- **AI UX Patterns** — `skills/ai-pm/ai-ux-patterns.md`
+- **Data Strategy** — `skills/ai-pm/data-strategy.md`
+- **LLM Evaluation Plan** — `skills/ai-pm/llm-evaluation-plan.md`
+- **Prompt Engineering Review** — `skills/ai-pm/prompt-engineering-review.md`
+- **Responsible AI Checklist** — `skills/ai-pm/responsible-ai-checklist.md`
+- **Brainstorm Partner** — `skills/brainstorm-partner.md`
+- **Analyst Briefing Deck** — `skills/collateral/analyst-relations/analyst-briefing-deck.md`
+- **Award Submission** — `skills/collateral/analyst-relations/award-submission.md`
+- **Magic Quadrant / Wave Response** — `skills/collateral/analyst-relations/magic-quadrant-response.md`
+- **Blog Post — Product Announcement** — `skills/collateral/digital-content/blog-post-announcement.md`
+- **Blog Post — Engineering** — `skills/collateral/digital-content/blog-post-engineering.md`
+- **Blog Post — How-To Guide** — `skills/collateral/digital-content/blog-post-how-to.md`
+- **Blog Post — Thought Leadership** — `skills/collateral/digital-content/blog-post-thought-leadership.md`
+- **Email Campaign** — `skills/collateral/digital-content/email-campaign.md`
+- **In-App Messaging** — `skills/collateral/digital-content/in-app-messaging.md`
+- **Newsletter Content** — `skills/collateral/digital-content/newsletter-content.md`
+- **Podcast Talking Points** — `skills/collateral/digital-content/podcast-talking-points.md`
+- **Social Media — LinkedIn** — `skills/collateral/digital-content/social-media-linkedin.md`
+- **Social Media — Product Hunt** — `skills/collateral/digital-content/social-media-product-hunt.md`
+- **Social Media — Twitter/X** — `skills/collateral/digital-content/social-media-twitter.md`
+- **Video Script** — `skills/collateral/digital-content/video-script.md`
+- **Webinar Script** — `skills/collateral/digital-content/webinar-script.md`
+- **PM Hiring Interview Questions** — `skills/collateral/internal-collateral/hiring-interview-questions.md`
+- **PM Hiring Rubric** — `skills/collateral/internal-collateral/hiring-rubric.md`
+- **Knowledge Base Article** — `skills/collateral/internal-collateral/knowledge-base-article.md`
+- **Process Documentation** — `skills/collateral/internal-collateral/process-documentation.md`
+- **Team Onboarding Guide** — `skills/collateral/internal-collateral/team-onboarding-guide.md`
+- **Training Materials** — `skills/collateral/internal-collateral/training-materials.md`
+- **Customer Case Study** — `skills/collateral/marketing-collateral/customer-case-study.md`
+- **Ebook Outline** — `skills/collateral/marketing-collateral/ebook-outline.md`
+- **Infographic Brief** — `skills/collateral/marketing-collateral/infographic-brief.md`
+- **Landing Page Copy** — `skills/collateral/marketing-collateral/landing-page-copy.md`
+- **Product Comparison Guide** — `skills/collateral/marketing-collateral/product-comparison-guide.md`
+- **Product Datasheet** — `skills/collateral/marketing-collateral/product-datasheet.md`
+- **ROI Calculator Spec** — `skills/collateral/marketing-collateral/roi-calculator-spec.md`
+- **Solution Brief** — `skills/collateral/marketing-collateral/solution-brief.md`
+- **Whitepaper** — `skills/collateral/marketing-collateral/whitepaper.md`
+- **All-Hands Deck** — `skills/collateral/presentations/all-hands-deck.md`
+- **Board Deck (Product Section)** — `skills/collateral/presentations/board-deck.md`
+- **Conference Talk Deck** — `skills/collateral/presentations/conference-talk-deck.md`
+- **Customer Presentation** — `skills/collateral/presentations/customer-presentation.md`
+- **Design Review Deck** — `skills/collateral/presentations/design-review-deck.md`
+- **Investor Pitch Deck (Product Section)** — `skills/collateral/presentations/investor-pitch-deck.md`
+- **Product Launch Deck** — `skills/collateral/presentations/product-launch-deck.md`
+- **Product Strategy Deck** — `skills/collateral/presentations/product-strategy-deck.md`
+- **Quarterly Business Review Deck** — `skills/collateral/presentations/quarterly-business-review.md`
+- **Roadmap Presentation** — `skills/collateral/presentations/roadmap-presentation.md`
+- **Sales Pitch Deck** — `skills/collateral/presentations/sales-pitch-deck.md`
+- **Sprint Review Deck** — `skills/collateral/presentations/sprint-review-deck.md`
+- **Competitive Battlecard** — `skills/collateral/sales-collateral/competitive-battlecard.md`
+- **Customer Onboarding Guide** — `skills/collateral/sales-collateral/customer-onboarding-guide.md`
+- **Discovery Question Bank** — `skills/collateral/sales-collateral/discovery-question-bank.md`
+- **Objection Handling Guide** — `skills/collateral/sales-collateral/objection-handling-guide.md`
+- **Proposal Template** — `skills/collateral/sales-collateral/proposal-template.md`
+- **Success Plan Template** — `skills/collateral/sales-collateral/success-plan-template.md`
+- **API Documentation Outline** — `skills/collateral/technical-content/api-documentation-outline.md`
+- **Architecture Overview** — `skills/collateral/technical-content/architecture-overview.md`
+- **Developer Quickstart** — `skills/collateral/technical-content/developer-quickstart.md`
+- **Integration Guide** — `skills/collateral/technical-content/integration-guide.md`
+- **Migration Guide** — `skills/collateral/technical-content/migration-guide.md`
+- **Security Whitepaper** — `skills/collateral/technical-content/security-whitepaper.md`
+- **Technical Documentation** — `skills/collateral/technical-content/technical-documentation.md`
+- **Annual Product Review** — `skills/collateral/written-documents/annual-product-review.md`
+- **Business Case** — `skills/collateral/written-documents/business-case.md`
+- **Competitive Landscape Report** — `skills/collateral/written-documents/competitive-landscape-report.md`
+- **Customer Insights Report** — `skills/collateral/written-documents/customer-insights-report.md`
+- **Market Research Report** — `skills/collateral/written-documents/market-research-report.md`
+- **Post-Mortem Report** — `skills/collateral/written-documents/post-mortem-report.md`
+- **Product Charter** — `skills/collateral/written-documents/product-charter.md`
+- **Product Vision Document** — `skills/collateral/written-documents/product-vision-doc.md`
+- **Strategy Document** — `skills/collateral/written-documents/strategy-document.md`
+- **All-Hands Talking Points** — `skills/communicate/all-hands-talking-points.md`
+- **Async Decision Request** — `skills/communicate/async-decision-request.md`
+- **Board Update** — `skills/communicate/board-update.md`
+- **Change Management Communications** — `skills/communicate/change-management-comms.md`
+- **Crisis Communication** — `skills/communicate/crisis-communication.md`
+- **Cross-Functional Update** — `skills/communicate/cross-functional-update.md`
+- **Customer Communication** — `skills/communicate/customer-communication.md`
+- **Difficult Conversation Prep** — `skills/communicate/difficult-conversation-prep.md`
+- **Executive Summary** — `skills/communicate/exec-summary.md`
+- **Investor Update** — `skills/communicate/investor-update.md`
+- **Partner Communication** — `skills/communicate/partner-communication.md`
+- **Presentation Outline** — `skills/communicate/presentation-outline.md`
+- **Stakeholder Email** — `skills/communicate/stakeholder-email.md`
+- **Town Hall Script** — `skills/communicate/town-hall-script.md`
+- **Weekly Update** — `skills/communicate/weekly-update.md`
+- **Acceptance Criteria Writer** — `skills/define/acceptance-criteria-writer.md`
+- **Accessibility Requirements** — `skills/define/accessibility-requirements.md`
+- **API Design Input** — `skills/define/api-design-input.md`
+- **Data Requirements** — `skills/define/data-requirements.md`
+- **Define Success Metrics** — `skills/define/define-success-metrics.md`
+- **Feature Flag Strategy** — `skills/define/feature-flag-strategy.md`
+- **Hypothesis Generation** — `skills/define/hypothesis-generation.md`
+- **Localization Requirements** — `skills/define/localization-requirements.md`
+- **Requirements Review** — `skills/define/requirements-review.md`
+- **Scope Negotiation** — `skills/define/scope-negotiation.md`
+- **Service Blueprint** — `skills/define/service-blueprint.md`
+- **Story Mapping** — `skills/define/story-mapping.md`
+- **Write API Requirements** — `skills/define/write-api-requirements.md`
+- **Write Jobs-to-Be-Done Analysis** — `skills/define/write-jobs-to-be-done.md`
+- **Write One-Pager** — `skills/define/write-one-pager.md`
+- **Write PRD** — `skills/define/write-prd.md`
+- **Write Press Release / FAQ** — `skills/define/write-press-release-faq.md`
+- **Write Six-Pager** — `skills/define/write-six-pager.md`
+- **Write Technical Brief** — `skills/define/write-technical-brief.md`
+- **Write User Stories** — `skills/define/write-user-stories.md`
+- **Analyst Briefing Prep** — `skills/discover/analyst-briefing-prep.md`
+- **Competitive Analysis** — `skills/discover/competitive-analysis.md`
+- **Competitive Battlecard** — `skills/discover/competitive-battlecard.md`
+- **Customer Feedback Synthesis** — `skills/discover/customer-feedback-synthesis.md`
+- **Customer Interview Debrief** — `skills/discover/customer-interview-debrief.md`
+- **Customer Interview Prep** — `skills/discover/customer-interview-prep.md`
+- **Customer Journey Mapping** — `skills/discover/customer-journey-mapping.md`
+- **Empathy Mapping** — `skills/discover/empathy-mapping.md`
+- **Focus Group Guide** — `skills/discover/focus-group-guide.md`
+- **Jobs-to-Be-Done Analysis** — `skills/discover/jobs-to-be-done-analysis.md`
+- **Market Landscape Report** — `skills/discover/market-landscape-report.md`
+- **Market Sizing** — `skills/discover/market-sizing.md`
+- **Market Trends** — `skills/discover/market-trends.md`
+- **Opportunity Assessment** — `skills/discover/opportunity-assessment.md`
+- **Problem Framing** — `skills/discover/problem-framing.md`
+- **Survey Design** — `skills/discover/survey-design.md`
+- **Technology Assessment** — `skills/discover/technology-assessment.md`
+- **User Research Synthesis** — `skills/discover/user-research-synthesis.md`
+- **User Testing Plan** — `skills/discover/user-testing-plan.md`
+- **Voice of Customer Report** — `skills/discover/voice-of-customer-report.md`
+- **Win-Loss Analysis** — `skills/discover/win-loss-analysis.md`
+- **Architecture Review Input** — `skills/execute/architecture-review-input.md`
+- **Blocker Resolution** — `skills/execute/blocker-resolution.md`
+- **Bug Triage** — `skills/execute/bug-triage.md`
+- **Code Review Context** — `skills/execute/code-review-context.md`
+- **Cross-Team Coordination** — `skills/execute/cross-team-coordination.md`
+- **Customer POC Plan** — `skills/execute/customer-poc-plan.md`
+- **Decision Document** — `skills/execute/decision-doc.md`
+- **Design Review** — `skills/execute/design-review.md`
+- **Escalation Document** — `skills/execute/escalation-doc.md`
+- **Incident Response (PM)** — `skills/execute/incident-response-pm.md`
+- **Initiative Status Update** — `skills/execute/initiative-status-update.md`
+- **Meeting Notes to Actions** — `skills/execute/meeting-notes-to-actions.md`
+- **Meeting Prep** — `skills/execute/meeting-prep.md`
+- **Negotiation Prep** — `skills/execute/negotiation-prep.md`
+- **Sprint Review Prep** — `skills/execute/sprint-review-prep.md`
+- **Stakeholder Alignment** — `skills/execute/stakeholder-alignment.md`
+- **UX Review** — `skills/execute/ux-review.md`
+- **Analyst Relations Brief** — `skills/launch/analyst-relations-brief.md`
+- **Beta Program** — `skills/launch/beta-program.md`
+- **Demo Script** — `skills/launch/demo-script.md`
+- **Early Adopter Program** — `skills/launch/early-adopter-program.md`
+- **Enablement Document** — `skills/launch/enablement-doc.md`
+- **Feature Announcement** — `skills/launch/feature-announcement.md`
+- **Go-to-Market Brief** — `skills/launch/go-to-market-brief.md`
+- **Launch Communications** — `skills/launch/launch-comms.md`
+- **Launch Plan** — `skills/launch/launch-plan.md`
+- **Launch Readiness Checklist** — `skills/launch/launch-readiness-checklist.md`
+- **Partner Enablement** — `skills/launch/partner-enablement.md`
+- **Pricing & Packaging Brief** — `skills/launch/pricing-packaging-brief.md`
+- **Product Hunt Launch** — `skills/launch/product-hunt-launch.md`
+- **Release Notes** — `skills/launch/release-notes.md`
+- **Rollback Plan** — `skills/launch/rollback-plan.md`
+- **Churn Analysis** — `skills/measure/churn-analysis.md`
+- **Cohort Analysis** — `skills/measure/cohort-analysis.md`
+- **Competitive Benchmark** — `skills/measure/competitive-benchmark.md`
+- **Customer Health Scoring** — `skills/measure/customer-health-scoring.md`
+- **Data Question** — `skills/measure/data-question.md`
+- **Experiment Analysis** — `skills/measure/experiment-analysis.md`
+- **Experiment Design** — `skills/measure/experiment-design.md`
+- **Feature Adoption Analysis** — `skills/measure/feature-adoption-analysis.md`
+- **Funnel Analysis** — `skills/measure/funnel-analysis.md`
+- **Metrics Review** — `skills/measure/metrics-review.md`
+- **NPS/CSAT Analysis** — `skills/measure/nps-csat-analysis.md`
+- **Post-Launch Review** — `skills/measure/post-launch-review.md`
+- **Quarterly Review** — `skills/measure/quarterly-review.md`
+- **Retention Analysis** — `skills/measure/retention-analysis.md`
+- **Retrospective** — `skills/measure/retrospective.md`
+- **Revenue Impact Analysis** — `skills/measure/revenue-impact-analysis.md`
+- **Unit Economics Analysis** — `skills/measure/unit-economics-analysis.md`
+- **Automation Finder** — `skills/operate/automation-finder.md`
+- **Career Growth Plan** — `skills/operate/career-growth-plan.md`
+- **Delegation Framework** — `skills/operate/delegation-framework.md`
+- **Handoff Document** — `skills/operate/handoff-doc.md`
+- **Interview Prep** — `skills/operate/interview-prep.md`
+- **Knowledge Base Builder** — `skills/operate/knowledge-base-builder.md`
+- **PM Hiring Loop** — `skills/operate/pm-hiring-loop.md`
+- **PM Onboarding Guide** — `skills/operate/pm-onboarding-guide.md`
+- **Process Improvement** — `skills/operate/process-improvement.md`
+- **Team Charter** — `skills/operate/team-charter.md`
+- **Time Audit** — `skills/operate/time-audit.md`
+- **Tools Audit** — `skills/operate/tools-audit.md`
+- **Vendor Evaluation** — `skills/operate/vendor-evaluation.md`
+- **Advisory Board Consult** — `skills/people/advisory-board-consult.md`
+- **Build Persona from Interactions** — `skills/people/build-persona-from-interactions.md`
+- **Build Persona from Internal Data** — `skills/people/build-persona-from-internal.md`
+- **Build Persona from LinkedIn** — `skills/people/build-persona-from-linkedin.md`
+- **Coalition Builder** — `skills/people/coalition-builder.md`
+- **Conflict Resolution** — `skills/people/conflict-resolution.md`
+- **Cross-Functional Workshop** — `skills/people/cross-functional-workshop.md`
+- **Executive Coaching Prep** — `skills/people/executive-coaching-prep.md`
+- **Feedback Prep** — `skills/people/feedback-prep.md`
+- **Influence Strategy** — `skills/people/influence-strategy.md`
+- **One-on-One Prep** — `skills/people/one-on-one-prep.md`
+- **Org Change Navigation** — `skills/people/org-change-navigation.md`
+- **Persona Builder** — `skills/people/persona-builder.md`
+- **Pre-Meeting Brief** — `skills/people/pre-meeting-brief.md`
+- **Refresh Persona** — `skills/people/refresh-persona.md`
+- **Relationship Health Check** — `skills/people/relationship-health-check.md`
+- **Stakeholder Communication Audit** — `skills/people/stakeholder-communication-audit.md`
+- **Stakeholder Mapping** — `skills/people/stakeholder-mapping.md`
+- **Team Health Check** — `skills/people/team-health-check.md`
+- **Annual Planning** — `skills/plan/annual-planning.md`
+- **Backlog Grooming** — `skills/plan/backlog-grooming.md`
+- **Budget Planning** — `skills/plan/budget-planning.md`
+- **Capacity Planning** — `skills/plan/capacity-planning.md`
+- **Dependency Mapping** — `skills/plan/dependency-mapping.md`
+- **Milestone Planning** — `skills/plan/milestone-planning.md`
+- **Portfolio Balancing** — `skills/plan/portfolio-balancing.md`
+- **Prioritization** — `skills/plan/prioritization.md`
+- **Quarterly OKRs** — `skills/plan/quarterly-okrs.md`
+- **Release Planning** — `skills/plan/release-planning.md`
+- **Resource Estimation** — `skills/plan/resource-estimation.md`
+- **Risk Assessment** — `skills/plan/risk-assessment.md`
+- **Roadmap Planning** — `skills/plan/roadmap-planning.md`
+- **Roadmap Review** — `skills/plan/roadmap-review.md`
+- **Scenario Planning** — `skills/plan/scenario-planning.md`
+- **Sprint Planning** — `skills/plan/sprint-planning.md`
+- **Tech Debt Negotiation** — `skills/plan/tech-debt-negotiation.md`
+- **Acquisition Assessment** — `skills/strategy/acquisition-assessment.md`
+- **Build vs Buy vs Partner** — `skills/strategy/build-vs-buy-vs-partner.md`
+- **Business Model Canvas** — `skills/strategy/business-model-canvas.md`
+- **Ecosystem Strategy** — `skills/strategy/ecosystem-strategy.md`
+- **Growth Strategy** — `skills/strategy/growth-strategy.md`
+- **Lean Canvas** — `skills/strategy/lean-canvas.md`
+- **Market Entry Strategy** — `skills/strategy/market-entry.md`
+- **Moat Analysis** — `skills/strategy/moat-analysis.md`
+- **Monetization Strategy** — `skills/strategy/monetization-strategy.md`
+- **Packaging Optimization** — `skills/strategy/packaging-optimization.md`
+- **Packaging Strategy** — `skills/strategy/packaging-strategy.md`
+- **Partnership Evaluation** — `skills/strategy/partnership-evaluation.md`
+- **Platform vs Product Strategy** — `skills/strategy/platform-vs-product.md`
+- **Pricing Change Analysis** — `skills/strategy/pricing-change-analysis.md`
+- **Pricing Strategy** — `skills/strategy/pricing-strategy.md`
+- **Product Portfolio Review** — `skills/strategy/product-portfolio-review.md`
+- **Product Strategy Document** — `skills/strategy/product-strategy-doc.md`
+- **Sunset Plan** — `skills/strategy/sunset-plan.md`
+- **Unit Economics Model** — `skills/strategy/unit-economics-model.md`
+- **Vision Narrative** — `skills/strategy/vision-narrative.md`
+- **Willingness to Pay Research** — `skills/strategy/willingness-to-pay-research.md`
+- **Amplitude Query Builder** — `skills/tools/analytics/amplitude-query-builder.md`
+- **FullStory Session Review** — `skills/tools/analytics/fullstory-session-review.md`
+- **Google Analytics Review** — `skills/tools/analytics/google-analytics-review.md`
+- **Heap Analysis** — `skills/tools/analytics/heap-analysis.md`
+- **Hotjar Heatmap Review** — `skills/tools/analytics/hotjar-heatmap-review.md`
+- **Looker Dashboard Spec** — `skills/tools/analytics/looker-dashboard-spec.md`
+- **Mixpanel Query Builder** — `skills/tools/analytics/mixpanel-query-builder.md`
+- **Pendo Guide Spec** — `skills/tools/analytics/pendo-guide-spec.md`
+- **Power BI Dashboard Spec** — `skills/tools/analytics/power-bi-dashboard-spec.md`
+- **Segment Event Spec** — `skills/tools/analytics/segment-event-spec.md`
+- **Tableau Dashboard Spec** — `skills/tools/analytics/tableau-dashboard-spec.md`
+- **Email Composer** — `skills/tools/communication/email-composer.md`
+- **Gmail Template** — `skills/tools/communication/gmail-template.md`
+- **Loom Video Script** — `skills/tools/communication/loom-video-script.md`
+- **Outlook Template** — `skills/tools/communication/outlook-template.md`
+- **Slack Announcement** — `skills/tools/communication/slack-announcement.md`
+- **Slack Workflow Builder** — `skills/tools/communication/slack-workflow-builder.md`
+- **Teams Announcement** — `skills/tools/communication/teams-announcement.md`
+- **Teams Channel Setup** — `skills/tools/communication/teams-channel-setup.md`
+- **Dovetail Research Synthesis** — `skills/tools/customer-tools/dovetail-research-synthesis.md`
+- **Gainsight Health Spec** — `skills/tools/customer-tools/gainsight-health-spec.md`
+- **Gong Call Analysis** — `skills/tools/customer-tools/gong-call-analysis.md`
+- **HubSpot Workflow Spec** — `skills/tools/customer-tools/hubspot-workflow-spec.md`
+- **Intercom Analysis** — `skills/tools/customer-tools/intercom-analysis.md`
+- **Salesforce Dashboard Spec** — `skills/tools/customer-tools/salesforce-dashboard-spec.md`
+- **Zendesk Ticket Analysis** — `skills/tools/customer-tools/zendesk-ticket-analysis.md`
+- **Canva Brief** — `skills/tools/design/canva-brief.md`
+- **Figma Design Feedback** — `skills/tools/design/figma-design-feedback.md`
+- **Figma Spec Annotation** — `skills/tools/design/figma-spec-annotation.md`
+- **Miro Board Builder** — `skills/tools/design/miro-board-builder.md`
+- **MURAL Board Builder** — `skills/tools/design/mural-board-builder.md`
+- **Whimsical Flowchart** — `skills/tools/design/whimsical-flowchart.md`
+- **GitHub Issue Writer** — `skills/tools/development/github-issue-writer.md`
+- **GitHub Project Setup** — `skills/tools/development/github-project-setup.md`
+- **GitLab Issue Writer** — `skills/tools/development/gitlab-issue-writer.md`
+- **LaunchDarkly Flag Plan** — `skills/tools/development/launchdarkly-flag-plan.md`
+- **Postman Collection Spec** — `skills/tools/development/postman-collection-spec.md`
+- **Swagger / OpenAPI Spec Review** — `skills/tools/development/swagger-api-spec-review.md`
+- **Coda Doc Builder** — `skills/tools/knowledge-management/coda-doc-builder.md`
+- **Confluence Page Builder** — `skills/tools/knowledge-management/confluence-page-builder.md`
+- **Confluence Space Organizer** — `skills/tools/knowledge-management/confluence-space-organizer.md`
+- **Dropbox Paper Builder** — `skills/tools/knowledge-management/dropbox-paper-builder.md`
+- **Google Docs Builder** — `skills/tools/knowledge-management/google-docs-builder.md`
+- **Google Sites Builder** — `skills/tools/knowledge-management/google-sites-builder.md`
+- **Notion Page Builder** — `skills/tools/knowledge-management/notion-page-builder.md`
+- **Notion Workspace Setup** — `skills/tools/knowledge-management/notion-workspace-setup.md`
+- **SharePoint Page Builder** — `skills/tools/knowledge-management/sharepoint-page-builder.md`
+- **Calendar Audit** — `skills/tools/meetings/calendar-audit.md`
+- **Google Meet Prep** — `skills/tools/meetings/google-meet-prep.md`
+- **Meeting Recording Summary** — `skills/tools/meetings/meeting-recording-summary.md`
+- **Teams Meeting Prep** — `skills/tools/meetings/teams-meeting-prep.md`
+- **Zoom Meeting Prep** — `skills/tools/meetings/zoom-meeting-prep.md`
+- **Google Slides Builder** — `skills/tools/presentations/google-slides-builder.md`
+- **Keynote Builder** — `skills/tools/presentations/keynote-builder.md`
+- **Pitch Deck Builder** — `skills/tools/presentations/pitch-deck-builder.md`
+- **PowerPoint Builder** — `skills/tools/presentations/powerpoint-builder.md`
+- **Aha! Idea Management** — `skills/tools/project-management/aha-idea-management.md`
+- **Aha! Roadmap Builder** — `skills/tools/project-management/aha-roadmap-builder.md`
+- **Asana Task Builder** — `skills/tools/project-management/asana-task-builder.md`
+- **ClickUp Task Builder** — `skills/tools/project-management/clickup-task-builder.md`
+- **Jira Backlog Builder** — `skills/tools/project-management/jira-backlog-builder.md`
+- **Jira Roadmap Sync** — `skills/tools/project-management/jira-roadmap-sync.md`
+- **Jira Sprint Report** — `skills/tools/project-management/jira-sprint-report.md`
+- **Jira Ticket Writer** — `skills/tools/project-management/jira-ticket-writer.md`
+- **Linear Issue Writer** — `skills/tools/project-management/linear-issue-writer.md`
+- **Linear Project Setup** — `skills/tools/project-management/linear-project-setup.md`
+- **Monday.com Board Setup** — `skills/tools/project-management/monday-board-setup.md`
+- **Productboard Feature Sync** — `skills/tools/project-management/productboard-feature-sync.md`
+- **Shortcut Story Writer** — `skills/tools/project-management/shortcut-story-writer.md`
+- **Maze Test Plan** — `skills/tools/research/maze-test-plan.md`
+- **Typeform / Survey Builder** — `skills/tools/research/typeform-survey-builder.md`
+- **UserTesting Plan** — `skills/tools/research/usertesting-plan.md`
+- **Airtable Base Builder** — `skills/tools/spreadsheets/airtable-base-builder.md`
+- **Excel Model** — `skills/tools/spreadsheets/excel-model.md`
+- **Google Sheets Model** — `skills/tools/spreadsheets/google-sheets-model.md`
+- **Spreadsheet Dashboard** — `skills/tools/spreadsheets/spreadsheet-dashboard.md`
+
+## Agents (20)
+
+- **Advisory Board** — `agents/advisory-board.md`
+- **Codebase Navigator** — `agents/codebase-navigator.md`
+- **Collateral Producer** — `agents/collateral-producer.md`
+- **Comms Chameleon** — `agents/comms-chameleon.md`
+- **Competitive Intel** — `agents/competitive-intel.md`
+- **Content Engine** — `agents/content-engine.md`
+- **Customer Lifecycle Manager** — `agents/customer-lifecycle-manager.md`
+- **Data Storyteller** — `agents/data-storyteller.md`
+- **Document Builder** — `agents/document-builder.md`
+- **GTM Strategist** — `agents/gtm-strategist.md`
+- **Initiative Tracker** — `agents/initiative-tracker.md`
+- **Launch Coordinator** — `agents/launch-coordinator.md`
+- **Meeting Copilot** — `agents/meeting-copilot.md`
+- **People Intelligence** — `agents/people-intelligence.md`
+- **PM Coach** — `agents/pm-coach.md`
+- **Pricing & Packaging Advisor** — `agents/pricing-packaging-advisor.md`
+- **Quarterly Planner** — `agents/quarterly-planner.md`
+- **Research Analyst** — `agents/research-analyst.md`
+- **Spec Writer** — `agents/spec-writer.md`
+- **Strategy Advisor** — `agents/strategy-advisor.md`
+
+## Playbooks (23)
+
+- **Acquisition Integration** — `playbooks/acquisition-integration.md`
+- **AI Feature Development** — `playbooks/ai-feature-development.md`
+- **Annual Planning** — `playbooks/annual-planning.md`
+- **Board Review Prep** — `playbooks/board-review-prep.md`
+- **Competitive Response** — `playbooks/competitive-response.md`
+- **Cross-Functional Alignment** — `playbooks/cross-functional-alignment.md`
+- **Customer Advisory Board** — `playbooks/customer-advisory-board.md`
+- **Customer Escalation** — `playbooks/customer-escalation.md`
+- **Enterprise Deal Support** — `playbooks/enterprise-deal-support.md`
+- **Incident Response** — `playbooks/incident-response.md`
+- **Market Expansion** — `playbooks/market-expansion.md`
+- **New Feature Lifecycle** — `playbooks/new-feature-lifecycle.md`
+- **New Market Pricing** — `playbooks/new-market-pricing.md`
+- **New PM Onboarding** — `playbooks/new-pm-onboarding.md`
+- **Platform & API Launch** — `playbooks/platform-api-launch.md`
+- **PM Team Scaling** — `playbooks/pm-team-scaling.md`
+- **Pricing & Packaging Change** — `playbooks/pricing-packaging-change.md`
+- **Product Launch** — `playbooks/product-launch.md`
+- **Product-Market Fit Search** — `playbooks/product-market-fit-search.md`
+- **Product Sunset** — `playbooks/product-sunset.md`
+- **Quarterly Planning** — `playbooks/quarterly-planning.md`
+- **Stakeholder Onboarding** — `playbooks/stakeholder-onboarding.md`
+- **Strategic Pivot** — `playbooks/strategic-pivot.md`
+
+## Templates (62)
+
+- **Competitive Brief: [Competitor Name]** — `templates/analysis/competitive-brief.md`
+- **Customer Journey Map: [Persona/Use Case]** — `templates/analysis/customer-journey-map.md`
+- **Experiment Plan: [Experiment Name]** — `templates/analysis/experiment-plan.md`
+- **Market Research: [Topic/Market]** — `templates/analysis/market-research.md`
+- **Market Sizing: [Market/Segment Name]** — `templates/analysis/market-sizing.md`
+- **Post-Mortem: [Incident/Event Title]** — `templates/analysis/post-mortem.md`
+- **Retrospective: [Sprint/Project/Quarter Name]** — `templates/analysis/retrospective.md`
+- **Unit Economics: [Product/Segment]** — `templates/analysis/unit-economics.md`
+- **Win/Loss Analysis: [Deal/Customer Name]** — `templates/analysis/win-loss.md`
+- **Blog Post: [Title]** — `templates/collateral/blog-post.md`
+- **Case Study: [Customer Name]** — `templates/collateral/case-study.md`
+- **Changelog: [Month Year]** — `templates/collateral/changelog.md`
+- **Email Campaign: [Campaign Name]** — `templates/collateral/email-campaign.md`
+- **[Article Title: Action-Oriented, e.g., "How to Set Up SSO"]** — `templates/collateral/help-article.md`
+- **Product Datasheet: [Product Name]** — `templates/collateral/product-datasheet.md`
+- **Release Notes: [Version/Release Name]** — `templates/collateral/release-notes.md`
+- **Sales Battlecard: [Competitor Name]** — `templates/collateral/sales-battlecard.md`
+- **Solution Brief: [Solution/Use Case Name]** — `templates/collateral/solution-brief.md`
+- **Webinar Script: [Title]** — `templates/collateral/webinar-script.md`
+- **Whitepaper Outline: [Title]** — `templates/collateral/whitepaper-outline.md`
+- **All-Hands Script: [Topic]** — `templates/communication/all-hands-script.md`
+- **Crisis Communication Plan: [Crisis Type]** — `templates/communication/crisis-communication.md`
+- **Customer Communication: [Topic]** — `templates/communication/customer-communication.md`
+- **Escalation: [Issue Title]** — `templates/communication/escalation.md`
+- **Executive Update: [Product Area]** — `templates/communication/exec-update.md`
+- **Investor Update: [Month/Quarter Year]** — `templates/communication/investor-update.md`
+- **Launch Announcement: [Feature/Product Name]** — `templates/communication/launch-announcement.md`
+- **Partner Update: [Quarter/Period]** — `templates/communication/partner-update.md`
+- **Stakeholder Email: [Topic]** — `templates/communication/stakeholder-email.md`
+- **Weekly Update: [Product Area]** — `templates/communication/weekly-update.md`
+- **Business Case: [Initiative Name]** — `templates/documents/business-case.md`
+- **Decision Document / RFC: [Decision Title]** — `templates/documents/decision-doc-rfc.md`
+- **Feature Spec: [Feature Name]** — `templates/documents/feature-spec.md`
+- **One-Pager: [Feature/Initiative Name]** — `templates/documents/one-pager.md`
+- **Product Requirements Document** — `templates/documents/prd.md`
+- **Press Release / FAQ: [Product/Feature Name]** — `templates/documents/press-release-faq.md`
+- **Product Charter: [Product/Team Name]** — `templates/documents/product-charter.md`
+- **Six-Pager: [Initiative Name]** — `templates/documents/six-pager.md`
+- **Product Strategy: [Product/Area Name]** — `templates/documents/strategy-doc.md`
+- **Technical Brief: [Feature/System Name]** — `templates/documents/technical-brief.md`
+- **Product Vision: [Product Name]** — `templates/documents/vision-doc.md`
+- **Annual Plan: [Product/Area] — [Year]** — `templates/planning/annual-plan.md`
+- **Capacity Plan: [Quarter/Period]** — `templates/planning/capacity-plan.md`
+- **Milestone Plan: [Initiative Name]** — `templates/planning/milestone-plan.md`
+- **OKRs: [Team/Product Area] — [Quarter Year]** — `templates/planning/okrs.md`
+- **Quarterly Roadmap: [Quarter Year]** — `templates/planning/quarterly-roadmap.md`
+- **Resource Request: [Initiative/Need]** — `templates/planning/resource-request.md`
+- **Risk Register: [Project/Product Area]** — `templates/planning/risk-register.md`
+- **Sprint Plan: Sprint [#] — [Date Range]** — `templates/planning/sprint-plan.md`
+- **Board Deck: [Quarter Year]** — `templates/presentations/board-deck.md`
+- **Launch Deck: [Feature/Product Name]** — `templates/presentations/launch-deck.md`
+- **QBR Deck: [Quarter Year]** — `templates/presentations/qbr-deck.md`
+- **Sales Deck: [Product Name]** — `templates/presentations/sales-deck.md`
+- **Strategy Deck: [Product/Area Name]** — `templates/presentations/strategy-deck.md`
+- **[Page Title]** — `templates/tools/confluence-page.md`
+- **Dashboard Spec: [Dashboard Name]** — `templates/tools/dashboard-spec.md`
+- **GitHub Issue: [Title]** — `templates/tools/github-issue.md`
+- **Jira Bug: [Bug Title]** — `templates/tools/jira-bug.md`
+- **Jira Epic: [Epic Name]** — `templates/tools/jira-epic.md`
+- **Jira Story: [Story Title]** — `templates/tools/jira-story.md`
+- **Linear Issue: [Title]** — `templates/tools/linear-issue.md`
+- **Tracking Plan: [Feature/Product Area]** — `templates/tools/tracking-plan.md`
+
+## Frameworks (107)
+
+- **Cohort Analysis** — `frameworks/analysis/cohort-analysis.md`
+- **Theory of Constraints (TOC)** — `frameworks/analysis/constraint-theory.md`
+- **First Principles Thinking** — `frameworks/analysis/first-principles.md`
+- **Inversion** — `frameworks/analysis/inversion.md`
+- **Pareto Analysis (80/20 Rule)** — `frameworks/analysis/pareto-analysis.md`
+- **Pre-Mortem** — `frameworks/analysis/pre-mortem.md`
+- **RFM Analysis** — `frameworks/analysis/rfm-analysis.md`
+- **Root Cause Analysis / Five Whys** — `frameworks/analysis/root-cause-five-whys.md`
+- **Second-Order Thinking** — `frameworks/analysis/second-order-thinking.md`
+- **SWOT Analysis** — `frameworks/analysis/swot.md`
+- **Unit Economics** — `frameworks/analysis/unit-economics.md`
+- **Narrative Memo (Amazon 6-Pager)** — `frameworks/communication/narrative-memo.md`
+- **Nonviolent Communication (NVC)** — `frameworks/communication/nonviolent-communication.md`
+- **Pyramid Principle** — `frameworks/communication/pyramid-principle.md`
+- **SCQA (Situation-Complication-Question-Answer)** — `frameworks/communication/scqa.md`
+- **Situation-Behavior-Impact (SBI)** — `frameworks/communication/situation-behavior-impact.md`
+- **SPADE Decision Communication** — `frameworks/communication/spade-decision.md`
+- **Stakeholder Influence** — `frameworks/communication/stakeholder-influence.md`
+- **Assumption Mapping** — `frameworks/discovery/assumption-mapping.md`
+- **Continuous Discovery Habits** — `frameworks/discovery/continuous-discovery.md`
+- **Customer Development** — `frameworks/discovery/customer-development.md`
+- **Design Thinking** — `frameworks/discovery/design-thinking.md`
+- **Dual-Track Agile** — `frameworks/discovery/dual-track-agile.md`
+- **Empathy Map** — `frameworks/discovery/empathy-map.md`
+- **Impact Mapping** — `frameworks/discovery/impact-mapping.md`
+- **Lean Experimentation** — `frameworks/discovery/lean-experimentation.md`
+- **Lean Startup** — `frameworks/discovery/lean-startup.md`
+- **Opportunity Solution Tree** — `frameworks/discovery/opportunity-solution-tree.md`
+- **Outcome-Driven Innovation (ODI)** — `frameworks/discovery/outcome-driven-innovation.md`
+- **PMF Survey (Sean Ellis Test)** — `frameworks/discovery/pmf-survey.md`
+- **Problem Interview** — `frameworks/discovery/problem-interview.md`
+- **Service Blueprint** — `frameworks/discovery/service-blueprint.md`
+- **User Story Mapping** — `frameworks/discovery/story-mapping.md`
+- **DACI Decision Framework** — `frameworks/execution/daci.md`
+- **Feature Factory Antidote** — `frameworks/execution/feature-factory-antidote.md`
+- **Kanban** — `frameworks/execution/kanban.md`
+- **North Star Framework** — `frameworks/execution/north-star-framework.md`
+- **OKRs (Objectives and Key Results)** — `frameworks/execution/okrs.md`
+- **Product Kata** — `frameworks/execution/product-kata.md`
+- **RACI Matrix** — `frameworks/execution/raci.md`
+- **SAFe (Scaled Agile Framework)** — `frameworks/execution/safe.md`
+- **Scrum** — `frameworks/execution/scrum.md`
+- **Shape Up** — `frameworks/execution/shape-up.md`
+- **SPADE Decision Framework** — `frameworks/execution/spade.md`
+- **Spotify Model** — `frameworks/execution/spotify-model.md`
+- **Team Topologies** — `frameworks/execution/team-topologies.md`
+- **Working Backwards** — `frameworks/execution/working-backwards.md`
+- **Activation Framework** — `frameworks/growth/activation-framework.md`
+- **Community-Led Growth (CLG)** — `frameworks/growth/community-led-growth.md`
+- **Expansion Revenue** — `frameworks/growth/expansion-revenue.md`
+- **Growth Loops** — `frameworks/growth/growth-loops.md`
+- **Hook Model** — `frameworks/growth/hook-model.md`
+- **JTBD for Growth** — `frameworks/growth/jobs-to-be-done-growth.md`
+- **Pirate Metrics (AARRR)** — `frameworks/growth/pirate-metrics-aarrr.md`
+- **Product-Led Growth (PLG)** — `frameworks/growth/product-led-growth.md`
+- **Product Qualified Leads (PQLs)** — `frameworks/growth/product-qualified-leads.md`
+- **Retention Framework** — `frameworks/growth/retention-framework.md`
+- **Sales-Led Growth (SLG)** — `frameworks/growth/sales-led-growth.md`
+- **Viral Loop Design** — `frameworks/growth/viral-loop-design.md`
+- **Bundle Economics** — `frameworks/pricing-packaging/bundle-economics.md`
+- **Competitive Pricing** — `frameworks/pricing-packaging/competitive-pricing.md`
+- **Conjoint Analysis** — `frameworks/pricing-packaging/conjoint-analysis.md`
+- **Cost-Plus Pricing** — `frameworks/pricing-packaging/cost-plus-pricing.md`
+- **Feature Gating** — `frameworks/pricing-packaging/feature-gating.md`
+- **Freemium Model** — `frameworks/pricing-packaging/freemium-model.md`
+- **Land and Expand** — `frameworks/pricing-packaging/land-and-expand.md`
+- **Penetration vs. Skimming Pricing** — `frameworks/pricing-packaging/penetration-vs-skimming.md`
+- **Per-Seat Pricing** — `frameworks/pricing-packaging/per-seat-pricing.md`
+- **Platform Pricing** — `frameworks/pricing-packaging/platform-pricing.md`
+- **Price Anchoring** — `frameworks/pricing-packaging/price-anchoring.md`
+- **Tiered Packaging (Good/Better/Best)** — `frameworks/pricing-packaging/tiered-packaging.md`
+- **Usage-Based Pricing** — `frameworks/pricing-packaging/usage-based-pricing.md`
+- **Value-Based Pricing** — `frameworks/pricing-packaging/value-based-pricing.md`
+- **Van Westendorp Price Sensitivity Meter** — `frameworks/pricing-packaging/van-westendorp.md`
+- **Buy a Feature** — `frameworks/prioritization/buy-a-feature.md`
+- **Cost of Delay** — `frameworks/prioritization/cost-of-delay.md`
+- **ICE Scoring** — `frameworks/prioritization/ice.md`
+- **Kano Model** — `frameworks/prioritization/kano.md`
+- **MoSCoW Prioritization** — `frameworks/prioritization/moscow.md`
+- **Opportunity Scoring** — `frameworks/prioritization/opportunity-scoring.md`
+- **RICE Scoring** — `frameworks/prioritization/rice.md`
+- **Stack Ranking** — `frameworks/prioritization/stack-ranking.md`
+- **Value-Effort Matrix** — `frameworks/prioritization/value-effort-matrix.md`
+- **Weighted Shortest Job First (WSJF)** — `frameworks/prioritization/wsjf.md`
+- **Minimum Lovable Product (MLP)** — `frameworks/product-market-fit/minimum-lovable-product.md`
+- **PMF Pyramid** — `frameworks/product-market-fit/pmf-pyramid.md`
+- **Retention Curves as PMF Signal** — `frameworks/product-market-fit/retention-curves.md`
+- **Sean Ellis Test** — `frameworks/product-market-fit/sean-ellis-test.md`
+- **Superhuman PMF Engine** — `frameworks/product-market-fit/superhuman-framework.md`
+- **Ansoff Matrix** — `frameworks/strategy/ansoff-matrix.md`
+- **BCG Growth-Share Matrix** — `frameworks/strategy/bcg-matrix.md`
+- **Blue Ocean Strategy** — `frameworks/strategy/blue-ocean.md`
+- **Business Model Canvas** — `frameworks/strategy/business-model-canvas.md`
+- **Crossing the Chasm** — `frameworks/strategy/crossing-the-chasm.md`
+- **Disruption Theory** — `frameworks/strategy/disruption-theory.md`
+- **Flywheel** — `frameworks/strategy/flywheel.md`
+- **Jobs to Be Done (JTBD)** — `frameworks/strategy/jobs-to-be-done.md`
+- **Lean Canvas** — `frameworks/strategy/lean-canvas.md`
+- **McKinsey 7-S Framework** — `frameworks/strategy/mckinsey-7s.md`
+- **Network Effects** — `frameworks/strategy/network-effects.md`
+- **PESTEL Analysis** — `frameworks/strategy/pestel.md`
+- **Porter's Five Forces** — `frameworks/strategy/porter-five-forces.md`
+- **Technology Adoption Lifecycle** — `frameworks/strategy/technology-adoption-lifecycle.md`
+- **Three Horizons** — `frameworks/strategy/three-horizons.md`
+- **Value Chain Analysis** — `frameworks/strategy/value-chain-analysis.md`
+- **Value Proposition Canvas** — `frameworks/strategy/value-proposition-canvas.md`
+- **Wardley Mapping** — `frameworks/strategy/wardley-mapping.md`

@@ -1,8 +1,11 @@
-"""Retrieval over the vendored Pro-PM skill library.
+# agent-notes: { ctx: "shared lexical retrieval over the Pro-PM skill library", deps: [app/shared/pm_skills/], state: active, last: "claude@2026-07-02" }
+"""Retrieval over the shared Pro-PM skill library (app/shared/pm_skills/).
 
-The PM agent can't fit 500+ skill files in one prompt, so per message we retrieve
-the few most relevant Pro-PM docs (skills / agents / playbooks / templates /
-frameworks) by lightweight lexical matching and load their full text into context.
+Lives in app/shared so multiple apps can use it — the PM agent (project 7) and
+the Product Discovery guide (project 1). No app can fit 500+ skill files in one
+prompt, so per request we retrieve the few most relevant docs (skills / agents /
+playbooks / templates / frameworks) by lightweight lexical matching and load
+their full text into context.
 
 No heavy deps — pure-Python keyword scoring so it runs on serverless.
 Source: https://github.com/rahulgoyal1001/Pro-PM (MIT).
@@ -12,7 +15,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-PPM = Path(__file__).resolve().parent / "pro_pm"
+PPM = Path(__file__).resolve().parent / "pm_skills"
 CATEGORIES = ["skills", "agents", "playbooks", "templates", "frameworks"]
 
 _TOKEN = re.compile(r"[a-z0-9]+")

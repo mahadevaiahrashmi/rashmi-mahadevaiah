@@ -16,7 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .. import llm
-from . import skills as skill_lib
+from ..shared import skills as skill_lib
 
 BASE = Path(__file__).resolve().parent
 
