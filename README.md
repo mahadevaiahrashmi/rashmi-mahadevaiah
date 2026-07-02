@@ -1,8 +1,12 @@
 # mahadevaiahrashmi.github.io
 
-Personal portfolio website for **Rashmi Mahadevaiah** — AI/ML Engineer & Product Leader.
+Personal portfolio website for **Rashmi Mahadevaiah** — AI/ML Engineer & Product Leader — with **seven embedded AI apps** you can launch from the Projects section.
 
-**Live:** https://mahadevaiahrashmi.github.io/
+**Live:** https://rashmi-mahadevaiah.vercel.app/
+
+**Embedded apps:** Product Discovery guide (`/product-discovery`), Personal Voice Skill (`/personal-voice`), Resume Tailor (`/resume-tailor`), Funded Companies / job agent (`/funded-companies`), Duolingo-style AI learning (`/learn-ai`), GTM with AI video (`/gtm-videos`), and a PM AI Agent (`/pm-agent`). See [`docs/`](docs/) for a PRD per app.
+
+> ▶️ **Run the whole thing locally:** see **[docs/running-locally.md](docs/running-locally.md)** — setup, env keys, and the one-command `vercel dev` flow.
 
 ## Tech Stack
 
@@ -13,18 +17,21 @@ Personal portfolio website for **Rashmi Mahadevaiah** — AI/ML Engineer & Produ
 - **Icons:** Lucide React
 - **Hosting:** GitHub Pages (deployed via GitHub Actions)
 
-## Preview Locally
+## Run locally
+
+**Full site (portfolio + all 7 embedded apps), exactly like production** — see the
+complete guide: **[docs/running-locally.md](docs/running-locally.md)**.
+
+Quick start for just the portfolio front end:
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server
-npm run dev
-
-# Open in browser
-open http://localhost:3000
+npm run dev        # http://localhost:5173
 ```
+
+To run the embedded apps too (they're a Python function), the guide covers the
+one-command `vercel dev` flow and the manual two-server setup, plus the `.env`
+keys each app uses (`cp .env.example .env`).
 
 ## Build for Production
 
