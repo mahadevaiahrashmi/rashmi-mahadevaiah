@@ -32,7 +32,7 @@ body {
 .topbar h1 { font-size: 1.6rem; margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .tagline { color: var(--muted); margin: 4px 0 0; font-size: 0.95rem; }
 .tagline em { color: var(--text); font-style: italic; }
-.back { color: #222222; text-decoration: none; font-size: 0.85rem; white-space: nowrap; opacity: 0.85; }
+.back { color: var(--accent); text-decoration: none; font-size: 0.85rem; white-space: nowrap; opacity: 0.85; }
 .back:hover { opacity: 1; }
 
 .layout {
