@@ -5,11 +5,10 @@ export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(() => {
     try {
       const savedTheme = localStorage.getItem("theme");
-      // Default to dark (the ramitphi-style navy + cyan theme) unless the user
-      // explicitly chose light before.
-      return savedTheme ? savedTheme === "dark" : true;
+      // Default to light (Airbnb is a light theme) unless the user chose dark.
+      return savedTheme === "dark";
     } catch {
-      return true;
+      return false;
     }
   });
 

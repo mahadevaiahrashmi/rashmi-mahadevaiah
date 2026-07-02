@@ -1,12 +1,12 @@
 :root {
-  --bg: #090e12;
-  --card: #11171c;
-  --card-2: #1d252d;
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #eff2f5;
-  --muted: #8f9aa4;
-  --accent: #00e0ea;
-  --accent-soft: rgba(0, 224, 234, 0.14);
+  --bg: #ffffff;
+  --card: #ffffff;
+  --card-2: #f7f7f7;
+  --border: #dddddd;
+  --text: #222222;
+  --muted: #717171;
+  --accent: #ff385c;
+  --accent-soft: rgba(255, 56, 92, 0.14);
   --good: #6bbf7b;
 }
 
@@ -32,7 +32,7 @@ body {
 }
 .topbar h1 { font-size: 1.6rem; margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .tagline { color: var(--muted); margin: 4px 0 0; font-size: 0.95rem; max-width: 60ch; }
-.back { color: #ffffff; text-decoration: none; font-size: 0.85rem; white-space: nowrap; opacity: 0.85; }
+.back { color: #222222; text-decoration: none; font-size: 0.85rem; white-space: nowrap; opacity: 0.85; }
 .back:hover { opacity: 1; }
 
 .wrap { max-width: 880px; margin: 18px auto 60px; padding: 0 20px; }
@@ -42,7 +42,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
 }
 label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.98rem; }
 .hint { color: var(--muted); font-size: 0.84rem; margin: 0 0 10px; }
@@ -50,7 +50,7 @@ label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.98rem
 textarea,
 input[type="text"] {
   width: 100%;
-  background: #0c0a07;
+  background: #f7f7f7;
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -78,7 +78,7 @@ input[type="text"]:focus { outline: none; border-color: var(--accent); }
 .chip:hover { color: var(--text); border-color: var(--accent); }
 
 .btn { border: none; border-radius: 11px; padding: 12px 20px; font: inherit; font-weight: 600; font-size: 0.92rem; cursor: pointer; transition: filter 0.12s, opacity 0.12s; }
-.btn.primary { background: var(--accent); color: #1a0f0a; width: 100%; margin-top: 14px; }
+.btn.primary { background: var(--accent); color: #ffffff; width: 100%; margin-top: 14px; }
 .btn.primary:hover { filter: brightness(1.08); }
 .btn:disabled { opacity: 0.5; cursor: default; }
 
