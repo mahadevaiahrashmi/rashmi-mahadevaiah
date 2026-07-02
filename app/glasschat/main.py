@@ -30,13 +30,15 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 # Models the learner may pick. Keys are OpenRouter model IDs (an allowlist so the
 # endpoint can't be used to run arbitrary/expensive models). Prices are only used
 # client-side to estimate cost; the allowlist is what matters here.
+# All FREE on OpenRouter (Mistral publishes no free models there, so we show a
+# curated set of free models from other makers — the demo costs $0).
 ALLOWED_MODELS = {
-    "openai/gpt-4o-mini",
-    "google/gemini-2.5-flash",
-    "anthropic/claude-haiku-4.5",
-    "anthropic/claude-sonnet-4.6",
+    "meta-llama/llama-3.3-70b-instruct:free",
+    "qwen/qwen3-next-80b-a3b-instruct:free",
+    "openai/gpt-oss-120b:free",
+    "google/gemma-4-31b-it:free",
 }
-DEFAULT_MODEL = "openai/gpt-4o-mini"
+DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
 
 MAX_MESSAGES = 40
 MAX_CONTENT = 8000

@@ -11,11 +11,13 @@ const ROOT = window.APP_ROOT || "";
 // ─────────────────────────── Model catalog + cost math ───────────────────────────
 // `in`/`out` are US dollars per 1,000,000 tokens (OpenRouter list prices, approx).
 // Used only to ESTIMATE cost for learning — a real bill is whatever you're charged.
+// All FREE models on OpenRouter (price 0). Mistral has no free models there, so
+// this is a curated free set from other makers — every reply costs $0.
 const MODELS = [
-  { id: "openai/gpt-4o-mini", label: "GPT-4o mini", blurb: "Cheapest & capable default.", price: { in: 0.15, out: 0.6 } },
-  { id: "google/gemini-2.5-flash", label: "Gemini 2.5 Flash", blurb: "Fast, low cost.", price: { in: 0.3, out: 2.5 } },
-  { id: "anthropic/claude-haiku-4.5", label: "Claude Haiku 4.5", blurb: "Fast Claude, mid price.", price: { in: 1.0, out: 5.0 } },
-  { id: "anthropic/claude-sonnet-4.6", label: "Claude Sonnet 4.6", blurb: "Most capable here, priciest.", price: { in: 3.0, out: 15.0 } },
+  { id: "meta-llama/llama-3.3-70b-instruct:free", label: "Llama 3.3 70B (free)", blurb: "Meta's strong open model.", price: { in: 0, out: 0 } },
+  { id: "qwen/qwen3-next-80b-a3b-instruct:free", label: "Qwen3 Next 80B (free)", blurb: "Alibaba's capable open model.", price: { in: 0, out: 0 } },
+  { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's open-weight model.", price: { in: 0, out: 0 } },
+  { id: "google/gemma-4-31b-it:free", label: "Gemma 4 31B (free)", blurb: "Google's open model.", price: { in: 0, out: 0 } },
 ];
 function getModel(id) { return MODELS.find((m) => m.id === id) || MODELS[0]; }
 function costOf(model, promptTokens = 0, completionTokens = 0) {
@@ -85,7 +87,7 @@ const TAGS = ["A", "B", "C", "D"];
 const MODEL_ROTATION = MODELS.map((m) => m.id);
 const state = {
   password: "",
-  panels: [makePanel("openai/gpt-4o-mini"), makePanel("anthropic/claude-sonnet-4.6")],
+  panels: [makePanel("meta-llama/llama-3.3-70b-instruct:free"), makePanel("openai/gpt-oss-120b:free")],
 };
 const activePanels = () => state.panels.map((_, i) => i);
 const anyBusy = () => state.panels.some((p) => p.busy);
