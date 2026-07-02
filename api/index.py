@@ -37,6 +37,7 @@ from app.funded.main import app as funded_app  # noqa: E402
 from app.learn.main import app as learn_app  # noqa: E402
 from app.gtm.main import app as gtm_app  # noqa: E402
 from app.pm.main import app as pm_app  # noqa: E402
+from app.explainer.main import app as explainer_app  # noqa: E402
 
 app = FastAPI()
 _MOUNTS = {
@@ -47,6 +48,7 @@ _MOUNTS = {
     "learn-ai": learn_app,
     "gtm-videos": gtm_app,
     "pm-agent": pm_app,
+    "explainer-bot": explainer_app,
 }
 for _prefix, _sub in _MOUNTS.items():
     app.mount("/" + _prefix, _sub)

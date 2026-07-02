@@ -27,6 +27,8 @@
     { "source": "/gtm-videos/(.*)", "destination": "/api/index" },
     { "source": "/pm-agent", "destination": "/api/index" },
     { "source": "/pm-agent/(.*)", "destination": "/api/index" },
+    { "source": "/explainer-bot", "destination": "/api/index" },
+    { "source": "/explainer-bot/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

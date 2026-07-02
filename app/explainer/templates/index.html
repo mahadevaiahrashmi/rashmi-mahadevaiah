@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narrated Explainer Video Bot</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Narrated Explainer Video Bot</h1>
+      <p class="tagline">Turn rough points into a 3Blue1Brown-style script and slides — then record the narration in your own voice.</p>
+    </div>
+    <a class="back" href="/#projects">&larr; Back to portfolio</a>
+  </header>
+
+  <main class="wrap">
+    <form id="form" class="card form">
+      <label class="fld">
+        <span>What do you want to explain?</span>
+        <input id="topic" type="text" placeholder="e.g. How does backpropagation actually work?" required />
+      </label>
+      <label class="fld">
+        <span>Rough points <em>(optional — bullet the ideas you want covered)</em></span>
+        <textarea id="points" rows="4" placeholder="- it's just the chain rule&#10;- errors flow backward through the layers&#10;- each weight learns how much it contributed"></textarea>
+      </label>
+      <button class="btn" id="go" type="submit">Write my script &amp; slides →</button>
+      <p class="note">The script, critique, and one HTML slide per segment are generated here. Recording your voice and stitching the final MP4 happen on your machine — see the <a href="https://github.com/mahadevaiahrashmi/explainer-bot" target="_blank" rel="noopener noreferrer">explainer-bot repo</a> for that last step.</p>
+    </form>
+
+    <div id="status" class="status" hidden></div>
+
+    <section id="result" hidden>
+      <div class="card aesthetic" id="aesthetic"></div>
+      <div class="card critique" id="critique"></div>
+
+      <div class="seg-head">
+        <h2>Slides</h2>
+        <button class="ghost" id="dl-script" type="button">⬇ Download script.txt</button>
+      </div>
+      <div id="segments" class="segments"></div>
+    </section>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/app.js"></script>
+</body>
+</html>

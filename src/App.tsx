@@ -34,6 +34,7 @@ const LEARN_AI_URL = "/learn-ai";
 const GTM_URL = "/gtm-videos";
 const PM_AGENT_URL = "/pm-agent";
 const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
+const EXPLAINER_URL = "/explainer-bot";
 const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 
 // The projects. `live` = a clickable card that opens the running app in a new
@@ -93,8 +94,9 @@ const projects = [
   {
     title: "Narrated Explainer Video Bot",
     description:
-      "Turn rough bullet points into a 3Blue1Brown-style explainer video, narrated in your own voice. The bot writes and critiques the script, designs one HTML slide per segment, and assembles a cue video — then you record audio over it to produce the final MP4. Runs from a web or terminal UI on your Claude Code subscription, a local Ollama model, or any LLM provider.",
+      "Turn rough bullet points into a 3Blue1Brown-style explainer video. The studio picks an aesthetic, writes and critiques a script broken into slide segments, and designs a self-contained HTML slide for each — previewed live, ready to download. You then record the narration in your own voice and stitch the final MP4 locally (see the repo).",
     tags: ["Python", "Generative AI", "Video"],
+    live: EXPLAINER_URL,
     repo: EXPLAINER_BOT_URL,
     repoLabel: "GitHub repo",
   },
