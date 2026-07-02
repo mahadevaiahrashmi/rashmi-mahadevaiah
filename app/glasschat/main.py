@@ -33,13 +33,16 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 # client-side to estimate cost; the allowlist is what matters here.
 # All FREE on OpenRouter (Mistral publishes no free models there, so we show a
 # curated set of free models from other makers — the demo costs $0).
-ALLOWED_MODELS = {
-    "openai/gpt-oss-120b:free",
+# Ordered by observed reliability — used both as the dropdown allowlist and as
+# the fallback order when a picked free model is rate-limited.
+MODELS_ORDER = [
     "openai/gpt-oss-20b:free",
     "google/gemma-4-31b-it:free",
+    "openai/gpt-oss-120b:free",
     "liquid/lfm-2.5-1.2b-instruct:free",
-}
-DEFAULT_MODEL = "openai/gpt-oss-120b:free"
+]
+ALLOWED_MODELS = set(MODELS_ORDER)
+DEFAULT_MODEL = "openai/gpt-oss-20b:free"
 
 MAX_MESSAGES = 40
 MAX_CONTENT = 8000
@@ -91,45 +94,50 @@ async def chat(request: Request):
             status_code=503,
         )
 
-    try:
-        # Free models share upstream rate limits and 429 intermittently; retry a
-        # few times with a short backoff so transient limits self-heal.
+    # Free models share upstream rate limits and 429 intermittently. Try the
+    # picked model (with a couple of quick retries), and if it stays busy, fall
+    # back to the other free models so the learner still gets an answer ($0).
+    # We report the model that actually replied so the inspector stays accurate.
+    async def _try(client, cand, tries):
         r = None
+        for attempt in range(tries):
+            r = await client.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                json={"model": cand, "messages": messages, "max_tokens": MAX_TOKENS},
+            )
+            if r.status_code != 429:
+                break
+            if attempt < tries - 1:
+                await asyncio.sleep(1.0 * (attempt + 1))
+        return r
+
+    order = [model] + [m for m in MODELS_ORDER if m != model]
+    try:
+        used, reply, usage = None, "", None
         async with httpx.AsyncClient(timeout=55) as client:
-            for attempt in range(3):
-                r = await client.post(
-                    "https://openrouter.ai/api/v1/chat/completions",
-                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                    json={"model": model, "messages": messages, "max_tokens": MAX_TOKENS},
-                )
-                if r.status_code != 429:
-                    break
-                if attempt < 2:
-                    await asyncio.sleep(1.2 * (attempt + 1))
-        if r.status_code == 429:
-            return JSONResponse(
-                {"error": "This free model is busy right now (rate-limited). Try again in a moment, or pick another model."},
-                status_code=429,
-            )
-        if r.status_code >= 400:
-            return JSONResponse(
-                {"error": f"The model provider returned an error (HTTP {r.status_code})."},
-                status_code=502,
-            )
-        data = r.json()
-        reply = (data["choices"][0]["message"]["content"] or "").strip()
-        u = data.get("usage") or {}
-        usage = {
-            "prompt_tokens": int(u.get("prompt_tokens", 0)),
-            "completion_tokens": int(u.get("completion_tokens", 0)),
-            "total_tokens": int(u.get("total_tokens", 0)),
-        }
-        if not reply:
-            return JSONResponse(
-                {"error": "This model didn't return any text this time — try again or pick another model."},
-                status_code=502,
-            )
+            for idx, cand in enumerate(order):
+                r = await _try(client, cand, tries=(2 if idx == 0 else 1))
+                if r.status_code != 200:
+                    continue
+                data = r.json()
+                text = (data["choices"][0]["message"]["content"] or "").strip()
+                if not text:
+                    continue
+                u = data.get("usage") or {}
+                used, reply = cand, text
+                usage = {
+                    "prompt_tokens": int(u.get("prompt_tokens", 0)),
+                    "completion_tokens": int(u.get("completion_tokens", 0)),
+                    "total_tokens": int(u.get("total_tokens", 0)),
+                }
+                break
     except (httpx.HTTPError, KeyError, IndexError, ValueError, TypeError):
         return JSONResponse({"error": "Couldn't reach the model — please try again."}, status_code=502)
 
-    return {"reply": reply, "usage": usage, "model": model}
+    if used is None:
+        return JSONResponse(
+            {"error": "All the free models are busy right now (rate-limited). Give it a moment and try again."},
+            status_code=429,
+        )
+    return {"reply": reply, "usage": usage, "model": used, "fell_back": used != model}

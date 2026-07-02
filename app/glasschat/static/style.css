@@ -791,3 +791,6 @@ textarea:focus {
   white-space: nowrap;
 }
 .back-link:hover { color: var(--text); border-color: var(--accent); }
+
+/* Shown when a picked free model was rate-limited and another free model answered */
+.fell-back { color: var(--warn); font-size: 11px; }

@@ -14,9 +14,9 @@ const ROOT = window.APP_ROOT || "";
 // All FREE models on OpenRouter (price 0). Mistral has no free models there, so
 // this is a curated free set from other makers — every reply costs $0.
 const MODELS = [
-  { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's open-weight model — largest here.", price: { in: 0, out: 0 } },
-  { id: "openai/gpt-oss-20b:free", label: "GPT-OSS 20B (free)", blurb: "OpenAI's smaller open model.", price: { in: 0, out: 0 } },
+  { id: "openai/gpt-oss-20b:free", label: "GPT-OSS 20B (free)", blurb: "OpenAI's open model — reliable.", price: { in: 0, out: 0 } },
   { id: "google/gemma-4-31b-it:free", label: "Gemma 4 31B (free)", blurb: "Google's open model.", price: { in: 0, out: 0 } },
+  { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's largest open model here.", price: { in: 0, out: 0 } },
   { id: "liquid/lfm-2.5-1.2b-instruct:free", label: "Liquid LFM 1.2B (free)", blurb: "Tiny 1.2B — great size contrast.", price: { in: 0, out: 0 } },
 ];
 function getModel(id) { return MODELS.find((m) => m.id === id) || MODELS[0]; }
@@ -87,7 +87,7 @@ const TAGS = ["A", "B", "C", "D"];
 const MODEL_ROTATION = MODELS.map((m) => m.id);
 const state = {
   password: "",
-  panels: [makePanel("openai/gpt-oss-120b:free"), makePanel("google/gemma-4-31b-it:free")],
+  panels: [makePanel("openai/gpt-oss-20b:free"), makePanel("google/gemma-4-31b-it:free")],
 };
 const activePanels = () => state.panels.map((_, i) => i);
 const anyBusy = () => state.panels.some((p) => p.busy);
@@ -318,6 +318,12 @@ function renderMessage(msg, panelIndex, msgIndex) {
     }
     eye.addEventListener("click", () => openInspector(panelIndex, msgIndex));
     foot.appendChild(eye);
+    if (msg.note) {
+      const n = document.createElement("span");
+      n.className = "fell-back";
+      n.textContent = msg.note;
+      foot.appendChild(n);
+    }
   }
   return node;
 }
@@ -368,10 +374,11 @@ async function sendToPanel(i, text) {
   renderPanelStream(i);
 
   try {
-    const { reply, usage, model } = await sendChat({ password: state.password, model: p.model, messages: sentContext });
+    const { reply, usage, model, fell_back } = await sendChat({ password: state.password, model: p.model, messages: sentContext });
     pending.pending = false;
     pending.content = reply;
     pending.meta = { sentContext, usage, model, memory: p.memory };
+    if (fell_back) pending.note = `↳ your pick was busy — answered by ${getModel(model).label}`;
     if (usage) {
       const m = getModel(model);
       const cost = costOf(m, usage.prompt_tokens, usage.completion_tokens);
