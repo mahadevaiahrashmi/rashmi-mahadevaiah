@@ -26,7 +26,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from ..providers import ProviderError, get_provider
+from .. import llm
 
 BASE = Path(__file__).resolve().parent
 
@@ -34,16 +34,7 @@ app = FastAPI(title="GTM with AI Video")
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
 
-# ---- Plan (OpenRouter text) ----
-HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
-MODELS = [
-    m.strip()
-    for m in os.environ.get(
-        "OPENROUTER_MODELS",
-        "deepseek/deepseek-chat,meta-llama/llama-3.3-70b-instruct:free",
-    ).split(",")
-    if m.strip()
-]
+# ---- Plan (any configured LLM provider) ----
 MAX_FIELD = 1200
 
 # ---- Video (Google Veo via Gemini API) ----
@@ -126,16 +117,12 @@ def build_plan(product, audience, channel, angle):
         f"EXTRA ANGLE / GOAL: {(angle.strip()[:MAX_FIELD] or 'none')}\n\n"
         "Design the full GTM plan now."
     )
-    if not HAS_OPENROUTER:
+    if not llm.available():
         return None, "The strategist is unavailable right now (no model configured). Please try again shortly."
-    for model in MODELS:
-        try:
-            text = get_provider("openrouter", model).generate(f"{SYSTEM}\n\n{prompt}")
-            plan = extract_json_object(text)
-            if plan:
-                return plan, None
-        except ProviderError:
-            continue
+    text = llm.complete(prompt, system=SYSTEM)
+    plan = extract_json_object(text) if text else None
+    if plan:
+        return plan, None
     return None, "The AI strategist is busy right now. Please try again shortly."
 
 

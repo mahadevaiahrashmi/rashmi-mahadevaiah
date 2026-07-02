@@ -8,31 +8,20 @@ server-side.
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 
-import httpx
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from .. import llm
 
 BASE = Path(__file__).resolve().parent
 
 app = FastAPI(title="PM AI Agent")
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
-
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
-API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
-MODELS = [
-    m.strip()
-    for m in os.environ.get(
-        "OPENROUTER_MODELS",
-        "deepseek/deepseek-chat,meta-llama/llama-3.3-70b-instruct:free",
-    ).split(",")
-    if m.strip()
-]
 
 MAX_TURNS = 16          # cap history we forward
 MAX_CONTENT = 6000      # cap each message's length
@@ -67,26 +56,6 @@ def _clean_history(raw: str):
     return out
 
 
-def _chat(messages):
-    payload = {"model": None, "messages": [{"role": "system", "content": SYSTEM}] + messages, "max_tokens": 1400}
-    headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json", "X-Title": "PM AI Agent"}
-    for model in MODELS:
-        payload["model"] = model
-        try:
-            r = httpx.post(API_URL, headers=headers, json=payload, timeout=55)
-        except httpx.HTTPError:
-            continue
-        if r.status_code != 200:
-            continue
-        try:
-            content = r.json()["choices"][0]["message"]["content"]
-        except (ValueError, KeyError, IndexError, TypeError):
-            continue
-        if content and content.strip():
-            return content.strip()
-    return None
-
-
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse(
@@ -96,12 +65,12 @@ def index(request: Request):
 
 @app.post("/chat")
 def chat(messages: str = Form(...)):
-    if not API_KEY:
+    if not llm.available():
         return {"ok": False, "error": "The PM agent is unavailable right now (no model configured). Please try again shortly."}
     history = _clean_history(messages)
     if not history or history[-1]["role"] != "user":
         return {"ok": False, "error": "Say something to the PM agent to get started."}
-    reply = _chat(history)
+    reply = llm.chat(history, system=SYSTEM, max_tokens=1400)
     if reply is None:
         return {"ok": False, "error": "The PM agent is busy right now. Please try again in a moment."}
     return {"ok": True, "reply": reply}

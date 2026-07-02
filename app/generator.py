@@ -10,6 +10,7 @@ import re
 
 from pydantic import ValidationError
 
+from . import llm
 from .prompts import build_prompt
 from .providers import ProviderError, get_provider
 from .schema import TailoredDocs
@@ -119,28 +120,34 @@ def generate_documents(
     jd: str,
     resume: str,
     instructions: str = "",
-    provider_name: str = "mock",
+    provider_name: str = "llm",
     model: str | None = None,
     retries: int = 1,
 ) -> TailoredDocs:
+    """Build the prompt, get model output, and parse into TailoredDocs.
+
+    provider_name="mock" uses the offline layout preview; anything else routes
+    through the configured LLM provider (OpenRouter / OpenAI / Anthropic / Gemini).
+    """
     if not jd.strip():
         raise GenerationError("Job description is empty.")
     if not resume.strip():
         raise GenerationError("Resume is empty.")
-
-    provider = get_provider(provider_name, model)
-    if not provider.is_available():
-        raise GenerationError(provider.setup_hint() or f"Provider '{provider_name}' is unavailable.")
 
     prompt = build_prompt(jd, resume, instructions)
     last_err: GenerationError | None = None
     for attempt in range(retries + 1):
         # On a retry, append a firm reminder to emit clean JSON.
         attempt_prompt = prompt if attempt == 0 else prompt + _RETRY_SUFFIX
-        try:
-            raw = provider.generate(attempt_prompt)
-        except ProviderError as exc:
-            raise GenerationError(str(exc)) from exc
+        if provider_name == "mock":
+            try:
+                raw = get_provider("mock").generate(attempt_prompt)
+            except ProviderError as exc:
+                raise GenerationError(str(exc)) from exc
+        else:
+            raw = llm.complete(attempt_prompt, max_tokens=2000)
+            if not raw:
+                raise GenerationError("No AI provider is available or the model errored.")
         try:
             return parse_docs(raw)
         except GenerationError as exc:

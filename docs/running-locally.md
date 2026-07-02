@@ -122,17 +122,38 @@ npm run lint        # ESLint
 
 ---
 
+## Choosing your AI provider
+
+The text apps (Resume Tailor, Personal Voice, Funded Agent, GTM plan, PM Agent)
+run on **any one** of four providers. Set the key for the one you want; the app
+auto-detects it. To force a choice, set `LLM_PROVIDER`.
+
+| `LLM_PROVIDER` | Key needed | Default model (override with…) |
+|---|---|---|
+| `openrouter` *(default)* | `OPENROUTER_API_KEY` | `deepseek/deepseek-chat` (`OPENROUTER_MODELS`) |
+| `openai` | `OPENAI_API_KEY` | `gpt-4o-mini` (`OPENAI_MODEL`) |
+| `anthropic` | `ANTHROPIC_API_KEY` | `claude-haiku-4-5-20251001` (`ANTHROPIC_MODEL`) |
+| `gemini` | `GEMINI_API_KEY` | `gemini-2.5-flash` (`GEMINI_TEXT_MODEL`) — **free tier works** |
+
+If `LLM_PROVIDER` is unset, the first key present wins, in this order:
+openrouter → anthropic → openai → gemini. **Note:** the Funded Companies Agent's
+*live web search* only works on OpenRouter; other providers answer from model
+knowledge (flagged as not-live).
+
 ## Environment variables reference
 
 | Variable | Used by | Required? | Where to get it |
 |----------|---------|-----------|-----------------|
-| `OPENROUTER_API_KEY` | Resume Tailor, Personal Voice, Funded Agent, GTM plan, PM Agent | Optional (apps degrade without it) | [openrouter.ai/keys](https://openrouter.ai/keys) |
-| `OPENROUTER_MODELS` | ↑ same | Optional | comma-separated model order; default `deepseek/deepseek-chat,…:free` |
-| `GEMINI_API_KEY` | `/gtm-videos` Veo generation | Optional (paid; billing required) | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
-| `GEMINI_VEO_MODEL` | `/gtm-videos` | Optional | default `veo-3.1-fast-generate-preview` |
-| `VEO_PASSCODE` | `/gtm-videos` | Optional | any string; gates the paid button |
-| `POSTHOG_KEY` | `/learn-ai` analytics | Optional | PostHog → Settings → Project API Key |
-| `POSTHOG_HOST` | `/learn-ai` analytics | Optional | `https://us.i.posthog.com` (US) or `…eu…` |
+| `LLM_PROVIDER` | all text apps | Optional | `openrouter` / `openai` / `anthropic` / `gemini` |
+| `OPENROUTER_API_KEY` | text apps + Funded web search | Optional | [openrouter.ai/keys](https://openrouter.ai/keys) |
+| `OPENROUTER_MODELS` | OpenRouter | Optional | comma-separated model order |
+| `OPENAI_API_KEY` / `OPENAI_MODEL` | text apps (OpenAI) | Optional | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
+| `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL` | text apps (Claude) | Optional | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+| `GEMINI_API_KEY` | text (free) **and** Veo video | Optional | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+| `GEMINI_TEXT_MODEL` | text via Gemini | Optional | default `gemini-2.5-flash` |
+| `GEMINI_VEO_MODEL` | `/gtm-videos` Veo (needs billing) | Optional | default `veo-3.1-fast-generate-preview` |
+| `VEO_PASSCODE` | `/gtm-videos` | Optional | any string; gates the paid Veo button |
+| `POSTHOG_KEY` / `POSTHOG_HOST` | `/learn-ai` analytics | Optional | PostHog → Settings → Project API Key |
 
 On **Vercel**, set these in **Project → Settings → Environment Variables** (not via
 `.env`), then redeploy for changes to take effect.

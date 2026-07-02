@@ -21,6 +21,7 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from . import llm
 from .generator import GenerationError, generate_documents
 from .providers import list_providers
 from .render_docx import render_cover_letter_docx, render_resume_docx
@@ -46,35 +47,15 @@ GEN.mkdir(parents=True, exist_ok=True)
 # hand the browser inline base64 data: URLs so downloads need no second request.
 INLINE_DOWNLOADS = ON_VERCEL
 
-# The UI has no engine picker: the server decides. With an OpenRouter key we try
-# these models in order and fail over to the next, finally to the offline Mock
-# preview, so the page never hard-fails. The first is a cheap PAID model with
-# dedicated capacity (reliable); the free ones are shared backups (often 429).
-HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
-
-FREE_MODELS = [
-    m.strip()
-    for m in os.environ.get(
-        "OPENROUTER_MODELS",
-        "deepseek/deepseek-chat,"                      # paid, ~cents/run, reliable
-        "meta-llama/llama-3.3-70b-instruct:free,"      # free backup
-        "openai/gpt-oss-120b:free",                    # free backup
-    ).split(",")
-    if m.strip()
-]
-
-
 def tailor(jd: str, resume: str, instructions: str):
-    """Return (docs, engine_label). Try free models in order, else Mock."""
-    errors = []
-    if HAS_OPENROUTER:
-        for model in FREE_MODELS:
-            try:
-                return generate_documents(jd, resume, instructions, "openrouter", model), model
-            except GenerationError as exc:
-                errors.append(f"{model}: {exc}")
+    """Return (docs, engine_label). Use the configured LLM, else offline Mock."""
+    if llm.available():
+        try:
+            return generate_documents(jd, resume, instructions, "llm"), llm.label()
+        except GenerationError:
+            pass  # model errored/unparseable — fall through to the offline preview
     # Offline fallback — always available, so the user still gets a document.
-    return generate_documents(jd, resume, instructions, "mock", None), "mock (offline preview)"
+    return generate_documents(jd, resume, instructions, "mock"), "mock (offline preview)"
 
 # Generated output accumulates one dir per run; sweep dirs older than this on each
 # request. Set GENERATED_TTL_HOURS=0 to disable cleanup and keep everything.

@@ -7,7 +7,6 @@ needs a model, so when none is available we say so plainly rather than faking it
 """
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
@@ -15,23 +14,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from ..providers import ProviderError, get_provider
+from .. import llm
 
 BASE = Path(__file__).resolve().parent
 
 app = FastAPI(title="Personal Voice Skill")
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
-
-HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
-MODELS = [
-    m.strip()
-    for m in os.environ.get(
-        "OPENROUTER_MODELS",
-        "deepseek/deepseek-chat,meta-llama/llama-3.3-70b-instruct:free",
-    ).split(",")
-    if m.strip()
-]
 
 KINDS = {
     "reply": "a reply",
@@ -58,8 +47,7 @@ MAX_FIELD = 4000
 def _draft(samples: str, kind: str, context: str, instruction: str, refine: str, previous: str) -> str | None:
     kind_label = KINDS.get(kind, "a piece of writing")
     parts = [
-        SYSTEM,
-        "\n\n=== WRITING SAMPLES (their voice) ===\n" + samples.strip()[:MAX_SAMPLES],
+        "=== WRITING SAMPLES (their voice) ===\n" + samples.strip()[:MAX_SAMPLES],
         f"\n\n=== TASK ===\nWrite {kind_label}.",
     ]
     if context.strip():
@@ -77,16 +65,7 @@ def _draft(samples: str, kind: str, context: str, instruction: str, refine: str,
         "\n\nOutput ONLY the finished text itself — no preamble, no explanation, "
         "no dividers, no surrounding quotes. Write it now:"
     )
-
-    if HAS_OPENROUTER:
-        for model in MODELS:
-            try:
-                text = get_provider("openrouter", model).generate(prompt)
-                if text and text.strip():
-                    return text.strip()
-            except ProviderError:
-                continue
-    return None
+    return llm.complete(prompt, system=SYSTEM)
 
 
 @app.get("/", response_class=HTMLResponse)

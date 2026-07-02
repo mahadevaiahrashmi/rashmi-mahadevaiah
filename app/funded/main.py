@@ -28,8 +28,10 @@ app = FastAPI(title="Funded Companies Agent")
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
 
+from .. import llm
+
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+API_KEY = os.environ.get("OPENROUTER_API_KEY", "")  # web-search grounding is OpenRouter-only
 MODEL = os.environ.get("FUNDED_MODEL", "deepseek/deepseek-chat")
 MAX_BG = 2500
 MAX_PREF = 400
@@ -123,30 +125,29 @@ def find_openings(background: str, prefs: str):
         + (prefs.strip()[:MAX_PREF] or "open") + "\n\n"
         "Find startups funded in the last ~7 days and propose this candidate's way in for each."
     )
-    if not API_KEY:
-        return None, {"error": "The agent is unavailable (no model configured). Add an OpenRouter API key to enable it."}
+    if not API_KEY and not llm.available():
+        return None, {"error": "The agent is unavailable (no model configured). Add an OpenRouter / OpenAI / Anthropic / Gemini key to enable it."}
 
-    # 1) Preferred: web-grounded search of last week's fundings.
-    try:
-        content, had_sources = _chat(prompt, use_web=True)
-        openings = extract_json_array(content)
-        if openings:
-            return openings, {"sourced": True, "live": had_sources}
-    except httpx.HTTPError:
-        pass
+    # 1) Preferred: live web-grounded search (OpenRouter web plugin only).
+    if API_KEY:
+        try:
+            content, had_sources = _chat(prompt, use_web=True)
+            openings = extract_json_array(content)
+            if openings:
+                return openings, {"sourced": True, "live": had_sources}
+        except httpx.HTTPError:
+            pass
 
-    # 2) Fallback: model knowledge only — clearly flagged as not live.
-    try:
-        content, _ = _chat(
-            prompt + "\n\n(Web search is unavailable; use only companies you reliably know raised funding recently, and keep the list short.)",
-            use_web=False,
-        )
-        openings = extract_json_array(content)
-        if openings:
-            return openings, {"sourced": False, "live": False}
-        return None, {"error": "The agent couldn't produce a clean result this time. Try again in a moment."}
-    except httpx.HTTPError:
-        return None, {"error": "The AI agent is unavailable right now (model error). Please try again shortly."}
+    # 2) Fallback: any configured LLM from its own knowledge — flagged as not live.
+    text = llm.complete(
+        prompt + "\n\n(No live web search available; use only companies you reliably know raised funding recently, and keep the list short.)",
+        system=SYSTEM,
+        max_tokens=2200,
+    )
+    openings = extract_json_array(text) if text else None
+    if openings:
+        return openings, {"sourced": False, "live": False}
+    return None, {"error": "The AI agent is unavailable or busy right now. Please try again shortly."}
 
 
 @app.get("/", response_class=HTMLResponse)

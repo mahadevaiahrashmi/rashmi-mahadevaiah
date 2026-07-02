@@ -8,7 +8,6 @@ fallback message if the model is unavailable).
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
@@ -16,24 +15,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from ..providers import ProviderError, get_provider
 from .content import MODULES, MODULE_IDS
+from .. import llm
 
 BASE = Path(__file__).resolve().parent
 
 app = FastAPI(title="Product Discovery Guide")
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
-
-HAS_OPENROUTER = bool(os.environ.get("OPENROUTER_API_KEY"))
-COACH_MODELS = [
-    m.strip()
-    for m in os.environ.get(
-        "OPENROUTER_MODELS",
-        "deepseek/deepseek-chat,meta-llama/llama-3.3-70b-instruct:free",
-    ).split(",")
-    if m.strip()
-]
 
 _MODULES_BY_ID = {m["id"]: m for m in MODULES}
 
@@ -49,21 +38,12 @@ SYSTEM = (
 def _coach(module: dict, answer: str) -> str | None:
     """Ask the model for feedback; return None if no engine is available."""
     prompt = (
-        f"{SYSTEM}\n\n"
         f"Lesson: {module['title']}\n"
         f"What to look for: {module['coach_focus']}\n"
         f"The learner's practice answer:\n\"\"\"\n{answer.strip()}\n\"\"\"\n\n"
         "Give your feedback now."
     )
-    if HAS_OPENROUTER:
-        for model in COACH_MODELS:
-            try:
-                text = get_provider("openrouter", model).generate(prompt)
-                if text and text.strip():
-                    return text.strip()
-            except ProviderError:
-                continue
-    return None
+    return llm.complete(prompt, system=SYSTEM, max_tokens=400)
 
 
 @app.get("/", response_class=HTMLResponse)
