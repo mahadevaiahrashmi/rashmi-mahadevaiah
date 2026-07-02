@@ -36,6 +36,7 @@ const PM_AGENT_URL = "/pm-agent";
 const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
 const EXPLAINER_URL = "/explainer-bot";
 const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
+const GLASSCHAT_URL = "/glass-chat";
 
 // The projects. `live` = a clickable card that opens the running app in a new
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
@@ -99,6 +100,13 @@ const projects = [
     live: EXPLAINER_URL,
     repo: EXPLAINER_BOT_URL,
     repoLabel: "GitHub repo",
+  },
+  {
+    title: "GlassChat — See How an LLM Works",
+    description:
+      "A see-through LLM chat built for learning. Toggle memory on/off and watch the context grow or shrink; click the 👁 on any reply to see exactly what was sent, the real token counts, and the tentative cost. Compare up to 4 models side by side — one prompt, four windows — to feel how price and quality differ. Password-gated for cost control.",
+    tags: ["LLMs", "Tokens & Cost", "Interactive"],
+    live: GLASSCHAT_URL,
   },
 ];
 
