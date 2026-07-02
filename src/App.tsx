@@ -33,6 +33,7 @@ const FUNDED_AGENT_URL = "/funded-companies";
 const LEARN_AI_URL = "/learn-ai";
 const GTM_URL = "/gtm-videos";
 const PM_AGENT_URL = "/pm-agent";
+const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
 
 // The 7 projects. `live` = a clickable card that opens the running app in a new
 // tab; projects without `live` render as "Coming soon" placeholders.
@@ -82,9 +83,11 @@ const projects = [
   {
     title: "Your Own PM AI Agent",
     description:
-      "A conversational Product Manager co-pilot — chat to draft PRDs, break features into user stories, prioritize a backlog with RICE, sketch a roadmap, and pressure-test ideas. Keeps context across the conversation.",
-    tags: ["Agentic AI", "Product", "LLMs"],
+      "A conversational Product Manager co-pilot — chat to draft PRDs, break features into user stories, prioritize a backlog with RICE, sketch a roadmap, and pressure-test ideas. Shipped two ways: a live web agent, and a Product-Manager skill in a fork of OpenClaw (the open-source personal AI assistant).",
+    tags: ["Agentic AI", "Product", "OpenClaw"],
     live: PM_AGENT_URL,
+    repo: OPENCLAW_FORK_URL,
+    repoLabel: "OpenClaw fork",
   },
 ];
 
@@ -382,21 +385,47 @@ function HomePage() {
             {projects.map((project, idx) => {
               const cardClass =
                 "group flex flex-col h-full border border-anthropic-text/10 rounded-2xl p-8 transition-colors";
+              // Cards with a `repo` render explicit links (Launch + source) instead
+              // of one big card-anchor, so the two links don't nest illegally.
+              const hasRepo = Boolean(project.live && project.repo);
+              const actions = project.live ? (
+                hasRepo ? (
+                  <div className="flex-shrink-0 flex items-center gap-4">
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 hover:opacity-100 transition-opacity"
+                    >
+                      Launch <ExternalLink size={14} />
+                    </a>
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={project.repoLabel || "Source"}
+                      className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-anthropic-accent transition-opacity"
+                    >
+                      <Github size={14} /> {project.repoLabel || "Source"}
+                    </a>
+                  </div>
+                ) : (
+                  <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 group-hover:opacity-100 transition-opacity">
+                    Launch <ExternalLink size={14} />
+                  </span>
+                )
+              ) : (
+                <span className="flex-shrink-0 text-[10px] font-sans uppercase tracking-widest px-2.5 py-1 rounded-full border border-anthropic-text/15 opacity-50">
+                  Coming soon
+                </span>
+              );
               const inner = (
                 <>
                   <div className="flex justify-between items-start mb-6 gap-4">
                     <h3 className="text-2xl font-serif font-medium group-hover:text-anthropic-accent transition-colors">
                       {project.title}
                     </h3>
-                    {project.live ? (
-                      <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 group-hover:opacity-100 transition-opacity">
-                        Launch <ExternalLink size={14} />
-                      </span>
-                    ) : (
-                      <span className="flex-shrink-0 text-[10px] font-sans uppercase tracking-widest px-2.5 py-1 rounded-full border border-anthropic-text/15 opacity-50">
-                        Coming soon
-                      </span>
-                    )}
+                    {actions}
                   </div>
                   <p className="text-lg leading-relaxed opacity-80 mb-6">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mt-auto">
@@ -420,7 +449,7 @@ function HomePage() {
                   viewport={{ once: true }}
                   transition={{ delay: (idx % 2) * 0.1 }}
                 >
-                  {project.live ? (
+                  {project.live && !hasRepo ? (
                     <a
                       href={project.live}
                       target="_blank"
@@ -431,7 +460,10 @@ function HomePage() {
                       {inner}
                     </a>
                   ) : (
-                    <div className={`${cardClass} opacity-70`} aria-disabled="true">
+                    <div
+                      className={`${cardClass} ${project.live ? "hover:border-anthropic-accent/40" : "opacity-70"}`}
+                      aria-disabled={project.live ? undefined : "true"}
+                    >
                       {inner}
                     </div>
                   )}
