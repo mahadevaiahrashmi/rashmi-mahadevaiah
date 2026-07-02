@@ -15,7 +15,18 @@ Starlette strips the prefix and the child routes stay unchanged.
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_ROOT))
+
+# Local dev: load a .env from the repo root so the apps see keys via os.environ.
+# Must run BEFORE the app modules import (they read env at import time). On Vercel
+# there's no .env — env vars are injected by the platform — so this is a no-op.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(_ROOT / ".env")
+except ImportError:
+    pass
 
 from fastapi import FastAPI  # noqa: E402
 from app.main import app as tailor_app  # noqa: E402
