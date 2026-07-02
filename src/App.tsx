@@ -34,9 +34,10 @@ const LEARN_AI_URL = "/learn-ai";
 const GTM_URL = "/gtm-videos";
 const PM_AGENT_URL = "/pm-agent";
 const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
+const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 
-// The 7 projects. `live` = a clickable card that opens the running app in a new
-// tab; projects without `live` render as "Coming soon" placeholders.
+// The projects. `live` = a clickable card that opens the running app in a new
+// tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
 const projects = [
   {
     title: "Product Discovery Interactive Guide",
@@ -88,6 +89,14 @@ const projects = [
     live: PM_AGENT_URL,
     repo: OPENCLAW_FORK_URL,
     repoLabel: "OpenClaw fork",
+  },
+  {
+    title: "Narrated Explainer Video Bot",
+    description:
+      "Turn rough bullet points into a 3Blue1Brown-style explainer video, narrated in your own voice. The bot writes and critiques the script, designs one HTML slide per segment, and assembles a cue video — then you record audio over it to produce the final MP4. Runs from a web or terminal UI on your Claude Code subscription, a local Ollama model, or any LLM provider.",
+    tags: ["Python", "Generative AI", "Video"],
+    repo: EXPLAINER_BOT_URL,
+    repoLabel: "GitHub repo",
   },
 ];
 
@@ -385,9 +394,21 @@ function HomePage() {
             {projects.map((project, idx) => {
               const cardClass =
                 "group flex flex-col h-full border border-anthropic-text/10 rounded-2xl p-8 transition-colors";
-              // Cards with a `repo` render explicit links (Launch + source) instead
-              // of one big card-anchor, so the two links don't nest illegally.
-              const hasRepo = Boolean(project.live && project.repo);
+              // Cards that carry a `repo` link render explicit anchors instead of
+              // one big card-anchor, so the links don't nest illegally.
+              const hasRepo = Boolean(project.repo);
+              const isAnchorCard = Boolean(project.live) && !hasRepo;
+              const repoLink = project.repo ? (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={project.repoLabel || "Source"}
+                  className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-anthropic-accent transition-opacity"
+                >
+                  <Github size={14} /> {project.repoLabel || "Source"}
+                </a>
+              ) : null;
               const actions = project.live ? (
                 hasRepo ? (
                   <div className="flex-shrink-0 flex items-center gap-4">
@@ -399,21 +420,15 @@ function HomePage() {
                     >
                       Launch <ExternalLink size={14} />
                     </a>
-                    <a
-                      href={project.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={project.repoLabel || "Source"}
-                      className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-anthropic-accent transition-opacity"
-                    >
-                      <Github size={14} /> {project.repoLabel || "Source"}
-                    </a>
+                    {repoLink}
                   </div>
                 ) : (
                   <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 group-hover:opacity-100 transition-opacity">
                     Launch <ExternalLink size={14} />
                   </span>
                 )
+              ) : hasRepo ? (
+                <div className="flex-shrink-0 flex items-center gap-4">{repoLink}</div>
               ) : (
                 <span className="flex-shrink-0 text-[10px] font-sans uppercase tracking-widest px-2.5 py-1 rounded-full border border-anthropic-text/15 opacity-50">
                   Coming soon
@@ -449,7 +464,7 @@ function HomePage() {
                   viewport={{ once: true }}
                   transition={{ delay: (idx % 2) * 0.1 }}
                 >
-                  {project.live && !hasRepo ? (
+                  {isAnchorCard ? (
                     <a
                       href={project.live}
                       target="_blank"
@@ -461,8 +476,8 @@ function HomePage() {
                     </a>
                   ) : (
                     <div
-                      className={`${cardClass} ${project.live ? "hover:border-anthropic-accent/40" : "opacity-70"}`}
-                      aria-disabled={project.live ? undefined : "true"}
+                      className={`${cardClass} ${project.live || hasRepo ? "hover:border-anthropic-accent/40" : "opacity-70"}`}
+                      aria-disabled={project.live || hasRepo ? undefined : "true"}
                     >
                       {inner}
                     </div>
