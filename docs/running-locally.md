@@ -64,23 +64,38 @@ cp .env.example .env
 
 ## 3. Run it
 
-### Option A — `vercel dev` (recommended: the whole site, exactly like production)
+### Option A — one server (recommended: whole site on one port, links work)
 
-This runs the Vite front end **and** the Python function behind the same routing
-as production, so every `/app` path works from one URL.
+Build the front end once, then let the Python server serve **both** the portfolio
+and every app on a single port — the same single-origin behaviour as production.
+(When `dist/` exists and you're not on Vercel, `api/index.py` serves it at `/`.)
 
 ```bash
-vercel dev
-# first run: it asks to link a project — accept the defaults (or link to your
-# Vercel project to pull its env vars automatically)
-# then open the printed URL, e.g. http://localhost:3000
+npm run build                                   # build the portfolio -> dist/
+set -a && source .env && set +a                 # load your keys (optional)
+./.venv/bin/python -m uvicorn api.index:app --port 8000
+# open http://localhost:8000  — portfolio at /, and clicking a project card
+# opens its app (/resume-tailor, /pm-agent, …) on the SAME origin.
 ```
 
-- Uses the keys from your `.env` (or, if you linked a Vercel project, run
-  `vercel env pull .env` to fetch the ones already set there).
-- Clicking a project card on the portfolio opens the embedded app for real.
+Re-run `npm run build` after front-end changes. For fast front-end iteration with
+hot-reload, use Option C.
 
-### Option B — two servers (no Vercel CLI)
+### Option B — `vercel dev` (Vercel-native, no build step)
+
+`vercel dev` emulates production routing from `vercel.json`:
+
+```bash
+vercel pull        # once, to fetch project settings + env
+vercel dev         # open the printed URL (e.g. http://localhost:3000)
+```
+
+> Note: `vercel dev` runs the Vite dev server and the Python function together.
+> On some setups (especially headless) the local Python runtime doesn't attach
+> and the `/app` paths 404 — if that happens, use **Option A**, which is the most
+> reliable single-port run.
+
+### Option C — two servers (fast front-end hot-reload)
 
 Handy when you're focused on one app. You run the front end and the Python apps
 separately, on different ports.
@@ -104,10 +119,10 @@ served by Vite below.)
 npm run dev        # http://localhost:5173
 ```
 
-> **Caveat:** in Option B the two halves are on different ports, so a project
+> **Caveat:** in Option C the two halves are on different ports, so a project
 > card on the Vite site (`localhost:5173`) links to `/resume-tailor` on **5173**,
-> not 8000. For the full click-through experience use **Option A**. Option B is
-> for iterating on a single app directly at its `:8000/...` URL.
+> not 8000. For full click-through on one origin use **Option A**. Option C is
+> best for fast front-end hot-reload while iterating on an app at its `:8000/...` URL.
 
 ---
 

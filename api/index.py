@@ -12,6 +12,7 @@ Starlette strips the prefix and the child routes stay unchanged.
   /gtm-videos         -> GTM with AI-generated videos
   /pm-agent           -> PM AI Agent
 """
+import os
 import sys
 from pathlib import Path
 
@@ -45,5 +46,26 @@ app.mount("/funded-companies", funded_app)
 app.mount("/learn-ai", learn_app)
 app.mount("/gtm-videos", gtm_app)
 app.mount("/pm-agent", pm_app)
+
+# Local single-server mode: also serve the built portfolio (dist/) at `/`, so one
+# `uvicorn api.index:app` serves the whole site like Vercel — the app paths above
+# plus the SPA and its assets. Skipped on Vercel (the platform serves dist/ there,
+# and this function only ever receives the /app paths), and skipped if not built.
+_DIST = _ROOT / "dist"
+if not os.environ.get("VERCEL") and _DIST.is_dir():
+    from fastapi.responses import FileResponse  # noqa: E402
+    from fastapi.staticfiles import StaticFiles  # noqa: E402
+
+    if (_DIST / "assets").is_dir():
+        app.mount("/assets", StaticFiles(directory=str(_DIST / "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    def _spa(full_path: str):
+        # Serve a real dist file if it exists (favicon, images, resume.pdf, …),
+        # otherwise fall back to index.html so client-side routes work.
+        candidate = (_DIST / full_path).resolve()
+        if full_path and str(candidate).startswith(str(_DIST.resolve())) and candidate.is_file():
+            return FileResponse(str(candidate))
+        return FileResponse(str(_DIST / "index.html"))
 
 __all__ = ["app"]
