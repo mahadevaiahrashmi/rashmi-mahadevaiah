@@ -18,7 +18,7 @@ Use when the user needs any product-management artifact or a sounding board for 
 - Optional: a quick-action (PRD / user stories / prioritize / roadmap / critique).
 
 ## How it works
-Retrieves the most relevant docs from the shared Pro-PM skill library (500+ skills, see docs/skills is complemented by app/shared/pm_skills) per message and grounds a concise, structured PM response in them. Reports which skills it used. Never fabricates facts about the user's product.
+Retrieves the most relevant docs from the shared Pro-PM skill library (500+ skills in `app/shared/skills/`) per message and grounds a concise, structured PM response in them. Reports which skills it used. Never fabricates facts about the user's product.
 
 ## Try it
 Live: https://rashmi-mahadevaiah.vercel.app/pm-agent

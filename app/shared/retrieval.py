@@ -1,5 +1,5 @@
-# agent-notes: { ctx: "shared lexical retrieval over the Pro-PM skill library", deps: [app/shared/pm_skills/], state: active, last: "claude@2026-07-02" }
-"""Retrieval over the shared Pro-PM skill library (app/shared/pm_skills/).
+# agent-notes: { ctx: "shared lexical retrieval over the Pro-PM skill library", deps: [app/shared/skills/], state: active, last: "claude@2026-07-02" }
+"""Retrieval over the shared Pro-PM skill library (app/shared/skills/).
 
 Lives in app/shared so multiple apps can use it — the PM agent (project 7) and
 the Product Discovery guide (project 1). No app can fit 500+ skill files in one
@@ -15,7 +15,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-PPM = Path(__file__).resolve().parent / "pm_skills"
+PPM = Path(__file__).resolve().parent / "skills"
 CATEGORIES = ["skills", "agents", "playbooks", "templates", "frameworks"]
 
 _TOKEN = re.compile(r"[a-z0-9]+")

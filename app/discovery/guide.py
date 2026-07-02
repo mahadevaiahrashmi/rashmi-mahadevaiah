@@ -17,7 +17,7 @@ from fastapi.templating import Jinja2Templates
 
 from .content import MODULES, MODULE_IDS
 from .. import llm
-from ..shared import skills as skill_lib
+from ..shared import retrieval as skill_lib
 
 BASE = Path(__file__).resolve().parent
 

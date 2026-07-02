@@ -22,5 +22,7 @@ These projects are demos or utilities, not reusable agent skills, so they have n
 - **Learn-AI** (`/learn-ai`) — a Duolingo-style *course*; its value is the lesson content, not an agent skill.
 - **Time Tracker** (`/time-tracker`) — a client-side productivity app with no AI capability.
 
-> Related: `app/shared/pm_skills/` holds the 500+ Pro-PM skill library that the
-> **product-manager** and **product-discovery-coach** skills retrieve from at runtime.
+> Related: the parent folder `app/shared/skills/` also holds the 500+ Pro-PM skill
+> library (`skills/`, `agents/`, `playbooks/`, `templates/`, `frameworks/`) that the
+> **product-manager** and **product-discovery-coach** skills retrieve from at runtime
+> via `app/shared/retrieval.py`.
