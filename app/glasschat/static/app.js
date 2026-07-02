@@ -14,10 +14,10 @@ const ROOT = window.APP_ROOT || "";
 // All FREE models on OpenRouter (price 0). Mistral has no free models there, so
 // this is a curated free set from other makers — every reply costs $0.
 const MODELS = [
-  { id: "meta-llama/llama-3.3-70b-instruct:free", label: "Llama 3.3 70B (free)", blurb: "Meta's strong open model.", price: { in: 0, out: 0 } },
-  { id: "qwen/qwen3-next-80b-a3b-instruct:free", label: "Qwen3 Next 80B (free)", blurb: "Alibaba's capable open model.", price: { in: 0, out: 0 } },
-  { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's open-weight model.", price: { in: 0, out: 0 } },
+  { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's open-weight model — largest here.", price: { in: 0, out: 0 } },
   { id: "google/gemma-4-31b-it:free", label: "Gemma 4 31B (free)", blurb: "Google's open model.", price: { in: 0, out: 0 } },
+  { id: "nvidia/nemotron-nano-9b-v2:free", label: "Nemotron Nano 9B (free)", blurb: "NVIDIA's small, fast model.", price: { in: 0, out: 0 } },
+  { id: "liquid/lfm-2.5-1.2b-instruct:free", label: "Liquid LFM 1.2B (free)", blurb: "Tiny 1.2B — great size contrast.", price: { in: 0, out: 0 } },
 ];
 function getModel(id) { return MODELS.find((m) => m.id === id) || MODELS[0]; }
 function costOf(model, promptTokens = 0, completionTokens = 0) {
@@ -87,7 +87,7 @@ const TAGS = ["A", "B", "C", "D"];
 const MODEL_ROTATION = MODELS.map((m) => m.id);
 const state = {
   password: "",
-  panels: [makePanel("meta-llama/llama-3.3-70b-instruct:free"), makePanel("openai/gpt-oss-120b:free")],
+  panels: [makePanel("openai/gpt-oss-120b:free"), makePanel("google/gemma-4-31b-it:free")],
 };
 const activePanels = () => state.panels.map((_, i) => i);
 const anyBusy = () => state.panels.some((p) => p.busy);

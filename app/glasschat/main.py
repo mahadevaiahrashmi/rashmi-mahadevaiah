@@ -33,12 +33,12 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 # All FREE on OpenRouter (Mistral publishes no free models there, so we show a
 # curated set of free models from other makers — the demo costs $0).
 ALLOWED_MODELS = {
-    "meta-llama/llama-3.3-70b-instruct:free",
-    "qwen/qwen3-next-80b-a3b-instruct:free",
     "openai/gpt-oss-120b:free",
     "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-nano-9b-v2:free",
+    "liquid/lfm-2.5-1.2b-instruct:free",
 }
-DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+DEFAULT_MODEL = "openai/gpt-oss-120b:free"
 
 MAX_MESSAGES = 40
 MAX_CONTENT = 8000
