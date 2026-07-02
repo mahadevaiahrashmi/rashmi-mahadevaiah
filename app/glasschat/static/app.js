@@ -15,8 +15,8 @@ const ROOT = window.APP_ROOT || "";
 // this is a curated free set from other makers — every reply costs $0.
 const MODELS = [
   { id: "openai/gpt-oss-120b:free", label: "GPT-OSS 120B (free)", blurb: "OpenAI's open-weight model — largest here.", price: { in: 0, out: 0 } },
+  { id: "openai/gpt-oss-20b:free", label: "GPT-OSS 20B (free)", blurb: "OpenAI's smaller open model.", price: { in: 0, out: 0 } },
   { id: "google/gemma-4-31b-it:free", label: "Gemma 4 31B (free)", blurb: "Google's open model.", price: { in: 0, out: 0 } },
-  { id: "nvidia/nemotron-nano-9b-v2:free", label: "Nemotron Nano 9B (free)", blurb: "NVIDIA's small, fast model.", price: { in: 0, out: 0 } },
   { id: "liquid/lfm-2.5-1.2b-instruct:free", label: "Liquid LFM 1.2B (free)", blurb: "Tiny 1.2B — great size contrast.", price: { in: 0, out: 0 } },
 ];
 function getModel(id) { return MODELS.find((m) => m.id === id) || MODELS[0]; }

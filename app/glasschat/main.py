@@ -12,6 +12,7 @@ block with real token counts.
 """
 from __future__ import annotations
 
+import asyncio
 import os
 from pathlib import Path
 
@@ -34,8 +35,8 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 # curated set of free models from other makers — the demo costs $0).
 ALLOWED_MODELS = {
     "openai/gpt-oss-120b:free",
+    "openai/gpt-oss-20b:free",
     "google/gemma-4-31b-it:free",
-    "nvidia/nemotron-nano-9b-v2:free",
     "liquid/lfm-2.5-1.2b-instruct:free",
 }
 DEFAULT_MODEL = "openai/gpt-oss-120b:free"
@@ -91,11 +92,24 @@ async def chat(request: Request):
         )
 
     try:
+        # Free models share upstream rate limits and 429 intermittently; retry a
+        # few times with a short backoff so transient limits self-heal.
+        r = None
         async with httpx.AsyncClient(timeout=55) as client:
-            r = await client.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": model, "messages": messages, "max_tokens": MAX_TOKENS},
+            for attempt in range(3):
+                r = await client.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                    json={"model": model, "messages": messages, "max_tokens": MAX_TOKENS},
+                )
+                if r.status_code != 429:
+                    break
+                if attempt < 2:
+                    await asyncio.sleep(1.2 * (attempt + 1))
+        if r.status_code == 429:
+            return JSONResponse(
+                {"error": "This free model is busy right now (rate-limited). Try again in a moment, or pick another model."},
+                status_code=429,
             )
         if r.status_code >= 400:
             return JSONResponse(
@@ -110,6 +124,11 @@ async def chat(request: Request):
             "completion_tokens": int(u.get("completion_tokens", 0)),
             "total_tokens": int(u.get("total_tokens", 0)),
         }
+        if not reply:
+            return JSONResponse(
+                {"error": "This model didn't return any text this time — try again or pick another model."},
+                status_code=502,
+            )
     except (httpx.HTTPError, KeyError, IndexError, ValueError, TypeError):
         return JSONResponse({"error": "Couldn't reach the model — please try again."}, status_code=502)
 
