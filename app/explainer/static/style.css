@@ -26,14 +26,14 @@ body {
 
 .topbar {
   display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
-  max-width: 940px; width: 100%; margin: 0 auto; padding: 22px 20px 10px;
+  max-width: 1200px; width: 100%; margin: 0 auto; padding: 22px 20px 10px;
 }
 .topbar h1 { font-size: 1.5rem; margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .tagline { color: var(--muted); margin: 4px 0 0; font-size: 0.9rem; max-width: 640px; }
 .back { color: #222222; text-decoration: none; font-size: 0.85rem; white-space: nowrap; opacity: 0.85; }
 .back:hover { opacity: 1; }
 
-.wrap { max-width: 940px; width: 100%; margin: 0 auto; padding: 10px 16px 60px; }
+.wrap { max-width: 1200px; width: 100%; margin: 0 auto; padding: 10px 16px 60px; }
 
 .card {
   background: var(--card); border: 1px solid var(--border); border-radius: 16px;

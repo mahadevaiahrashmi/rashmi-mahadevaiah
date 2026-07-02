@@ -24,7 +24,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
-.app { max-width: 780px; margin: 0 auto; padding: 20px 18px 60px; }
+.app { max-width: 1120px; margin: 0 auto; padding: 20px 18px 60px; }
 
 .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
 .brand { display: flex; align-items: center; gap: 10px; }

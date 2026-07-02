@@ -264,7 +264,7 @@ function HomePage() {
     <div className="min-h-screen selection:bg-anthropic-accent/20">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-anthropic-bg/80 backdrop-blur-sm border-b border-anthropic-text/5 transition-colors duration-300">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="font-serif text-xl font-medium tracking-tight">Rashmi Mahadevaiah</span>
           <div className="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-sans uppercase tracking-[0.14em] sm:tracking-widest opacity-60 whitespace-nowrap">
             <a href="#about" className="hover:opacity-100 transition-opacity">About</a>
@@ -276,7 +276,7 @@ function HomePage() {
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <main className="max-w-6xl mx-auto px-6 pt-32 pb-24">
         {/* Hero Section */}
         <section id="about" className="mb-32">
           <motion.div
@@ -625,7 +625,7 @@ function HomePage() {
         </section>
       </main>
 
-      <footer className="max-w-5xl mx-auto px-6 py-12 border-t border-anthropic-text/5 flex flex-col md:flex-row justify-between items-center gap-4 opacity-40 text-xs font-sans uppercase tracking-[0.2em]">
+      <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-anthropic-text/5 flex flex-col md:flex-row justify-between items-center gap-4 opacity-40 text-xs font-sans uppercase tracking-[0.2em]">
         <span>© 2026 Rashmi Mahadevaiah</span>
         <span>Built with precision and care</span>
       </footer>

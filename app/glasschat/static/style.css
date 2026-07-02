@@ -379,7 +379,7 @@ select {
   padding: 26px 18px 140px;
 }
 .stream-inner {
-  max-width: 760px;
+  max-width: 1040px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -548,7 +548,7 @@ select {
   background: linear-gradient(to top, var(--bg) 55%, transparent);
 }
 .composer-inner {
-  max-width: 760px;
+  max-width: 1040px;
   margin: 0 auto;
   display: flex;
   gap: 10px;
@@ -592,7 +592,7 @@ textarea:focus {
   cursor: default;
 }
 .composer-note {
-  max-width: 760px;
+  max-width: 1040px;
   margin: 8px auto 0;
   text-align: center;
   font-size: 11.5px;
