@@ -37,6 +37,7 @@ const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
 const EXPLAINER_URL = "/explainer-bot";
 const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 const GLASSCHAT_URL = "/glass-chat";
+const TIME_TRACKER_URL = "/time-tracker";
 
 // The projects. `live` = a clickable card that opens the running app in a new
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
@@ -107,6 +108,13 @@ const projects = [
       "A see-through LLM chat built for learning. Toggle memory on/off and watch the context grow or shrink; click the 👁 on any reply to see exactly what was sent, the real token counts, and the tentative cost. Compare up to 4 models side by side — one prompt, four windows — to feel how price and quality differ. Password-gated for cost control.",
     tags: ["LLMs", "Tokens & Cost", "Interactive"],
     live: GLASSCHAT_URL,
+  },
+  {
+    title: "Modern Time Tracker",
+    description:
+      "A clean, fast time tracker: one-tap start/stop with a live ticking clock, color-coded projects, and manual entries. See today's and this week's totals at a glance, plus a per-project breakdown. Everything is saved locally in your browser — no account, no server, instant.",
+    tags: ["Productivity", "Vanilla JS", "localStorage"],
+    live: TIME_TRACKER_URL,
   },
 ];
 

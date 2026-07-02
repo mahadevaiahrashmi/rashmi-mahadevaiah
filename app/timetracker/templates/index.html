@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Time Tracker</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="dot">⏱</span><h1>Time Tracker</h1></div>
+      <a class="back" href="/#projects">← Portfolio</a>
+    </header>
+
+    <!-- Live timer -->
+    <section class="timer-card">
+      <div class="timer-inputs">
+        <input id="task" type="text" placeholder="What are you working on?" autocomplete="off" />
+        <div class="proj-wrap">
+          <select id="project"></select>
+          <button id="add-proj" class="icon-btn" title="Add a project" aria-label="Add a project">＋</button>
+        </div>
+      </div>
+      <div class="timer-run">
+        <span id="clock" class="clock">00:00:00</span>
+        <button id="toggle" class="start">Start</button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+      <div class="stat"><div class="k">Today</div><div class="v" id="stat-today">0h 0m</div></div>
+      <div class="stat"><div class="k">This week</div><div class="v" id="stat-week">0h 0m</div></div>
+      <div class="stat wide">
+        <div class="k">This week by project</div>
+        <div id="stat-bars" class="bars"></div>
+      </div>
+    </section>
+
+    <!-- Entries -->
+    <section class="entries">
+      <div class="entries-head">
+        <h2>Recent</h2>
+        <button id="add-manual" class="ghost">＋ Add entry</button>
+      </div>
+      <div id="entries-list"></div>
+    </section>
+  </div>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/app.js"></script>
+</body>
+</html>
