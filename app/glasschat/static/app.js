@@ -12,10 +12,10 @@ const ROOT = window.APP_ROOT || "";
 // `in`/`out` are US dollars per 1,000,000 tokens (OpenRouter list prices, approx).
 // Used only to ESTIMATE cost for learning — a real bill is whatever you're charged.
 const MODELS = [
-  { id: "google/gemini-2.0-flash-001", label: "Gemini 2.0 Flash", blurb: "Cheapest & fastest.", price: { in: 0.1, out: 0.4 } },
-  { id: "openai/gpt-4o-mini", label: "GPT-4o mini", blurb: "Cheap, capable default.", price: { in: 0.15, out: 0.6 } },
-  { id: "anthropic/claude-3.5-haiku", label: "Claude 3.5 Haiku", blurb: "Fast Claude, mid price.", price: { in: 0.8, out: 4.0 } },
-  { id: "anthropic/claude-3.5-sonnet", label: "Claude 3.5 Sonnet", blurb: "Most capable here, priciest.", price: { in: 3.0, out: 15.0 } },
+  { id: "openai/gpt-4o-mini", label: "GPT-4o mini", blurb: "Cheapest & capable default.", price: { in: 0.15, out: 0.6 } },
+  { id: "google/gemini-2.5-flash", label: "Gemini 2.5 Flash", blurb: "Fast, low cost.", price: { in: 0.3, out: 2.5 } },
+  { id: "anthropic/claude-haiku-4.5", label: "Claude Haiku 4.5", blurb: "Fast Claude, mid price.", price: { in: 1.0, out: 5.0 } },
+  { id: "anthropic/claude-sonnet-4.6", label: "Claude Sonnet 4.6", blurb: "Most capable here, priciest.", price: { in: 3.0, out: 15.0 } },
 ];
 function getModel(id) { return MODELS.find((m) => m.id === id) || MODELS[0]; }
 function costOf(model, promptTokens = 0, completionTokens = 0) {
@@ -85,7 +85,7 @@ const TAGS = ["A", "B", "C", "D"];
 const MODEL_ROTATION = MODELS.map((m) => m.id);
 const state = {
   password: "",
-  panels: [makePanel("openai/gpt-4o-mini"), makePanel("anthropic/claude-3.5-sonnet")],
+  panels: [makePanel("openai/gpt-4o-mini"), makePanel("anthropic/claude-sonnet-4.6")],
 };
 const activePanels = () => state.panels.map((_, i) => i);
 const anyBusy = () => state.panels.some((p) => p.busy);

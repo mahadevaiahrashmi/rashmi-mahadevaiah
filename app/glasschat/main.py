@@ -31,10 +31,10 @@ templates = Jinja2Templates(directory=str(BASE / "templates"))
 # endpoint can't be used to run arbitrary/expensive models). Prices are only used
 # client-side to estimate cost; the allowlist is what matters here.
 ALLOWED_MODELS = {
-    "google/gemini-2.0-flash-001",
     "openai/gpt-4o-mini",
-    "anthropic/claude-3.5-haiku",
-    "anthropic/claude-3.5-sonnet",
+    "google/gemini-2.5-flash",
+    "anthropic/claude-haiku-4.5",
+    "anthropic/claude-sonnet-4.6",
 }
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 
