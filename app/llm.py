@@ -124,25 +124,20 @@ def _call_gemini(key, model, messages, system, max_tokens):
     return "".join(p.get("text", "") for p in cand).strip()
 
 
-def chat(messages, system=None, max_tokens: int = 1600):
-    """messages: [{role: 'user'|'assistant', content: str}, ...]. Returns text or None."""
-    provider = active_provider()
-    if not provider:
+def _call_one(provider, messages, system, max_tokens):
+    """Call a single provider once. Returns text or None (never raises)."""
+    key = os.environ.get(_KEYS[provider], "")
+    if not key:
         return None
-    key = os.environ[_KEYS[provider]]
     try:
         if provider == "openrouter":
-            # Try the configured model list in order (free-model resilience).
-            last = None
-            for model in _openrouter_models():
+            for model in _openrouter_models():  # model list = free-model resilience
                 try:
                     text = _call_openai_style("https://openrouter.ai/api/v1/chat/completions", key, model, messages, system, max_tokens)
                     if text:
                         return text
-                except httpx.HTTPError as exc:
-                    last = exc
-            if last:
-                return None
+                except httpx.HTTPError:
+                    continue
             return None
         if provider == "openai":
             return _call_openai_style("https://api.openai.com/v1/chat/completions", key, _model_for("openai"), messages, system, max_tokens) or None
@@ -152,6 +147,23 @@ def chat(messages, system=None, max_tokens: int = 1600):
             return _call_gemini(key, _model_for("gemini"), messages, system, max_tokens) or None
     except (httpx.HTTPError, KeyError, IndexError, ValueError, TypeError):
         return None
+    return None
+
+
+def chat(messages, system=None, max_tokens: int = 1600):
+    """messages: [{role: 'user'|'assistant', content: str}, ...]. Returns text or None.
+
+    Tries the active provider first, then falls through to any other provider that
+    has a key — so a dead/invalid key doesn't take the whole app down.
+    """
+    first = active_provider()
+    if not first:
+        return None
+    order = [first] + [p for p in PRIORITY if p != first and _has(p)]
+    for provider in order:
+        text = _call_one(provider, messages, system, max_tokens)
+        if text:
+            return text
     return None
 
 
