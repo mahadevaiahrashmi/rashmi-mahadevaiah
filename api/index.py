@@ -39,13 +39,17 @@ from app.gtm.main import app as gtm_app  # noqa: E402
 from app.pm.main import app as pm_app  # noqa: E402
 
 app = FastAPI()
-app.mount("/resume-tailor", tailor_app)
-app.mount("/product-discovery", discovery_app)
-app.mount("/personal-voice", voice_app)
-app.mount("/funded-companies", funded_app)
-app.mount("/learn-ai", learn_app)
-app.mount("/gtm-videos", gtm_app)
-app.mount("/pm-agent", pm_app)
+_MOUNTS = {
+    "resume-tailor": tailor_app,
+    "product-discovery": discovery_app,
+    "personal-voice": voice_app,
+    "funded-companies": funded_app,
+    "learn-ai": learn_app,
+    "gtm-videos": gtm_app,
+    "pm-agent": pm_app,
+}
+for _prefix, _sub in _MOUNTS.items():
+    app.mount("/" + _prefix, _sub)
 
 # Local single-server mode: also serve the built portfolio (dist/) at `/`, so one
 # `uvicorn api.index:app` serves the whole site like Vercel — the app paths above
@@ -53,7 +57,7 @@ app.mount("/pm-agent", pm_app)
 # and this function only ever receives the /app paths), and skipped if not built.
 _DIST = _ROOT / "dist"
 if not os.environ.get("VERCEL") and _DIST.is_dir():
-    from fastapi.responses import FileResponse  # noqa: E402
+    from fastapi.responses import FileResponse, RedirectResponse  # noqa: E402
     from fastapi.staticfiles import StaticFiles  # noqa: E402
 
     if (_DIST / "assets").is_dir():
@@ -61,6 +65,11 @@ if not os.environ.get("VERCEL") and _DIST.is_dir():
 
     @app.get("/{full_path:path}")
     def _spa(full_path: str):
+        # A bare app path (e.g. "product-discovery" with no trailing slash) doesn't
+        # match the mount above — send it to the app's slash form rather than
+        # serving the portfolio SPA (which would render blank there).
+        if full_path in _MOUNTS:
+            return RedirectResponse("/" + full_path + "/")
         # Serve a real dist file if it exists (favicon, images, resume.pdf, …),
         # otherwise fall back to index.html so client-side routes work.
         candidate = (_DIST / full_path).resolve()
