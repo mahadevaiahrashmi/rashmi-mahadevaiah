@@ -75,4 +75,6 @@ body {
 }
 .send:hover { filter: brightness(1.08); }
 .send:disabled { opacity: 0.5; cursor: default; }
+.skills-used { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); color: var(--accent); font-size: 0.76rem; }
 .composer-note { color: var(--muted); font-size: 0.76rem; text-align: center; margin-top: 8px; }
+.composer-note a { color: var(--muted); }

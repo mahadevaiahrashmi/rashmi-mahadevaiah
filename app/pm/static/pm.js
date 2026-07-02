@@ -124,7 +124,13 @@ async function send(text) {
     thinking.remove();
     if (!payload.ok) { addMessage("agent", payload.error || "Something went wrong."); }
     else {
-      addMessage("agent", payload.reply);
+      const el = addMessage("agent", payload.reply);
+      if (Array.isArray(payload.skills_used) && payload.skills_used.length) {
+        const s = document.createElement("div");
+        s.className = "skills-used";
+        s.textContent = "🧰 Pro-PM skills used: " + payload.skills_used.join(" · ");
+        el.querySelector(".bubble").appendChild(s);
+      }
       history.push({ role: "assistant", content: payload.reply });
     }
   } catch (err) {

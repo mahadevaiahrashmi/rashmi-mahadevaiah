@@ -16,6 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .. import llm
+from . import skills as skill_lib
 
 BASE = Path(__file__).resolve().parent
 
@@ -50,7 +51,11 @@ SYSTEM = (
     "• Roadmap → Now / Next / Later, organized by theme, each tied to an outcome or "
     "metric and a rough size (S/M/L). No invented dates.\n\n"
     "• Critique / pressure-test → the riskiest assumptions, what would make it fail, "
-    "and the cheapest experiment to de-risk it before building."
+    "and the cheapest experiment to de-risk it before building.\n\n"
+    "You are backed by the Pro-PM skill library (300+ PM skills). When relevant "
+    "skill docs are supplied below under 'RELEVANT PRO-PM SKILLS', treat them as "
+    "your playbook: follow their steps and structure, adapting to the user's "
+    "request — don't just echo their headers."
 )
 
 
@@ -86,7 +91,17 @@ def chat(messages: str = Form(...)):
     history = _clean_history(messages)
     if not history or history[-1]["role"] != "user":
         return {"ok": False, "error": "Say something to the PM agent to get started."}
-    reply = llm.chat(history, system=SYSTEM, max_tokens=1400)
+
+    # Retrieve the most relevant Pro-PM skills for this turn and load them in.
+    hits = skill_lib.retrieve(history[-1]["content"], k=3)
+    system = SYSTEM
+    if hits:
+        blocks = [
+            f"=== {h['title']} ({h['cat']}) ===\n{skill_lib.load(h['path'])}" for h in hits
+        ]
+        system = SYSTEM + "\n\nRELEVANT PRO-PM SKILLS:\n\n" + "\n\n".join(blocks)
+
+    reply = llm.chat(history, system=system, max_tokens=1400)
     if reply is None:
         return {"ok": False, "error": "The PM agent is busy right now. Please try again in a moment."}
-    return {"ok": True, "reply": reply}
+    return {"ok": True, "reply": reply, "skills_used": [h["title"] for h in hits]}
