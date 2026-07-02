@@ -25,9 +25,9 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
-  max-width: 1040px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 28px 20px 8px;
+  padding: 28px 32px 8px;
 }
 .topbar h1 { font-size: 1.6rem; margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .tagline { color: var(--muted); margin: 4px 0 0; font-size: 0.95rem; }
@@ -36,9 +36,9 @@ body {
 .back:hover { opacity: 1; }
 
 .layout {
-  max-width: 1040px;
+  max-width: 1440px;
   margin: 18px auto 60px;
-  padding: 0 20px;
+  padding: 0 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
