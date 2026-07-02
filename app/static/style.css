@@ -1,12 +1,14 @@
 :root {
-  --navy: #1f3b5b;
-  --rule: #2e5a88;
-  --gray: #555;
-  --bg: #f4f6f9;
-  --panel: #ffffff;
-  --border: #d9e0ea;
-  --ok: #1d7a46;
-  --err: #b3261e;
+  --navy: #00e0ea;        /* accent (cyan) — used for headings, buttons, focus */
+  --rule: #00b4bc;        /* deeper cyan */
+  --gray: #8f9aa4;        /* muted text */
+  --bg: #090e12;          /* dark navy background */
+  --panel: #11171c;       /* card surface */
+  --panel-2: #1d252d;     /* inputs */
+  --border: #262f38;
+  --text: #eff2f5;
+  --ok: #4ad496;
+  --err: #e26d6d;
 }
 
 * { box-sizing: border-box; }
@@ -14,18 +16,19 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  color: #1c2733;
+  color: var(--text);
   background: var(--bg);
   line-height: 1.45;
 }
 
 .topbar {
-  background: var(--navy);
+  background: linear-gradient(135deg, #0d141a, #11171c);
   color: #fff;
   padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
 }
 .topbar h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
-.tagline { margin: 4px 0 0; font-size: 13px; opacity: 0.85; }
+.tagline { margin: 4px 0 0; font-size: 13px; opacity: 0.75; }
 
 .layout {
   display: grid;
@@ -57,7 +60,8 @@ textarea, select, input[type="text"] {
   padding: 9px 11px;
   font-size: 13px;
   font-family: inherit;
-  background: #fff;
+  background: var(--panel-2);
+  color: var(--text);
   resize: vertical;
 }
 textarea:focus, select:focus, input:focus { outline: 2px solid var(--rule); border-color: var(--rule); }
@@ -69,17 +73,17 @@ textarea:focus, select:focus, input:focus { outline: 2px solid var(--rule); bord
 .hint { font-size: 12px; color: var(--gray); margin: 6px 0 0; }
 
 button.primary {
-  background: var(--navy);
-  color: #fff;
+  background: linear-gradient(135deg, var(--navy), var(--rule));
+  color: #05252a;
   border: none;
   border-radius: 7px;
   padding: 11px 18px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   width: 100%;
 }
-button.primary:hover { background: #16304b; }
+button.primary:hover { filter: brightness(1.08); }
 button.primary:disabled { opacity: 0.6; cursor: progress; }
 
 .status {
@@ -87,12 +91,12 @@ button.primary:disabled { opacity: 0.6; cursor: progress; }
   padding: 12px 14px;
   font-size: 13px;
   margin-bottom: 16px;
-  background: #eef2f7;
+  background: var(--panel-2);
   border: 1px solid var(--border);
 }
-.status.working { background: #fff7e6; border-color: #f0d9a6; }
-.status.error { background: #fdeceb; border-color: #f3c2bf; color: var(--err); white-space: pre-wrap; }
-.status.done { background: #e9f6ee; border-color: #b7e2c6; color: var(--ok); }
+.status.working { background: rgba(230, 180, 80, 0.12); border-color: rgba(230, 180, 80, 0.4); }
+.status.error { background: rgba(226, 109, 109, 0.12); border-color: rgba(226, 109, 109, 0.4); color: #f0a3a3; white-space: pre-wrap; }
+.status.done { background: rgba(74, 212, 150, 0.12); border-color: rgba(74, 212, 150, 0.4); color: var(--ok); }
 
 .hidden { display: none; }
 
@@ -102,7 +106,7 @@ button.primary:disabled { opacity: 0.6; cursor: progress; }
   display: block;
   text-align: center;
   text-decoration: none;
-  background: #eaf0f7;
+  background: var(--panel-2);
   border: 1px solid var(--rule);
   color: var(--navy);
   font-weight: 600;
@@ -110,41 +114,44 @@ button.primary:disabled { opacity: 0.6; cursor: progress; }
   border-radius: 7px;
   padding: 10px;
 }
-.download-buttons a:hover { background: #dde8f3; }
+.download-buttons a:hover { background: #223041; }
 
 .preview { margin-top: 20px; }
 .preview-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
   border: 1px solid var(--border);
-  background: #f0f3f7;
+  background: var(--panel-2);
+  color: var(--text);
   border-radius: 6px 6px 0 0;
   padding: 6px 12px;
   font-size: 13px;
   cursor: pointer;
 }
-.tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.tab.active { background: var(--navy); color: #05252a; border-color: var(--navy); }
 
+/* The document preview stays "paper" (white) — it mirrors the Word/PDF output. */
 .preview-body {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 16px;
   font-size: 12.5px;
-  background: #fff;
+  background: #ffffff;
+  color: #1c2733;
   max-height: 540px;
   overflow: auto;
 }
-.preview-body h3 { color: var(--navy); margin: 0 0 2px; font-size: 18px; }
-.preview-body .contact { color: var(--gray); font-size: 12px; margin-bottom: 12px; }
+.preview-body h3 { color: #1f3b5b; margin: 0 0 2px; font-size: 18px; }
+.preview-body .contact { color: #555; font-size: 12px; margin-bottom: 12px; }
 .preview-body .sec {
-  color: var(--navy); font-weight: 700; text-transform: uppercase;
-  font-size: 12px; border-bottom: 1px solid var(--rule);
+  color: #1f3b5b; font-weight: 700; text-transform: uppercase;
+  font-size: 12px; border-bottom: 1px solid #2e5a88;
   margin: 14px 0 6px; padding-bottom: 2px; letter-spacing: 0.5px;
 }
 .preview-body .role { display: flex; justify-content: space-between; font-weight: 600; margin-top: 8px; }
-.preview-body .role .dates { color: var(--gray); font-weight: 400; }
+.preview-body .role .dates { color: #555; font-weight: 400; }
 .preview-body ul { margin: 4px 0 0; padding-left: 18px; }
 .preview-body li { margin-bottom: 3px; }
-.preview-body .skill b { color: var(--navy); }
+.preview-body .skill b { color: #1f3b5b; }
 .preview-body p { margin: 0 0 9px; text-align: justify; }
 
 .foot { text-align: center; color: var(--gray); font-size: 12px; padding: 16px; }

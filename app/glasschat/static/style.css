@@ -1,15 +1,15 @@
 /* agent-notes: { ctx: "all app styling: glassy dark theme, chat + inspector", deps: [], state: active, last: "claude@2026-07-01" } */
 
 :root {
-  --bg: #0b0d13;
-  --panel: rgba(22, 26, 38, 0.72);
-  --panel-solid: #161a26;
+  --bg: #090e12;
+  --panel: rgba(17, 23, 28, 0.72);
+  --panel-solid: #11171c;
   --stroke: rgba(255, 255, 255, 0.08);
   --stroke-strong: rgba(255, 255, 255, 0.16);
-  --text: #eef1f8;
-  --muted: #9aa3b8;
+  --text: #eff2f5;
+  --muted: #8f9aa4;
   --faint: #6b7488;
-  --accent: #7c5cff;
+  --accent: #00e0ea;
   --accent-2: #22d3ee;
   --user: #2563eb;
   --good: #34d399;
@@ -44,7 +44,7 @@ body::before {
   inset: -30%;
   z-index: -1;
   background:
-    radial-gradient(40% 40% at 20% 20%, rgba(124, 92, 255, 0.28), transparent 60%),
+    radial-gradient(40% 40% at 20% 20%, rgba(0, 224, 234, 0.28), transparent 60%),
     radial-gradient(45% 45% at 80% 25%, rgba(34, 211, 238, 0.22), transparent 60%),
     radial-gradient(50% 50% at 60% 90%, rgba(236, 72, 153, 0.18), transparent 60%);
   filter: blur(40px);
@@ -142,7 +142,7 @@ input[type='text'] {
   font-size: 15px;
   font-weight: 600;
   color: white;
-  background: linear-gradient(135deg, var(--accent), #5b8bff);
+  background: linear-gradient(135deg, var(--accent), #00b4bc);
   transition:
     transform 0.12s ease,
     filter 0.12s ease;
@@ -297,7 +297,7 @@ select {
   color: var(--text);
 }
 .seg-btn.on {
-  background: linear-gradient(135deg, var(--accent), #5b8bff);
+  background: linear-gradient(135deg, var(--accent), #00b4bc);
   color: white;
 }
 
@@ -439,7 +439,7 @@ select {
   font-size: 16px;
 }
 .msg.user .avatar {
-  background: linear-gradient(135deg, var(--user), #60a5fa);
+  background: linear-gradient(135deg, var(--user), #00b4bc);
 }
 .msg.assistant .avatar {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
@@ -505,7 +505,7 @@ select {
 .eye:hover {
   color: var(--text);
   border-color: var(--accent);
-  background: rgba(124, 92, 255, 0.12);
+  background: rgba(0, 224, 234, 0.12);
 }
 .typing {
   display: inline-flex;
@@ -581,7 +581,7 @@ textarea:focus {
   height: 40px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), #5b8bff);
+  background: linear-gradient(135deg, var(--accent), #00b4bc);
   color: white;
   font-size: 18px;
   display: grid;
@@ -668,13 +668,13 @@ textarea:focus {
   margin-top: 0;
 }
 .callout {
-  background: rgba(124, 92, 255, 0.1);
-  border: 1px solid rgba(124, 92, 255, 0.3);
+  background: rgba(0, 224, 234, 0.1);
+  border: 1px solid rgba(0, 224, 234, 0.3);
   border-radius: 12px;
   padding: 12px 14px;
   font-size: 13px;
   line-height: 1.5;
-  color: #d7ccff;
+  color: #cfeff2;
 }
 .callout.warn {
   background: rgba(251, 191, 36, 0.1);

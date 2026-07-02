@@ -1,12 +1,12 @@
 :root {
-  --bg: #0f0d0a;
-  --card: #17140f;
-  --card-2: #1e1a14;
+  --bg: #090e12;
+  --card: #11171c;
+  --card-2: #1d252d;
   --border: rgba(255, 255, 255, 0.08);
-  --text: #f3eee6;
-  --muted: #a89f90;
-  --accent: #d97757;
-  --accent-soft: rgba(217, 119, 87, 0.14);
+  --text: #eff2f5;
+  --muted: #8f9aa4;
+  --accent: #00e0ea;
+  --accent-soft: rgba(0, 224, 234, 0.14);
   --good: #6bbf7b;
 }
 
@@ -116,7 +116,7 @@ textarea:focus { outline: none; border-color: var(--accent); }
 .coach {
   margin-top: 16px;
   background: var(--accent-soft);
-  border: 1px solid rgba(217, 119, 87, 0.3);
+  border: 1px solid rgba(0, 224, 234, 0.3);
   border-radius: 12px;
   padding: 16px 18px;
   white-space: pre-wrap;

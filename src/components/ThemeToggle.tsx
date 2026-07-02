@@ -5,10 +5,11 @@ export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(() => {
     try {
       const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      return savedTheme === "dark" || (!savedTheme && prefersDark);
+      // Default to dark (the ramitphi-style navy + cyan theme) unless the user
+      // explicitly chose light before.
+      return savedTheme ? savedTheme === "dark" : true;
     } catch {
-      return false;
+      return true;
     }
   });
 

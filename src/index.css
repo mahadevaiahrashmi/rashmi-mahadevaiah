@@ -4,17 +4,19 @@
 
 @layer base {
   :root {
-    --bg-color: #fbfaf8;
-    --text-color: #1d1917;
-    --accent-color: #d97757;
+    /* Light mode: keep a light surface but adopt the cyan accent (deepened for contrast). */
+    --bg-color: #f4f7f9;
+    --text-color: #0e1417;
+    --accent-color: #068c96;
     --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   }
-  
+
+  /* Dark mode mirrors ramitphi.me: dark navy background, near-white text, cyan accent. */
   :root.dark {
-    --bg-color: #1d1917;
-    --text-color: #fbfaf8;
-    --accent-color: #e08b6f;
+    --bg-color: #090e12;
+    --text-color: #eff2f5;
+    --accent-color: #00e0ea;
   }
 }
 
