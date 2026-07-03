@@ -50,8 +50,9 @@ GRADE_SYSTEM = (
     "REFERENCE answer, and the STUDENT answer. Score how well the student answer "
     "captures the reference: 1.0 = fully correct, 0.5 = partially, 0.0 = wrong/blank. "
     "Be fair but rigorous; ignore spelling.\n\n"
-    "Output ONLY a JSON array (same order as input), no prose, no code fences. Each item:\n"
-    '  {"score": 0.0|0.5|1.0, "feedback": str (one short sentence)}'
+    "Output ONLY a JSON array, no prose, no code fences. Each item MUST echo the same "
+    '"id" it was given so it can be matched back:\n'
+    '  {"id": int (echo the given id), "score": 0.0|0.5|1.0, "feedback": str (one short sentence)}'
 )
 ASSESS_SYSTEM = (
     "You are an exam-integrity assistant. Given a list of proctoring EVENTS detected "
@@ -147,16 +148,26 @@ def grade(payload: str = Form(...)):
         if q.get("type") == "mcq":
             correct = str(ans).strip() == str(q.get("answer", "")).strip()
             results.append({"score": 1.0 if correct else 0.0, "feedback": "Correct." if correct else f"Answer: {q.get('answer','')}"})
+        elif not str(ans).strip():
+            # A blank short-answer is always 0 — never ask the model to grade nothing.
+            results.append({"score": 0.0, "feedback": "No answer given."})
         else:
             results.append(None)  # fill after AI grade
             idx_map.append(i)
-            to_grade.append({"question": q.get("text", ""), "reference": q.get("answer", ""), "student": str(ans)})
+            to_grade.append({"id": i, "question": q.get("text", ""), "reference": q.get("answer", ""), "student": str(ans)})
 
     if to_grade:
-        raw = llm.complete("Grade these:\n" + json.dumps(to_grade), system=GRADE_SYSTEM, max_tokens=1200)
+        raw = llm.complete(
+            'Grade each item; echo its "id" in your output. Items:\n' + json.dumps(to_grade),
+            system=GRADE_SYSTEM, max_tokens=1200)
         graded = _extract_json(raw, "[", "]")
+        # Prefer matching by echoed id (robust to reordering); fall back to position.
+        by_id = {g["id"]: g for g in graded if isinstance(g, dict) and isinstance(g.get("id"), int)} if isinstance(graded, list) else {}
         for k, i in enumerate(idx_map):
-            g = graded[k] if isinstance(graded, list) and k < len(graded) and isinstance(graded[k], dict) else {}
+            g = by_id.get(i)
+            if g is None and isinstance(graded, list) and k < len(graded) and isinstance(graded[k], dict):
+                g = graded[k]
+            g = g or {}
             try:
                 sc = float(g.get("score", 0))
             except (ValueError, TypeError):
