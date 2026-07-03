@@ -44,24 +44,24 @@ const PROCTORED_URL = "/proctored-ai";
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
 const projects = [
   {
-    title: "Product Discovery Interactive Guide",
+    title: "Product Discovery Guide",
     description:
       "Interactive product-discovery course with an LLM coach that critiques your practice answers — problem framing, user research, riskiest-assumption tests, and evidence-based decisions.",
-    tags: ["Product", "LLMs", "Interactive"],
+    tags: ["LLM", "FastAPI", "Product"],
     live: DISCOVERY_GUIDE_URL,
   },
   {
     title: "Personal Voice Skill",
     description:
       "Learns your writing voice from a few samples, then drafts messages that sound like you — with one-tap tone controls. An LLM personalization skill (prompting + voice profile).",
-    tags: ["LLMs", "Personalization", "Agents"],
+    tags: ["LLM", "Prompt Engineering", "Personalization"],
     live: VOICE_SKILL_URL,
   },
   {
     title: "JD-to-Resume Customizer",
     description:
       "Tailors a resume + cover letter to any job description and exports Word/PDF. Python/FastAPI with a multi-provider LLM — re-emphasizes real experience, never fabricates it.",
-    tags: ["Python", "FastAPI", "LLMs"],
+    tags: ["Python", "FastAPI", "LLM"],
     live: RESUME_TAILOR_URL,
   },
   {
@@ -86,16 +86,16 @@ const projects = [
     live: GTM_URL,
   },
   {
-    title: "Your Own PM AI Agent",
+    title: "PM AI Agent",
     description:
       "Conversational PM co-pilot for PRDs, user stories, RICE prioritization, and roadmaps — grounded in a 500+ skill library via retrieval. Also shipped as an OpenClaw skill.",
-    tags: ["Agentic AI", "Product", "OpenClaw"],
+    tags: ["Agentic AI", "RAG", "Product"],
     live: PM_AGENT_URL,
     repo: OPENCLAW_FORK_URL,
     repoLabel: "OpenClaw fork",
   },
   {
-    title: "Narrated Explainer Video Bot",
+    title: "Explainer Video Bot",
     description:
       "Turns rough notes into a 3Blue1Brown-style explainer: AI writes and critiques the script and designs self-contained HTML slides to narrate. Python + multi-provider generative AI.",
     tags: ["Python", "Generative AI", "Video"],
@@ -104,10 +104,10 @@ const projects = [
     repoLabel: "GitHub repo",
   },
   {
-    title: "GlassChat — See How an LLM Works",
+    title: "GlassChat",
     description:
       "A teaching tool that exposes how LLMs work — a per-message token/cost inspector, memory on/off toggle, and 4-model side-by-side comparison on real OpenRouter usage.",
-    tags: ["LLMs", "Tokens & Cost", "Interactive"],
+    tags: ["LLM", "OpenRouter", "Tokens & Cost"],
     live: GLASSCHAT_URL,
   },
   {
@@ -121,7 +121,7 @@ const projects = [
     title: "AI Exam Proctor",
     description:
       "AI-generated, AI-graded exams with opt-in webcam proctoring (vision-model checks + integrity signals), an explicit consent flow, and a post-exam voice tutor. FastAPI + OpenRouter.",
-    tags: ["EdTech", "LLMs", "Proctoring"],
+    tags: ["LLM", "Computer Vision", "Proctoring"],
     live: PROCTORED_URL,
     repo: "https://github.com/mahadevaiahrashmi/ProctoredAI",
     repoLabel: "Source",
