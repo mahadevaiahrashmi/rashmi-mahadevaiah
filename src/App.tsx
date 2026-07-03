@@ -45,49 +45,49 @@ const INTERVIEW_URL = "/interview-prep";
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
 const projects = [
   {
-    title: "Product Discovery Guide",
+    title: "Learn Product Discovery",
     description:
       "Interactive product-discovery course with an LLM coach that critiques your practice answers — problem framing, user research, riskiest-assumption tests, and evidence-based decisions.",
     tags: ["LLM", "FastAPI", "Product"],
     live: DISCOVERY_GUIDE_URL,
   },
   {
-    title: "Personal Voice Skill",
+    title: "Write Like You",
     description:
       "Learns your writing voice from a few samples, then drafts messages that sound like you — with one-tap tone controls. An LLM personalization skill (prompting + voice profile).",
     tags: ["LLM", "Prompt Engineering", "Personalization"],
     live: VOICE_SKILL_URL,
   },
   {
-    title: "JD-to-Resume Customizer",
+    title: "Resume Tailor",
     description:
       "Tailors a resume + cover letter to any job description and exports Word/PDF. Python/FastAPI with a multi-provider LLM — re-emphasizes real experience, never fabricates it.",
     tags: ["Python", "FastAPI", "LLM"],
     live: RESUME_TAILOR_URL,
   },
   {
-    title: "Funded Companies Agent",
+    title: "Find Job Leads",
     description:
       "Weekly agent that finds newly-funded startups and drafts a tailored way in — target role, why you fit, who to contact, and a pitch. Agentic AI with live web search.",
     tags: ["Agentic AI", "RAG", "Web Search"],
     live: FUNDED_AGENT_URL,
   },
   {
-    title: "Duolingo-Style AI Learning App",
+    title: "AI Learning Game",
     description:
       "Gamified course teaching core AI concepts (tokens, embeddings, RAG, agents) with XP, streaks, and instant feedback — instrumented with PostHog product analytics.",
     tags: ["EdTech", "Gamification", "PostHog"],
     live: LEARN_AI_URL,
   },
   {
-    title: "GTM with AI-Generated Videos",
+    title: "AI Video Marketing",
     description:
       "Turns a launch into a short-form-video go-to-market plan — concepts, paste-ready Veo/Higgsfield prompts, scripts, and a 2-week posting schedule. Generative-AI GTM tooling.",
     tags: ["Generative AI", "GTM", "Video"],
     live: GTM_URL,
   },
   {
-    title: "PM AI Agent",
+    title: "AI Product Manager",
     description:
       "Conversational PM co-pilot for PRDs, user stories, RICE prioritization, and roadmaps — grounded in a 500+ skill library via retrieval. Also shipped as an OpenClaw skill.",
     tags: ["Agentic AI", "RAG", "Product"],
@@ -96,7 +96,7 @@ const projects = [
     repoLabel: "OpenClaw fork",
   },
   {
-    title: "Explainer Video Bot",
+    title: "Make Explainer Videos",
     description:
       "Turns rough notes into a 3Blue1Brown-style explainer: AI writes and critiques the script and designs self-contained HTML slides to narrate. Python + multi-provider generative AI.",
     tags: ["Python", "Generative AI", "Video"],
@@ -105,14 +105,14 @@ const projects = [
     repoLabel: "GitHub repo",
   },
   {
-    title: "GlassChat",
+    title: "How AI Works",
     description:
       "A teaching tool that exposes how LLMs work — a per-message token/cost inspector, memory on/off toggle, and 4-model side-by-side comparison on real OpenRouter usage.",
     tags: ["LLM", "OpenRouter", "Tokens & Cost"],
     live: GLASSCHAT_URL,
   },
   {
-    title: "Modern Time Tracker",
+    title: "Time Tracker",
     description:
       "Fast, client-side time tracker with live start/stop timers, color-coded projects, and daily/weekly summaries. Vanilla JS + localStorage — no backend, no account.",
     tags: ["Productivity", "Vanilla JS", "localStorage"],
@@ -128,7 +128,7 @@ const projects = [
     repoLabel: "Source",
   },
   {
-    title: "Interview Prep Mapper",
+    title: "Interview Study Plan",
     description:
       "Maps every requirement in a job description to free courses to study for the interview, with an optional day-by-day prep schedule. Drops degree/experience requirements; exports Markdown/CSV/HTML. FastAPI + OpenRouter.",
     tags: ["Python", "FastAPI", "LLM"],
