@@ -14,18 +14,23 @@ model, and the tutor is text-only (OpenRouter free models have no TTS).
 
 The AI (shared multi-provider router → OpenRouter) does four text jobs:
   POST /generate  -> build an exam (MCQ + short-answer) for a topic
-  POST /grade     -> grade the short-answer questions and total the score
-  POST /assess    -> write an integrity summary from client-detected events
-  POST /tutor     -> answer a follow-up question grounded in the graded exam
+  POST /grade         -> grade the short-answer questions and total the score
+  POST /assess        -> write an integrity summary from client-detected events
+  POST /tutor         -> answer a follow-up question grounded in the graded exam
+  POST /proctor-frame -> (proctored only, with consent) vision check of one webcam frame
 
-Camera proctoring is OFF by default and opt-in; the actual camera + integrity
-signals (tab switches, focus loss, copy, fullscreen exit) run client-side, so no
-video ever leaves the browser.
+Camera proctoring is OFF by default and opt-in. Client-side integrity signals
+(tab switches, focus loss, copy, fullscreen exit) never send video. When the user
+grants the camera AND gives explicit consent, frames are sampled and sent to a
+vision model for violation detection (FR-6); nothing is stored server-side.
 """
 from __future__ import annotations
 
 import json
+import os
 import re
+
+import httpx
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
@@ -77,6 +82,20 @@ ASSESS_SYSTEM = (
     "fullscreen) and whether the camera was on, write a brief, neutral integrity "
     "summary: 2-4 sentences stating what was observed and an overall risk level "
     "(Low / Medium / High). Do not accuse; describe. Plain text, no markdown."
+)
+# Vision-capable models for webcam violation detection (paid, cheap, <= $0.10/1M in).
+VISION_MODELS = [
+    m.strip() for m in os.environ.get(
+        "PROCTOR_VISION_MODELS", "google/gemini-2.5-flash-lite,openai/gpt-4o-mini"
+    ).split(",") if m.strip()
+]
+VISION_SYSTEM = (
+    "You are an online-exam proctor analyzing a SINGLE webcam frame. Detect only "
+    "CLEAR integrity issues. Output ONLY a JSON array (no prose, no code fences) of "
+    "short strings, chosen from exactly these when clearly present: "
+    '"No face detected", "Multiple people", "Looking away from screen", '
+    '"Phone or device visible", "Notes or book visible". If nothing is clearly '
+    "suspicious, return []. Be conservative — only flag when you are confident."
 )
 TUTOR_SYSTEM = (
     "You are a supportive post-exam tutor. You are given the exam TOPIC and, for each "
@@ -258,3 +277,39 @@ def tutor(context: str = Form(...), message: str = Form(...)):
     if reply is None:
         return {"ok": False, "error": "The tutor is busy right now. Please try again."}
     return {"ok": True, "reply": reply.strip()}
+
+
+@app.post("/proctor-frame")
+def proctor_frame(image: str = Form(...)):
+    """Vision check of one webcam frame (proctored + consented sessions only).
+
+    Sends the frame to a cheap vision model via OpenRouter and returns any clear
+    violations. Non-blocking: any failure returns no violations. Nothing stored.
+    """
+    key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+    if not key or not image.startswith("data:image"):
+        return {"ok": True, "violations": []}
+    messages = [
+        {"role": "system", "content": VISION_SYSTEM},
+        {"role": "user", "content": [
+            {"type": "text", "text": "Analyze this exam webcam frame for integrity issues."},
+            {"type": "image_url", "image_url": {"url": image}},
+        ]},
+    ]
+    for model in VISION_MODELS:
+        try:
+            r = httpx.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                json={"model": model, "messages": messages, "max_tokens": 200},
+                timeout=30,
+            )
+            if r.status_code != 200:
+                continue
+            content = r.json()["choices"][0]["message"]["content"] or ""
+            arr = _extract_json(content, "[", "]")
+            if isinstance(arr, list):
+                return {"ok": True, "violations": [str(v)[:80] for v in arr[:5] if str(v).strip()]}
+        except (httpx.HTTPError, KeyError, IndexError, ValueError, TypeError):
+            continue
+    return {"ok": True, "violations": []}

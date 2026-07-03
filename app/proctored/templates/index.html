@@ -63,6 +63,17 @@
           <span class="check-label">🎙 Microphone Access</span>
           <span class="check-state" id="mic-check">Not started</span>
         </div>
+
+        <!-- Privacy notice + explicit consent (only for proctored start) -->
+        <div class="consent" id="consent-panel" hidden>
+          <h3>Webcam proctoring — privacy notice <span class="notice-ver">v1</span></h3>
+          <p>If you continue proctored, a snapshot of your webcam is sent to an AI vision model about every 8 seconds to check for integrity issues (e.g. another person, a phone, or looking away). <b>Frames are not stored</b> — there's no server database — and they're processed only to flag possible violations. You can decline and take the exam unproctored instead.</p>
+          <label class="consent-check">
+            <input type="checkbox" id="consent-box" />
+            <span>I understand and <b>consent</b> to webcam proctoring for this exam.</span>
+          </label>
+        </div>
+
         <button class="btn" id="begin-btn" disabled>Start Exam →</button>
         <button class="ghost wide" id="unproctored-btn">Take Without Camera (Unproctored)</button>
       </div>
@@ -73,6 +84,7 @@
       <div class="exam-head">
         <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
         <div class="exam-meta">
+          <span class="mode-badge" id="mode-badge">Unproctored</span>
           <span class="timer" id="timer">00:00</span>
           <span class="integrity ok" id="integrity" title="Proctoring status">🛡 Clean</span>
         </div>

@@ -5,10 +5,14 @@ const ROOT = window.APP_ROOT || "";
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+const NOTICE_VERSION = "v1";           // versioned privacy notice (consent audit)
+const SECONDS_PER_QUESTION = 90;       // FR-5: 90s/question, auto-submit at 0
+const VISION_INTERVAL_MS = 8000;       // FR-6: sample a webcam frame every ~8s
+
 let state = {
-  topic: "", questions: [], answers: [], i: 0,
-  camera: false, stream: null,
-  events: [], startTs: 0, timerId: null, submitted: false,
+  topic: "", name: "", questions: [], answers: [], i: 0,
+  camera: false, stream: null, consent: null,
+  events: [], startTs: 0, deadline: 0, timerId: null, visionId: null, submitted: false,
 };
 
 // ─────────────────────────── System check (camera optional, off by default) ───────────────────────────
@@ -33,14 +37,27 @@ async function requestProctoring() {
     $("cam").hidden = false;
     state.camera = true;
     setCheck("cam-check", "Granted ✓", true); setCheck("mic-check", "Granted ✓", true);
-    $("begin-btn").disabled = false;
+    // FR-12: require explicit consent behind the privacy notice before proctoring.
+    $("consent-panel").hidden = false;
+    $("begin-btn").disabled = !$("consent-box").checked;
     logEvent("Camera turned on");
   } catch {
-    state.camera = false;
+    state.camera = false; state.consent = null;
     setCheck("cam-check", "Denied ✗", false, true); setCheck("mic-check", "Denied ✗", false, true);
+    $("consent-panel").hidden = true;
     $("begin-btn").disabled = true; // must take the exam unproctored
   }
 }
+// Consent checkbox: record consent (timestamp + notice version) and enable Start.
+$("consent-box").addEventListener("change", (e) => {
+  if (e.target.checked && state.camera) {
+    state.consent = { acceptedAt: new Date().toISOString(), notice: NOTICE_VERSION };
+    $("begin-btn").disabled = false;
+  } else {
+    state.consent = null;
+    $("begin-btn").disabled = true;
+  }
+});
 $("cam-close").addEventListener("click", () => { disableCamera(); state.camera = false; });
 
 function disableCamera() {
@@ -111,21 +128,61 @@ $("to-step-1").addEventListener("click", async () => {
 // Step 1 → Step 2 (system check) — request camera + mic like the original.
 $("to-step-2").addEventListener("click", () => { showStep(2); requestProctoring(); });
 
-// Step 2 → begin the exam (proctored = camera granted; or unproctored)
+// Step 2 → begin the exam (proctored = camera granted + consent; or unproctored)
 function beginExam() {
+  const proctored = state.camera && state.consent;
+  if (!proctored) { disableCamera(); state.camera = false; state.consent = null; }
+  const badge = $("mode-badge");
+  badge.textContent = proctored ? "🔴 Proctored" : "Unproctored";
+  badge.classList.toggle("proctored", !!proctored);
   $("setup").hidden = true; $("exam").hidden = false;
   state.startTs = Date.now();
   startTimer(); armProctoring(); renderQuestion();
+  if (proctored) startVisionProctoring();
 }
 $("begin-btn").addEventListener("click", beginExam);
-$("unproctored-btn").addEventListener("click", () => { disableCamera(); state.camera = false; beginExam(); });
+$("unproctored-btn").addEventListener("click", () => { disableCamera(); state.camera = false; state.consent = null; beginExam(); });
 
+// FR-5: total countdown (90s/question), auto-submits at zero.
 function startTimer() {
+  state.deadline = Date.now() + state.questions.length * SECONDS_PER_QUESTION * 1000;
   const tick = () => {
-    const s = Math.floor((Date.now() - state.startTs) / 1000);
-    $("timer").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+    const left = Math.max(0, Math.round((state.deadline - Date.now()) / 1000));
+    const el = $("timer");
+    el.textContent = `${String(Math.floor(left / 60)).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
+    el.classList.toggle("low", left <= 30);
+    if (left <= 0 && !state.submitted) {
+      clearInterval(state.timerId);
+      logEvent("Time expired — exam auto-submitted");
+      submitExam();
+    }
   };
   tick(); state.timerId = setInterval(tick, 1000);
+}
+
+// FR-6: sample a webcam frame and ask the vision model for violations.
+function startVisionProctoring() {
+  state.visionId = setInterval(sampleFrame, VISION_INTERVAL_MS);
+}
+let _lastVision = "";
+async function sampleFrame() {
+  if (state.submitted || !state.stream) return;
+  const v = $("cam-video");
+  if (!v.videoWidth) return;
+  const c = document.createElement("canvas");
+  c.width = 320; c.height = 240;
+  c.getContext("2d").drawImage(v, 0, 0, 320, 240);
+  let data;
+  try { data = c.toDataURL("image/jpeg", 0.6); } catch { return; }
+  try {
+    const fd = new FormData(); fd.set("image", data);
+    const r = await (await fetch(ROOT + "/proctor-frame", { method: "POST", body: fd })).json();
+    (r.violations || []).forEach((vio) => {
+      // avoid spamming the same violation every frame
+      if (vio !== _lastVision) { logEvent("📷 " + vio); }
+    });
+    _lastVision = (r.violations || [])[0] || "";
+  } catch { /* non-blocking */ }
 }
 
 // ─────────────────────────── Question player ───────────────────────────
@@ -152,12 +209,21 @@ function renderQuestion() {
 }
 $("prev-btn").addEventListener("click", () => { if (state.i > 0) { state.i--; renderQuestion(); } });
 $("next-btn").addEventListener("click", () => { if (state.i < state.questions.length - 1) { state.i++; renderQuestion(); } });
-$("submit-btn").addEventListener("click", submitExam);
+// US-7: confirm before final submission.
+$("submit-btn").addEventListener("click", () => {
+  const answered = state.answers.filter((a) => a && a.trim()).length;
+  showConfirm(
+    `Submit your exam? You've answered ${answered} of ${state.questions.length} question${state.questions.length !== 1 ? "s" : ""}. You can't change answers after submitting.`,
+    submitExam
+  );
+});
 
 // ─────────────────────────── Submit + grade ───────────────────────────
 async function submitExam() {
+  if (state.submitted) return;
   state.submitted = true;
   clearInterval(state.timerId);
+  clearInterval(state.visionId);
   $("submit-btn").disabled = true;
   $("exam").hidden = true;
   const res = $("result"); res.hidden = false;
@@ -211,7 +277,11 @@ function renderResults(g, summary) {
 
     <div class="card integrity-card">
       <h3>🛡 Proctoring report</h3>
-      <p class="sub">Camera was <b>${state.camera ? "on" : "off"}</b> · <b>${flags.length}</b> integrity flag${flags.length !== 1 ? "s" : ""}.</p>
+      ${state.camera
+        ? `<p class="sub">Camera <b>on</b> — webcam proctoring active · <b>${flags.length}</b> integrity flag${flags.length !== 1 ? "s" : ""}.</p>`
+        : `<p class="unproctored-label">⚠ Unproctored session — no camera monitoring was performed. Client-side signals only.</p>`}
+      ${state.camera && state.consent
+        ? `<p class="consent-audit">✅ Consent recorded: accepted ${esc(new Date(state.consent.acceptedAt).toLocaleString())} (privacy notice ${esc(state.consent.notice)}).</p>` : ""}
       ${summary ? `<p class="assess">${esc(summary)}</p>` : ""}
       ${flags.length ? `<ul class="flags">${flags.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : `<p class="clean">No suspicious activity detected. ✅</p>`}
     </div>
@@ -271,3 +341,22 @@ async function askTutor() {
 
 // ─────────────────────────── helpers ───────────────────────────
 function setStatus(id, msg) { const el = $(id); if (!el) return; el.hidden = !msg; el.textContent = msg || ""; }
+
+function showConfirm(message, onConfirm) {
+  const scrim = document.createElement("div");
+  scrim.className = "modal-scrim";
+  scrim.innerHTML =
+    `<div class="modal-box" role="dialog" aria-modal="true">
+       <p>${esc(message)}</p>
+       <div class="modal-actions">
+         <button class="ghost" data-act="cancel">Cancel</button>
+         <button class="btn" data-act="ok">Submit</button>
+       </div>
+     </div>`;
+  const close = () => scrim.remove();
+  scrim.addEventListener("click", (e) => {
+    if (e.target === scrim || e.target.dataset.act === "cancel") close();
+    else if (e.target.dataset.act === "ok") { close(); onConfirm(); }
+  });
+  document.body.appendChild(scrim);
+}
