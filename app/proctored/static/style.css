@@ -161,3 +161,7 @@ body {
 .check-label em { color: var(--muted); font-weight: 400; font-style: normal; font-size: 0.85em; }
 .check-state { margin-left: auto; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
 .check-state.on { color: var(--good); }
+
+.check-state.bad { color: var(--bad); }
+.ghost.wide { width: 100%; margin-top: 10px; }
+.check-row + .check-row { margin-top: -6px; }

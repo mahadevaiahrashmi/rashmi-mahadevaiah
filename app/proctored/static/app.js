@@ -11,37 +11,38 @@ let state = {
   events: [], startTs: 0, timerId: null, submitted: false,
 };
 
-// ─────────────────────────── Camera opt-in (OFF by default) ───────────────────────────
-function setCamState(on) {
-  const el = $("cam-check");
-  if (el) { el.textContent = on ? "On — proctored" : "Off — unproctored"; el.classList.toggle("on", on); }
+// ─────────────────────────── System check (camera optional, off by default) ───────────────────────────
+function setCheck(id, text, ok, bad) {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.classList.toggle("on", !!ok);
+  el.classList.toggle("bad", !!bad);
 }
-$("cam-toggle").addEventListener("change", async (e) => {
-  if (e.target.checked) {
-    const ok = await enableCamera();
-    if (!ok) { e.target.checked = false; return; }
-    state.camera = true; setCamState(true);
-  } else {
-    disableCamera(); state.camera = false; setCamState(false);
-  }
-});
-$("cam-close").addEventListener("click", () => {
-  disableCamera(); state.camera = false; setCamState(false); $("cam-toggle").checked = false;
-});
-
-async function enableCamera() {
+// Requests camera + mic like the original's System Check. Camera is used for the
+// proctoring preview; the mic is only used to satisfy the check and is stopped
+// immediately (no audio is recorded). Users can skip via "Take Without Camera".
+async function requestProctoring() {
+  setCheck("cam-check", "Checking…"); setCheck("mic-check", "Checking…");
+  $("begin-btn").disabled = true;
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 }, audio: false });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 }, audio: true });
+    stream.getAudioTracks().forEach((t) => t.stop()); // mic only for the check
     state.stream = stream;
     $("cam-video").srcObject = stream;
     $("cam").hidden = false;
+    state.camera = true;
+    setCheck("cam-check", "Granted ✓", true); setCheck("mic-check", "Granted ✓", true);
+    $("begin-btn").disabled = false;
     logEvent("Camera turned on");
-    return true;
   } catch {
-    alert("Couldn't access the camera. You can still take the exam without it.");
-    return false;
+    state.camera = false;
+    setCheck("cam-check", "Denied ✗", false, true); setCheck("mic-check", "Denied ✗", false, true);
+    $("begin-btn").disabled = true; // must take the exam unproctored
   }
 }
+$("cam-close").addEventListener("click", () => { disableCamera(); state.camera = false; });
+
 function disableCamera() {
   if (state.stream) { state.stream.getTracks().forEach((t) => t.stop()); state.stream = null; }
   $("cam").hidden = true;
@@ -107,15 +108,17 @@ $("to-step-1").addEventListener("click", async () => {
   }
 });
 
-// Step 1 → Step 2 (system check)
-$("to-step-2").addEventListener("click", () => showStep(2));
+// Step 1 → Step 2 (system check) — request camera + mic like the original.
+$("to-step-2").addEventListener("click", () => { showStep(2); requestProctoring(); });
 
-// Step 2 → begin the exam
-$("begin-btn").addEventListener("click", () => {
+// Step 2 → begin the exam (proctored = camera granted; or unproctored)
+function beginExam() {
   $("setup").hidden = true; $("exam").hidden = false;
   state.startTs = Date.now();
   startTimer(); armProctoring(); renderQuestion();
-});
+}
+$("begin-btn").addEventListener("click", beginExam);
+$("unproctored-btn").addEventListener("click", () => { disableCamera(); state.camera = false; beginExam(); });
 
 function startTimer() {
   const tick = () => {
