@@ -189,9 +189,56 @@ function renderResults(g, summary) {
     </div>
 
     <div class="card"><h3>Answers</h3>${rows}</div>
+
+    <div class="card tutor-card">
+      <h3>🎓 AI tutor</h3>
+      <p class="sub">Ask about any answer — the tutor is grounded in this exam.</p>
+      <div class="tutor-log" id="tutor-log"></div>
+      <div class="tutor-input">
+        <input id="tutor-msg" type="text" placeholder="e.g. Why was question 2 wrong?" />
+        <button class="btn" id="tutor-send">Ask</button>
+      </div>
+    </div>
+
     <div class="again"><button class="btn" onclick="location.reload()">Take another exam</button></div>
   `;
+
+  // Ground the tutor in the graded exam.
+  state.tutorContext = {
+    topic: state.topic,
+    items: state.questions.map((q, i) => ({
+      q: q.text, correct: q.answer, your: state.answers[i] || "", score: (g.results[i] || {}).score,
+    })),
+  };
+  $("tutor-send").addEventListener("click", askTutor);
+  $("tutor-msg").addEventListener("keydown", (e) => { if (e.key === "Enter") askTutor(); });
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function askTutor() {
+  const input = $("tutor-msg");
+  const msg = input.value.trim();
+  if (!msg) return;
+  const log = $("tutor-log");
+  input.value = "";
+  $("tutor-send").disabled = true;
+  log.insertAdjacentHTML("beforeend", `<div class="tmsg you">${esc(msg)}</div>`);
+  const pending = document.createElement("div");
+  pending.className = "tmsg tutor"; pending.textContent = "…";
+  log.appendChild(pending); log.scrollTop = log.scrollHeight;
+  try {
+    const fd = new FormData();
+    fd.set("context", JSON.stringify(state.tutorContext));
+    fd.set("message", msg);
+    const d = await (await fetch(ROOT + "/tutor", { method: "POST", body: fd })).json();
+    pending.textContent = d.ok ? d.reply : (d.error || "The tutor couldn't answer that.");
+  } catch {
+    pending.textContent = "Network error — please try again.";
+  } finally {
+    $("tutor-send").disabled = false;
+    log.scrollTop = log.scrollHeight;
+    input.focus();
+  }
 }
 
 // ─────────────────────────── helpers ───────────────────────────

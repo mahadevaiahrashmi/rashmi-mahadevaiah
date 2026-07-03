@@ -120,10 +120,10 @@ const projects = [
   {
     title: "AI Exam Proctor",
     description:
-      "An AI-generated, AI-graded exam with privacy-first proctoring. Pick a topic and the AI writes a mixed multiple-choice + short-answer exam, then grades your written answers. Proctoring is opt-in: the camera is OFF by default (turn it on for a webcam preview that never leaves your browser), while integrity signals — tab switches, focus loss, copy attempts, leaving full-screen — are always tracked locally and summarized by the AI. Adapted from ProctoredAI by Abhinav R Bharadwaj.",
+      "An AI-generated, AI-graded exam with privacy-first proctoring and a post-exam AI tutor. Pick a topic and the AI writes a mixed multiple-choice + short-answer exam, then grades your written answers. Proctoring is opt-in: the camera is OFF by default (turn it on for a webcam preview that never leaves your browser), while integrity signals — tab switches, focus loss, copy attempts, leaving full-screen — are tracked locally and summarized by the AI. Afterward, an AI tutor grounded in your results explains any answer. Adapted from ProctoredAI by Rashmi Mahadevaiah.",
     tags: ["EdTech", "LLMs", "Proctoring"],
     live: PROCTORED_URL,
-    repo: "https://github.com/abhinavrbharadwaj7/AI_test_propter",
+    repo: "https://github.com/mahadevaiahrashmi/ProctoredAI",
     repoLabel: "Source",
   },
 ];

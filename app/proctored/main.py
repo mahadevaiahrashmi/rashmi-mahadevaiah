@@ -1,14 +1,22 @@
-# agent-notes: { ctx: "FastAPI sub-app: AI exam proctor — generate, grade, integrity summary", deps: [app/llm.py], state: active, last: "claude@2026-07-02" }
+# agent-notes: { ctx: "FastAPI sub-app: AI exam proctor — generate, grade, integrity, tutor", deps: [app/llm.py], state: active, last: "claude@2026-07-03" }
 """FastAPI sub-app: AI Exam Proctor.
 
-Mounted under /ai-proctor. An AI-generated, AI-graded exam with privacy-first
-proctoring. Adapted (serverless + OpenRouter) from ProctoredAI by Abhinav R
-Bharadwaj — https://github.com/abhinavrbharadwaj7/AI_test_propter (credited).
+Mounted under /proctored-ai. An AI-generated, AI-graded exam with privacy-first
+proctoring and a post-exam AI tutor. A serverless (OpenRouter) reinterpretation
+of ProctoredAI by Rashmi Mahadevaiah —
+https://github.com/mahadevaiahrashmi/ProctoredAI (which is itself based on
+abhinavrbharadwaj7/AI_test_propter). Credited in the UI.
 
-The AI (shared multi-provider router → OpenRouter) does three text jobs:
+Per that project's ADR-0009 (pluggable providers + camera opt-out): the camera is
+optional and off by default, and features degrade gracefully on providers without
+vision/TTS — here proctoring uses client-side integrity signals instead of a vision
+model, and the tutor is text-only (OpenRouter free models have no TTS).
+
+The AI (shared multi-provider router → OpenRouter) does four text jobs:
   POST /generate  -> build an exam (MCQ + short-answer) for a topic
   POST /grade     -> grade the short-answer questions and total the score
   POST /assess    -> write an integrity summary from client-detected events
+  POST /tutor     -> answer a follow-up question grounded in the graded exam
 
 Camera proctoring is OFF by default and opt-in; the actual camera + integrity
 signals (tab switches, focus loss, copy, fullscreen exit) run client-side, so no
@@ -60,6 +68,13 @@ ASSESS_SYSTEM = (
     "fullscreen) and whether the camera was on, write a brief, neutral integrity "
     "summary: 2-4 sentences stating what was observed and an overall risk level "
     "(Low / Medium / High). Do not accuse; describe. Plain text, no markdown."
+)
+TUTOR_SYSTEM = (
+    "You are a supportive post-exam tutor. You are given the exam TOPIC and, for each "
+    "question, its text, the correct/reference answer, the student's answer, and their "
+    "score. Answer the student's follow-up question clearly and encouragingly, grounded "
+    "ONLY in THIS exam and its answers. If asked about something outside the exam, gently "
+    "steer back. Be concise (<= 130 words), plain text, no markdown headers."
 )
 
 
@@ -191,3 +206,33 @@ def assess(events: str = Form(...), camera: str = Form("off")):
     prompt = f"CAMERA: {'on' if camera == 'on' else 'off'}\nEVENTS ({len(ev)}):\n" + "\n".join(f"- {str(e)[:120]}" for e in ev[:40])
     summary = llm.complete(prompt, system=ASSESS_SYSTEM, max_tokens=350) or ""
     return {"ok": True, "summary": summary.strip()}
+
+
+@app.post("/tutor")
+def tutor(context: str = Form(...), message: str = Form(...)):
+    """Post-exam AI tutor: answers a follow-up grounded in the graded exam."""
+    if not llm.available():
+        return {"ok": False, "error": "The tutor is unavailable right now."}
+    msg = message.strip()[:600]
+    if not msg:
+        return {"ok": False, "error": "Ask the tutor a question about your exam."}
+    try:
+        ctx = json.loads(context)
+        topic = str(ctx.get("topic", ""))[:200]
+        items = ctx.get("items", [])
+    except (ValueError, TypeError):
+        topic, items = "", []
+    lines = [f"TOPIC: {topic}", ""]
+    for n, it in enumerate(items[:12], 1):
+        lines.append(
+            f"Q{n}: {str(it.get('q',''))[:300]}\n"
+            f"  correct: {str(it.get('correct',''))[:300]}\n"
+            f"  your answer: {str(it.get('your',''))[:300]}\n"
+            f"  score: {it.get('score','')}"
+        )
+    lines.append("")
+    lines.append(f"STUDENT QUESTION: {msg}")
+    reply = llm.complete("\n".join(lines), system=TUTOR_SYSTEM, max_tokens=500)
+    if reply is None:
+        return {"ok": False, "error": "The tutor is busy right now. Please try again."}
+    return {"ok": True, "reply": reply.strip()}

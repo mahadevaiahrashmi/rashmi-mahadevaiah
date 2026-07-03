@@ -7,7 +7,7 @@
 | **Author** | Rashmi Mahadevaiah |
 | **Status** | v1.0 — Shipped |
 | **Last updated** | 2026-07-03 |
-| **Source** | Adapted from [ProctoredAI](https://github.com/abhinavrbharadwaj7/AI_test_propter) by Abhinav R Bharadwaj |
+| **Source** | Adapted from [ProctoredAI](https://github.com/mahadevaiahrashmi/ProctoredAI) by Rashmi Mahadevaiah (based on [AI_test_propter](https://github.com/abhinavrbharadwaj7/AI_test_propter) by Abhinav R Bharadwaj) |
 
 ---
 
