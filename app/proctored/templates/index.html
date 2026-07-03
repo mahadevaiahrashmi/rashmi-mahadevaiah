@@ -16,30 +16,51 @@
   </header>
 
   <main class="wrap">
-    <!-- SETUP -->
-    <section id="setup" class="card">
-      <h2>Set up your exam</h2>
-      <label class="fld">
-        <span>Topic</span>
-        <input id="topic" type="text" placeholder="e.g. Introduction to Quantum Physics" />
-      </label>
-      <label class="fld">
-        <span>Number of questions</span>
-        <select id="count">
-          <option>3</option><option selected>5</option><option>7</option><option>10</option>
-        </select>
-      </label>
-
-      <div class="cam-optin">
-        <label class="switch-row">
-          <span class="switch"><input type="checkbox" id="cam-toggle"><span class="slider"></span></span>
-          <span><b>Camera proctoring</b> — <span id="cam-state">off</span></span>
-        </label>
-        <p class="cam-note">Off by default. If you turn it on, a small webcam preview appears and stays <b>entirely in your browser</b> — no video is ever uploaded. Either way, integrity signals (tab switches, focus loss, copy, leaving full-screen) are tracked locally during the exam.</p>
+    <!-- SETUP WIZARD (3 steps) -->
+    <section id="setup">
+      <div class="steps" id="steps">
+        <span class="dot on">1</span><span class="rail"></span>
+        <span class="dot">2</span><span class="rail"></span>
+        <span class="dot">3</span>
       </div>
 
-      <button class="btn" id="start-btn">Start exam →</button>
-      <div id="setup-status" class="status" hidden></div>
+      <!-- Step 0: Identity & topic -->
+      <div class="card wizard-step" id="step-0">
+        <h2>Proctored exam setup</h2>
+        <label class="fld">
+          <span>👤 Your name</span>
+          <input id="name" type="text" placeholder="e.g. Alex" autocomplete="off" />
+        </label>
+        <label class="fld">
+          <span>📄 Topic</span>
+          <input id="topic" type="text" placeholder="e.g. Introduction to Quantum Physics" />
+        </label>
+        <label class="fld">
+          <span>Number of questions</span>
+          <select id="count"><option>3</option><option selected>5</option><option>7</option><option>10</option></select>
+        </label>
+        <button class="btn" id="to-step-1" disabled>Generate exam &amp; proceed →</button>
+        <div id="setup-status" class="status" hidden></div>
+      </div>
+
+      <!-- Step 1: Instructions -->
+      <div class="card wizard-step hidden" id="step-1">
+        <h2>Instructions</h2>
+        <div class="instructions" id="instructions"></div>
+        <button class="btn" id="to-step-2">Start system check →</button>
+      </div>
+
+      <!-- Step 2: System check -->
+      <div class="card wizard-step hidden" id="step-2">
+        <h2>System check</h2>
+        <p class="sub">Proctoring is <b>optional</b>. Turn the camera on for a webcam preview (it <b>never leaves your browser</b>), or take the exam unproctored. Either way, integrity signals — tab switches, focus loss, copy, leaving full-screen — are tracked locally.</p>
+        <div class="check-row">
+          <span class="check-label">📷 Camera <em>(optional)</em></span>
+          <span class="check-state" id="cam-check">Off — unproctored</span>
+          <span class="switch"><input type="checkbox" id="cam-toggle"><span class="slider"></span></span>
+        </div>
+        <button class="btn" id="begin-btn">Start exam →</button>
+      </div>
     </section>
 
     <!-- EXAM -->

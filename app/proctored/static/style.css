@@ -132,3 +132,32 @@ body {
 .tutor-input input { flex: 1; background: #fff; border: 1px solid var(--border); border-radius: 12px; color: var(--text); font: inherit; font-size: 0.95rem; padding: 11px 14px; outline: none; }
 .tutor-input input:focus { border-color: var(--text); }
 .tutor-input .btn { padding: 11px 20px; }
+
+/* ---- Setup wizard (3 steps) ---- */
+.hidden { display: none !important; }
+.steps { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px 0 18px; }
+.steps .dot {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 0.82rem; font-weight: 700; color: var(--muted);
+  background: #fff; border: 2px solid var(--border);
+}
+.steps .dot.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+.steps .dot.done { color: #fff; background: var(--good); border-color: var(--good); }
+.steps .dot.done::after { content: "✓"; }
+.steps .dot.done { font-size: 0; }
+.steps .dot.done::after { font-size: 0.85rem; }
+.steps .rail { width: 42px; height: 2px; background: var(--border); }
+
+.instructions {
+  background: #fff5f7; border: 1px solid #ffd0da; border-radius: 12px;
+  padding: 16px 18px; margin-bottom: 18px; font-size: 0.96rem; line-height: 1.6; white-space: pre-wrap;
+}
+
+.check-row {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px; margin: 14px 0 18px;
+  background: var(--card-2); border: 1px solid var(--border); border-radius: 12px;
+}
+.check-label { font-weight: 600; }
+.check-label em { color: var(--muted); font-weight: 400; font-style: normal; font-size: 0.85em; }
+.check-state { margin-left: auto; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+.check-state.on { color: var(--good); }

@@ -12,17 +12,21 @@ let state = {
 };
 
 // ─────────────────────────── Camera opt-in (OFF by default) ───────────────────────────
+function setCamState(on) {
+  const el = $("cam-check");
+  if (el) { el.textContent = on ? "On — proctored" : "Off — unproctored"; el.classList.toggle("on", on); }
+}
 $("cam-toggle").addEventListener("change", async (e) => {
   if (e.target.checked) {
     const ok = await enableCamera();
     if (!ok) { e.target.checked = false; return; }
-    state.camera = true; $("cam-state").textContent = "on";
+    state.camera = true; setCamState(true);
   } else {
-    disableCamera(); state.camera = false; $("cam-state").textContent = "off";
+    disableCamera(); state.camera = false; setCamState(false);
   }
 });
 $("cam-close").addEventListener("click", () => {
-  disableCamera(); state.camera = false; $("cam-state").textContent = "off"; $("cam-toggle").checked = false;
+  disableCamera(); state.camera = false; setCamState(false); $("cam-toggle").checked = false;
 });
 
 async function enableCamera() {
@@ -68,29 +72,50 @@ function armProctoring() {
   });
 }
 
-// ─────────────────────────── Start exam ───────────────────────────
-$("start-btn").addEventListener("click", startExam);
-async function startExam() {
-  const topic = $("topic").value.trim();
-  if (!topic) { $("topic").focus(); return; }
-  const btn = $("start-btn"); btn.disabled = true;
+// ─────────────────────────── Setup wizard (3 steps) ───────────────────────────
+function showStep(n) {
+  [0, 1, 2].forEach((s) => $("step-" + s).classList.toggle("hidden", s !== n));
+  [...document.querySelectorAll("#steps .dot")].forEach((d, k) => {
+    d.classList.toggle("on", k <= n); d.classList.toggle("done", k < n);
+  });
+}
+// Step 0: enable the CTA only when name + topic are filled.
+function checkStep0() { $("to-step-1").disabled = !($("name").value.trim() && $("topic").value.trim()); }
+$("name").addEventListener("input", checkStep0);
+$("topic").addEventListener("input", checkStep0);
+
+// Step 0 → generate exam → Step 1 (instructions)
+$("to-step-1").addEventListener("click", async () => {
+  const topic = $("topic").value.trim(), name = $("name").value.trim();
+  if (!topic || !name) return;
+  const btn = $("to-step-1"); btn.disabled = true;
   setStatus("setup-status", "🧠 Generating your exam…");
   try {
     const fd = new FormData();
-    fd.set("topic", topic); fd.set("count", $("count").value);
+    fd.set("topic", topic); fd.set("count", $("count").value); fd.set("name", name);
     const data = await (await fetch(ROOT + "/generate", { method: "POST", body: fd })).json();
     if (!data.ok) { setStatus("setup-status", "⚠️ " + data.error); btn.disabled = false; return; }
-    state.topic = data.topic;
+    state.topic = data.topic; state.name = data.name || name;
     state.questions = data.questions;
     state.answers = new Array(data.questions.length).fill("");
     state.i = 0; state.events = []; state.submitted = false;
-    $("setup").hidden = true; $("exam").hidden = false;
-    state.startTs = Date.now();
-    startTimer(); armProctoring(); renderQuestion();
+    setStatus("setup-status", "");
+    $("instructions").textContent = data.instructions || "";
+    showStep(1);
   } catch {
     setStatus("setup-status", "⚠️ Network error — please try again."); btn.disabled = false;
   }
-}
+});
+
+// Step 1 → Step 2 (system check)
+$("to-step-2").addEventListener("click", () => showStep(2));
+
+// Step 2 → begin the exam
+$("begin-btn").addEventListener("click", () => {
+  $("setup").hidden = true; $("exam").hidden = false;
+  state.startTs = Date.now();
+  startTimer(); armProctoring(); renderQuestion();
+});
 
 function startTimer() {
   const tick = () => {
@@ -176,7 +201,7 @@ function renderResults(g, summary) {
     <div class="card score-card">
       <div class="score-ring" style="--p:${pct}"><span>${pct}%</span></div>
       <div>
-        <h2>${grade}</h2>
+        <h2>${state.name ? esc(state.name) + " — " : ""}${grade}</h2>
         <p class="sub">You scored <b>${g.earned}</b> / ${g.total} on <b>${esc(state.topic)}</b>.</p>
       </div>
     </div>

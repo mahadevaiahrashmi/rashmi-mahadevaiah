@@ -42,8 +42,17 @@ app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
 
 MAX_TOPIC = 200
+MAX_NAME = 60
 MIN_Q, MAX_Q = 3, 10
 
+WELCOME_SYSTEM = (
+    "You are an exam proctor welcoming a student to a short online exam. Given the "
+    "student's NAME, the TOPIC, and the question COUNT, write a brief, warm welcome "
+    "and instructions (<= 90 words, plain text, no markdown). Address them by name, "
+    "say what the exam covers and how many questions, and note: proctoring is "
+    "optional (they may enable the camera or take it unproctored), integrity signals "
+    "like tab-switching are tracked, and the AI grades written answers afterward."
+)
 GEN_SYSTEM = (
     "You are an exam author. Given a TOPIC and a COUNT, write COUNT exam questions "
     "mixing multiple-choice and short-answer. Balanced difficulty, unambiguous, one "
@@ -119,10 +128,11 @@ def index(request: Request):
 
 
 @app.post("/generate")
-def generate(topic: str = Form(...), count: int = Form(5)):
+def generate(topic: str = Form(...), count: int = Form(5), name: str = Form("")):
     if not llm.available():
         return {"ok": False, "error": "The exam engine is unavailable right now (no model configured)."}
     topic = topic.strip()[:MAX_TOPIC]
+    name = name.strip()[:MAX_NAME]
     if not topic:
         return {"ok": False, "error": "Enter a topic for the exam."}
     count = max(MIN_Q, min(MAX_Q, int(count or 5)))
@@ -145,7 +155,19 @@ def generate(topic: str = Form(...), count: int = Form(5)):
             questions.append(q)
     if not questions:
         return {"ok": False, "error": "Couldn't build a valid exam — please try again."}
-    return {"ok": True, "topic": topic, "questions": questions}
+    # AI-written welcome/instructions for the wizard's step 1 (fallback if it fails).
+    welcome = llm.complete(
+        f"NAME: {name or 'there'}\nTOPIC: {topic}\nCOUNT: {len(questions)}",
+        system=WELCOME_SYSTEM, max_tokens=200) or ""
+    if not welcome.strip():
+        who = f"{name}, " if name else ""
+        welcome = (
+            f"Welcome {who}and good luck! This exam covers {topic} with {len(questions)} "
+            "questions (multiple-choice and short-answer). Proctoring is optional — you can "
+            "enable your camera or take it unproctored — and integrity signals like tab "
+            "switching are tracked locally. The AI grades your written answers at the end."
+        )
+    return {"ok": True, "topic": topic, "name": name, "questions": questions, "instructions": welcome.strip()}
 
 
 @app.post("/grade")
