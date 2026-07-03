@@ -46,49 +46,49 @@ const projects = [
   {
     title: "Product Discovery Interactive Guide",
     description:
-      "An interactive, step-by-step guide that teaches product discovery — framing problems, learning from real user behavior, testing your riskiest assumption, and deciding on evidence. Includes an AI coach that gives feedback on your practice answers.",
+      "Interactive product-discovery course with an LLM coach that critiques your practice answers — problem framing, user research, riskiest-assumption tests, and evidence-based decisions.",
     tags: ["Product", "LLMs", "Interactive"],
     live: DISCOVERY_GUIDE_URL,
   },
   {
     title: "Personal Voice Skill",
     description:
-      "Paste a few things you've written and it learns your voice, then drafts replies, posts, and messages that actually sound like you — with one-tap tweaks (shorter, warmer, more formal) — not like a generic model.",
+      "Learns your writing voice from a few samples, then drafts messages that sound like you — with one-tap tone controls. An LLM personalization skill (prompting + voice profile).",
     tags: ["LLMs", "Personalization", "Agents"],
     live: VOICE_SKILL_URL,
   },
   {
     title: "JD-to-Resume Customizer",
     description:
-      "Paste a job description and your resume, pick an AI engine, and get a tailored one-page resume and matching cover letter as Word and PDF. Re-emphasises real experience — never invents it.",
+      "Tailors a resume + cover letter to any job description and exports Word/PDF. Python/FastAPI with a multi-provider LLM — re-emphasizes real experience, never fabricates it.",
     tags: ["Python", "FastAPI", "LLMs"],
     live: RESUME_TAILOR_URL,
   },
   {
     title: "Funded Companies Agent",
     description:
-      "A weekly agent that scrapes the web for startups that raised funding this week — the moment they're hiring — and proposes your way in: for each, a target role, why you fit, who to contact, a tailored pitch, and an application path, mapped to your background.",
+      "Weekly agent that finds newly-funded startups and drafts a tailored way in — target role, why you fit, who to contact, and a pitch. Agentic AI with live web search.",
     tags: ["Agentic AI", "RAG", "Web Search"],
     live: FUNDED_AGENT_URL,
   },
   {
     title: "Duolingo-Style AI Learning App",
     description:
-      "Learn AI concepts the Duolingo way — a gamified lesson path with XP, hearts, streaks, and instant feedback across 8 bite-sized lessons (tokens, embeddings, RAG, agents, and more). Product usage is tracked with PostHog analytics.",
+      "Gamified course teaching core AI concepts (tokens, embeddings, RAG, agents) with XP, streaks, and instant feedback — instrumented with PostHog product analytics.",
     tags: ["EdTech", "Gamification", "PostHog"],
     live: LEARN_AI_URL,
   },
   {
     title: "GTM with AI-Generated Videos",
     description:
-      "Turn what you're launching into a full go-to-market plan built on short-form AI video — 3–5 concepts with paste-ready Higgsfield / Google Veo prompts, scripts, captions, a 2-week posting schedule, and an Instagram-or-LinkedIn playbook to land your first 10 users.",
+      "Turns a launch into a short-form-video go-to-market plan — concepts, paste-ready Veo/Higgsfield prompts, scripts, and a 2-week posting schedule. Generative-AI GTM tooling.",
     tags: ["Generative AI", "GTM", "Video"],
     live: GTM_URL,
   },
   {
     title: "Your Own PM AI Agent",
     description:
-      "A conversational Product Manager co-pilot — chat to draft PRDs, break features into user stories, prioritize a backlog with RICE, sketch a roadmap, and pressure-test ideas. Shipped two ways: a live web agent, and a Product-Manager skill in a fork of OpenClaw (the open-source personal AI assistant).",
+      "Conversational PM co-pilot for PRDs, user stories, RICE prioritization, and roadmaps — grounded in a 500+ skill library via retrieval. Also shipped as an OpenClaw skill.",
     tags: ["Agentic AI", "Product", "OpenClaw"],
     live: PM_AGENT_URL,
     repo: OPENCLAW_FORK_URL,
@@ -97,7 +97,7 @@ const projects = [
   {
     title: "Narrated Explainer Video Bot",
     description:
-      "Turn rough bullet points into a 3Blue1Brown-style explainer video. The studio picks an aesthetic, writes and critiques a script broken into slide segments, and designs a self-contained HTML slide for each — previewed live, ready to download. You then record the narration in your own voice and stitch the final MP4 locally (see the repo).",
+      "Turns rough notes into a 3Blue1Brown-style explainer: AI writes and critiques the script and designs self-contained HTML slides to narrate. Python + multi-provider generative AI.",
     tags: ["Python", "Generative AI", "Video"],
     live: EXPLAINER_URL,
     repo: EXPLAINER_BOT_URL,
@@ -106,21 +106,21 @@ const projects = [
   {
     title: "GlassChat — See How an LLM Works",
     description:
-      "A see-through LLM chat built for learning. Toggle memory on/off and watch the context grow or shrink; click the 👁 on any reply to see exactly what was sent, the real token counts, and the tentative cost. Compare up to 4 models side by side — one prompt, four windows — to feel how price and quality differ. Password-gated for cost control.",
+      "A teaching tool that exposes how LLMs work — a per-message token/cost inspector, memory on/off toggle, and 4-model side-by-side comparison on real OpenRouter usage.",
     tags: ["LLMs", "Tokens & Cost", "Interactive"],
     live: GLASSCHAT_URL,
   },
   {
     title: "Modern Time Tracker",
     description:
-      "A clean, fast time tracker: one-tap start/stop with a live ticking clock, color-coded projects, and manual entries. See today's and this week's totals at a glance, plus a per-project breakdown. Everything is saved locally in your browser — no account, no server, instant.",
+      "Fast, client-side time tracker with live start/stop timers, color-coded projects, and daily/weekly summaries. Vanilla JS + localStorage — no backend, no account.",
     tags: ["Productivity", "Vanilla JS", "localStorage"],
     live: TIME_TRACKER_URL,
   },
   {
     title: "AI Exam Proctor",
     description:
-      "An AI-generated, AI-graded exam with privacy-first proctoring and a post-exam AI tutor. Pick a topic and the AI writes a mixed multiple-choice + short-answer exam, then grades your written answers. Proctoring is opt-in: the camera is OFF by default (turn it on for a webcam preview that never leaves your browser), while integrity signals — tab switches, focus loss, copy attempts, leaving full-screen — are tracked locally and summarized by the AI. Afterward, an AI tutor grounded in your results explains any answer. Adapted from ProctoredAI by Rashmi Mahadevaiah.",
+      "AI-generated, AI-graded exams with opt-in webcam proctoring (vision-model checks + integrity signals), an explicit consent flow, and a post-exam voice tutor. FastAPI + OpenRouter.",
     tags: ["EdTech", "LLMs", "Proctoring"],
     live: PROCTORED_URL,
     repo: "https://github.com/mahadevaiahrashmi/ProctoredAI",
