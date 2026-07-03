@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Exam Proctor</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>AI Exam Proctor</h1>
+      <p class="tagline">An AI-generated, AI-graded exam with privacy-first proctoring.</p>
+    </div>
+    <a class="back" href="/#projects">← Back to portfolio</a>
+  </header>
+
+  <main class="wrap">
+    <!-- SETUP -->
+    <section id="setup" class="card">
+      <h2>Set up your exam</h2>
+      <label class="fld">
+        <span>Topic</span>
+        <input id="topic" type="text" placeholder="e.g. Introduction to Quantum Physics" />
+      </label>
+      <label class="fld">
+        <span>Number of questions</span>
+        <select id="count">
+          <option>3</option><option selected>5</option><option>7</option><option>10</option>
+        </select>
+      </label>
+
+      <div class="cam-optin">
+        <label class="switch-row">
+          <span class="switch"><input type="checkbox" id="cam-toggle"><span class="slider"></span></span>
+          <span><b>Camera proctoring</b> — <span id="cam-state">off</span></span>
+        </label>
+        <p class="cam-note">Off by default. If you turn it on, a small webcam preview appears and stays <b>entirely in your browser</b> — no video is ever uploaded. Either way, integrity signals (tab switches, focus loss, copy, leaving full-screen) are tracked locally during the exam.</p>
+      </div>
+
+      <button class="btn" id="start-btn">Start exam →</button>
+      <div id="setup-status" class="status" hidden></div>
+    </section>
+
+    <!-- EXAM -->
+    <section id="exam" hidden>
+      <div class="exam-head">
+        <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+        <div class="exam-meta">
+          <span class="timer" id="timer">00:00</span>
+          <span class="integrity ok" id="integrity" title="Proctoring status">🛡 Clean</span>
+        </div>
+      </div>
+
+      <div class="card q-card">
+        <div class="q-count" id="q-count"></div>
+        <h2 class="q-text" id="q-text"></h2>
+        <div id="q-body"></div>
+      </div>
+
+      <div class="exam-foot">
+        <button class="ghost" id="prev-btn">← Previous</button>
+        <button class="ghost" id="next-btn">Next →</button>
+        <button class="btn" id="submit-btn">Submit exam</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="result" hidden></section>
+  </main>
+
+  <!-- Floating camera (only shown if opted in) -->
+  <div id="cam" class="cam" hidden>
+    <video id="cam-video" autoplay playsinline muted></video>
+    <button id="cam-close" title="Turn camera off">✕</button>
+  </div>
+
+  <footer class="foot">
+    Adapted from <a href="https://github.com/abhinavrbharadwaj7/AI_test_propter" target="_blank" rel="noopener noreferrer">ProctoredAI</a> by Abhinav R Bharadwaj. Rebuilt serverless with OpenRouter. Camera stays in your browser.
+  </footer>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/app.js"></script>
+</body>
+</html>

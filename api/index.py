@@ -40,6 +40,7 @@ from app.pm.main import app as pm_app  # noqa: E402
 from app.explainer.main import app as explainer_app  # noqa: E402
 from app.glasschat.main import app as glasschat_app  # noqa: E402
 from app.timetracker.main import app as timetracker_app  # noqa: E402
+from app.proctored.main import app as proctored_app  # noqa: E402
 
 app = FastAPI()
 _MOUNTS = {
@@ -53,6 +54,7 @@ _MOUNTS = {
     "explainer-bot": explainer_app,
     "glass-chat": glasschat_app,
     "time-tracker": timetracker_app,
+    "proctored-ai": proctored_app,
 }
 for _prefix, _sub in _MOUNTS.items():
     app.mount("/" + _prefix, _sub)

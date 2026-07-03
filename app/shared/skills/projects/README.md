@@ -13,6 +13,11 @@ and how it works. Each links to the live app.
 | [product-manager](product-manager.md) | PM AI Agent | `/pm-agent` |
 | [explainer-video](explainer-video.md) | Narrated Explainer Video Bot | `/explainer-bot` |
 | [product-discovery-coach](product-discovery-coach.md) | Product Discovery Guide | `/product-discovery` |
+| [ai-exam-proctor](ai-exam-proctor.md) | AI Exam Proctor | `/proctored-ai` |
+
+## Meta
+
+- [add-new-project](add-new-project.md) — the repeatable recipe for adding a new embedded project/app to this portfolio (folder → mount → route → card → docs → deploy).
 
 ## Not skills (intentionally omitted)
 

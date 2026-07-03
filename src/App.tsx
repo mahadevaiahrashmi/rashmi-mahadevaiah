@@ -38,6 +38,7 @@ const EXPLAINER_URL = "/explainer-bot";
 const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 const GLASSCHAT_URL = "/glass-chat";
 const TIME_TRACKER_URL = "/time-tracker";
+const PROCTORED_URL = "/proctored-ai";
 
 // The projects. `live` = a clickable card that opens the running app in a new
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
@@ -115,6 +116,13 @@ const projects = [
       "A clean, fast time tracker: one-tap start/stop with a live ticking clock, color-coded projects, and manual entries. See today's and this week's totals at a glance, plus a per-project breakdown. Everything is saved locally in your browser — no account, no server, instant.",
     tags: ["Productivity", "Vanilla JS", "localStorage"],
     live: TIME_TRACKER_URL,
+  },
+  {
+    title: "AI Exam Proctor",
+    description:
+      "An AI-generated, AI-graded exam with privacy-first proctoring. Pick a topic and the AI writes a mixed multiple-choice + short-answer exam, then grades your written answers. Proctoring is opt-in: the camera is OFF by default (turn it on for a webcam preview that never leaves your browser), while integrity signals — tab switches, focus loss, copy attempts, leaving full-screen — are always tracked locally and summarized by the AI. Adapted from ProctoredAI by Abhinav R Bharadwaj.",
+    tags: ["EdTech", "LLMs", "Proctoring"],
+    live: PROCTORED_URL,
   },
 ];
 
