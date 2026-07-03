@@ -16,99 +16,112 @@
   </header>
 
   <main class="wrap">
-    <!-- SETUP WIZARD (3 steps) -->
+    <!-- SETUP WIZARD (persistent header + swapping step body) -->
     <section id="setup" class="setup-wrap">
-      <!-- Step 0: Identity & topic -->
-      <div class="card wizard-step setup-card" id="step-0">
+      <div class="card setup-card">
         <div class="setup-badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
         </div>
         <h2>Proctored Exam Setup</h2>
         <p class="sub setup-sub">Follow the steps to begin your exam securely.</p>
-        <label class="fld">
-          <span class="fld-label"><svg class="fld-ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Your Name</span>
-          <input id="name" type="text" placeholder="e.g. Alex Doe" autocomplete="off" />
-        </label>
-        <label class="fld">
-          <span class="fld-label"><svg class="fld-ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg> Exam Topic</span>
-          <input id="topic" type="text" placeholder="e.g. Quantum Physics, World History" />
-        </label>
-        <label class="fld">
-          <span class="fld-label">Number of questions</span>
-          <select id="count"><option>3</option><option selected>5</option><option>7</option><option>10</option></select>
-        </label>
-        <button class="btn wide" id="to-step-1" disabled>Generate Exam &amp; Proceed →</button>
-        <div id="setup-status" class="status" hidden></div>
-      </div>
 
-      <!-- Step 1: Instructions -->
-      <div class="card wizard-step setup-card hidden" id="step-1">
-        <h2>Instructions</h2>
-        <div class="instructions" id="instructions"></div>
-        <button class="btn wide" id="to-step-2">Start System Check →</button>
-      </div>
-
-      <!-- Step 2: System check -->
-      <div class="card wizard-step setup-card hidden" id="step-2">
-        <h2>System Check</h2>
-        <p class="sub">The exam can be proctored through your webcam, or taken unproctored. Grant access below to be proctored (video stays in your browser), or choose <b>Take Without Camera</b>. Integrity signals are tracked locally either way.</p>
-        <div class="check-row">
-          <span class="check-label">📷 Camera Access</span>
-          <span class="check-state" id="cam-check">Not started</span>
-        </div>
-        <div class="check-row">
-          <span class="check-label">🎙 Microphone Access</span>
-          <span class="check-state" id="mic-check">Not started</span>
-        </div>
-
-        <!-- Privacy notice + explicit consent (only for proctored start) -->
-        <div class="consent" id="consent-panel" hidden>
-          <h3>Webcam proctoring — privacy notice <span class="notice-ver">v1</span></h3>
-          <p>If you continue proctored, a snapshot of your webcam is sent to an AI vision model about every 8 seconds to check for integrity issues (e.g. another person, a phone, or looking away). <b>Frames are not stored</b> — there's no server database — and they're processed only to flag possible violations. You can decline and take the exam unproctored instead.</p>
-          <label class="consent-check">
-            <input type="checkbox" id="consent-box" />
-            <span>I understand and <b>consent</b> to webcam proctoring for this exam.</span>
+        <!-- Step 0: Identity & topic -->
+        <div class="wizard-step" id="step-0">
+          <label class="fld">
+            <span class="fld-label"><svg class="fld-ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Your Name</span>
+            <input id="name" type="text" placeholder="e.g. Alex Doe" autocomplete="off" />
           </label>
+          <label class="fld">
+            <span class="fld-label"><svg class="fld-ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg> Exam Topic</span>
+            <input id="topic" type="text" placeholder="e.g. Quantum Physics, World History" />
+          </label>
+          <label class="fld">
+            <span class="fld-label">Number of questions</span>
+            <select id="count"><option>3</option><option selected>5</option><option>7</option><option>10</option></select>
+          </label>
+          <button class="btn wide" id="to-step-1" disabled>Generate Exam &amp; Proceed →</button>
+          <div id="setup-status" class="status" hidden></div>
         </div>
 
-        <button class="btn" id="begin-btn" disabled>Start Exam →</button>
-        <button class="ghost wide" id="unproctored-btn">Take Without Camera (Unproctored)</button>
+        <!-- Step 1: Instructions -->
+        <div class="wizard-step hidden" id="step-1">
+          <h3 class="step-title">Instructions</h3>
+          <div class="instructions" id="instructions"></div>
+          <button class="btn wide" id="to-step-2">Start System Check →</button>
+        </div>
+
+        <!-- Step 2: System check -->
+        <div class="wizard-step hidden" id="step-2">
+          <h3 class="step-title">System Check</h3>
+          <p class="sub step-sub">Grant camera &amp; microphone to be proctored, or take the exam unproctored.</p>
+          <div class="check-row">
+            <span class="check-label"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> Camera Access</span>
+            <span class="check-icon" id="cam-check"></span>
+          </div>
+          <div class="check-row">
+            <span class="check-label"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg> Microphone Access</span>
+            <span class="check-icon" id="mic-check"></span>
+          </div>
+
+          <!-- Privacy notice + explicit consent (proctored only) -->
+          <div class="consent" id="consent-panel" hidden>
+            <h4><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Privacy notice <span class="notice-ver">v1</span></h4>
+            <p>During a proctored exam your webcam is sampled about every 8 seconds, and each snapshot is sent to an AI vision model for automated proctoring analysis. <b>Nothing is stored</b> — there is no server-side database — and snapshots are used only to flag possible violations. You can decline and take the exam unproctored instead.</p>
+          </div>
+          <label class="consent-check" id="consent-row" hidden>
+            <input type="checkbox" id="consent-box" />
+            <span>I consent to webcam monitoring for this exam, including sending periodic snapshots to the AI provider for proctoring.</span>
+          </label>
+
+          <button class="btn wide" id="begin-btn" disabled>Consent Required to Proctor</button>
+          <button class="ghost wide" id="unproctored-btn">🚫 Take Without Camera (Unproctored)</button>
+        </div>
       </div>
     </section>
 
-    <!-- EXAM -->
-    <section id="exam" hidden>
-      <div class="exam-head">
-        <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
-        <div class="exam-meta">
-          <span class="mode-badge" id="mode-badge">Unproctored</span>
-          <span class="timer" id="timer">00:00</span>
-          <span class="integrity ok" id="integrity" title="Proctoring status">🛡 Clean</span>
+    <!-- EXAM (two-column: question + proctoring sidebar) -->
+    <section id="exam" class="exam-screen" hidden>
+      <div class="exam-topbar">
+        <h1 class="exam-title" id="exam-title">Exam</h1>
+        <span class="timer-pill" id="timer">00:00</span>
+      </div>
+
+      <div class="exam-grid" id="exam-grid">
+        <div class="exam-main">
+          <div class="card q-card">
+            <div class="q-count" id="q-count"></div>
+            <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+            <h2 class="q-text" id="q-text"></h2>
+            <div id="q-body"></div>
+            <div class="exam-foot">
+              <button class="ghost" id="prev-btn">‹ Previous</button>
+              <span class="foot-spacer"></span>
+              <button class="ghost" id="next-btn">Next ›</button>
+              <button class="btn" id="submit-btn">➤ Submit Exam</button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="card q-card">
-        <div class="q-count" id="q-count"></div>
-        <h2 class="q-text" id="q-text"></h2>
-        <div id="q-body"></div>
-      </div>
-
-      <div class="exam-foot">
-        <button class="ghost" id="prev-btn">← Previous</button>
-        <button class="ghost" id="next-btn">Next →</button>
-        <button class="btn" id="submit-btn">Submit exam</button>
+        <aside class="exam-side" id="exam-side" hidden>
+          <div class="cam-box">
+            <video id="cam-video" autoplay playsinline muted></video>
+            <span class="cam-tag">📷 Your Camera</span>
+          </div>
+          <div class="side-sec">
+            <h3>Proctoring Status</h3>
+            <div class="proctor-status ok" id="integrity">🛡 Clean</div>
+          </div>
+          <div class="side-sec">
+            <h3>Violation Log</h3>
+            <div class="violation-log" id="violation-log"><p class="vlog-empty">No violations detected.</p></div>
+          </div>
+        </aside>
       </div>
     </section>
 
     <!-- RESULTS -->
     <section id="result" hidden></section>
   </main>
-
-  <!-- Floating camera (only shown if opted in) -->
-  <div id="cam" class="cam" hidden>
-    <video id="cam-video" autoplay playsinline muted></video>
-    <button id="cam-close" title="Turn camera off">✕</button>
-  </div>
 
   <footer class="foot">
     Adapted from <a href="https://github.com/abhinavrbharadwaj7/AI_test_propter" target="_blank" rel="noopener noreferrer">AI_test_propter</a> by Abhinav R Bharadwaj.

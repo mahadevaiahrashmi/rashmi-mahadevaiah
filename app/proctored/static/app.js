@@ -16,54 +16,58 @@ let state = {
 };
 
 // ─────────────────────────── System check (camera optional, off by default) ───────────────────────────
-function setCheck(id, text, ok, bad) {
+const ICONS = {
+  checking: '<span class="ci-spin"></span>',
+  granted: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>',
+  denied: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+};
+function setCheck(id, kind) {
   const el = $(id);
   if (!el) return;
-  el.textContent = text;
-  el.classList.toggle("on", !!ok);
-  el.classList.toggle("bad", !!bad);
+  el.innerHTML = ICONS[kind] || "";
+  el.className = "check-icon " + kind;
 }
-// Requests camera + mic like the original's System Check. Camera is used for the
-// proctoring preview; the mic is only used to satisfy the check and is stopped
-// immediately (no audio is recorded). Users can skip via "Take Without Camera".
+// Requests camera + mic like the original's System Check. Camera drives the
+// proctoring preview; the mic only satisfies the check and is stopped immediately
+// (no audio recorded). Users can skip via "Take Without Camera".
 async function requestProctoring() {
-  setCheck("cam-check", "Checking…"); setCheck("mic-check", "Checking…");
+  setCheck("cam-check", "checking"); setCheck("mic-check", "checking");
   $("begin-btn").disabled = true;
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 }, audio: true });
-    stream.getAudioTracks().forEach((t) => t.stop()); // mic only for the check
+    stream.getAudioTracks().forEach((t) => t.stop());
     state.stream = stream;
     $("cam-video").srcObject = stream;
-    $("cam").hidden = false;
     state.camera = true;
-    setCheck("cam-check", "Granted ✓", true); setCheck("mic-check", "Granted ✓", true);
-    // FR-12: require explicit consent behind the privacy notice before proctoring.
+    setCheck("cam-check", "granted"); setCheck("mic-check", "granted");
+    // FR-12: explicit consent behind the privacy notice before proctoring.
     $("consent-panel").hidden = false;
-    $("begin-btn").disabled = !$("consent-box").checked;
+    $("consent-row").hidden = false;
+    syncBeginBtn();
     logEvent("Camera turned on");
   } catch {
     state.camera = false; state.consent = null;
-    setCheck("cam-check", "Denied ✗", false, true); setCheck("mic-check", "Denied ✗", false, true);
-    $("consent-panel").hidden = true;
+    setCheck("cam-check", "denied"); setCheck("mic-check", "denied");
+    $("consent-panel").hidden = true; $("consent-row").hidden = true;
     $("begin-btn").disabled = true; // must take the exam unproctored
   }
 }
+function syncBeginBtn() {
+  const ok = state.camera && !!state.consent;
+  const btn = $("begin-btn");
+  btn.disabled = !ok;
+  btn.textContent = ok ? "Start Proctored Exam" : "Consent Required to Proctor";
+}
 // Consent checkbox: record consent (timestamp + notice version) and enable Start.
 $("consent-box").addEventListener("change", (e) => {
-  if (e.target.checked && state.camera) {
-    state.consent = { acceptedAt: new Date().toISOString(), notice: NOTICE_VERSION };
-    $("begin-btn").disabled = false;
-  } else {
-    state.consent = null;
-    $("begin-btn").disabled = true;
-  }
+  state.consent = (e.target.checked && state.camera)
+    ? { acceptedAt: new Date().toISOString(), notice: NOTICE_VERSION } : null;
+  syncBeginBtn();
 });
-$("cam-close").addEventListener("click", () => { disableCamera(); state.camera = false; });
 
 function disableCamera() {
   if (state.stream) { state.stream.getTracks().forEach((t) => t.stop()); state.stream = null; }
-  $("cam").hidden = true;
-  $("cam-video").srcObject = null;
+  const v = $("cam-video"); if (v) v.srcObject = null;
 }
 
 // ─────────────────────────── Integrity signals (client-side) ───────────────────────────
@@ -72,12 +76,22 @@ function logEvent(what) {
   state.events.push(`${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")} — ${what}`);
   updateIntegrity();
 }
+function violations() { return state.events.filter((e) => !e.includes("Camera turned on")); }
 function updateIntegrity() {
   const el = $("integrity");
-  if (!el) return;
-  const n = state.events.filter((e) => !e.includes("Camera turned on")).length;
-  if (n === 0) { el.className = "integrity ok"; el.textContent = "🛡 Clean"; }
-  else { el.className = "integrity flag"; el.textContent = `⚠ ${n} flag${n > 1 ? "s" : ""}`; }
+  if (el) {
+    const n = violations().length;
+    if (n === 0) { el.className = "proctor-status ok"; el.textContent = "🛡 Clean"; }
+    else { el.className = "proctor-status flag"; el.textContent = "⚠ Potential Violation Detected"; }
+  }
+  const log = $("violation-log");
+  if (log) {
+    const v = violations();
+    log.innerHTML = v.length
+      ? v.map((f) => `<div class="vlog-row">⚠ ${esc(f)}</div>`).join("")
+      : `<p class="vlog-empty">No violations detected.</p>`;
+    log.scrollTop = log.scrollHeight;
+  }
 }
 function armProctoring() {
   document.addEventListener("visibilitychange", () => {
@@ -93,9 +107,6 @@ function armProctoring() {
 // ─────────────────────────── Setup wizard (3 steps) ───────────────────────────
 function showStep(n) {
   [0, 1, 2].forEach((s) => $("step-" + s).classList.toggle("hidden", s !== n));
-  [...document.querySelectorAll("#steps .dot")].forEach((d, k) => {
-    d.classList.toggle("on", k <= n); d.classList.toggle("done", k < n);
-  });
 }
 // Step 0: enable the CTA only when name + topic are filled.
 function checkStep0() { $("to-step-1").disabled = !($("name").value.trim() && $("topic").value.trim()); }
@@ -132,9 +143,10 @@ $("to-step-2").addEventListener("click", () => { showStep(2); requestProctoring(
 function beginExam() {
   const proctored = state.camera && state.consent;
   if (!proctored) { disableCamera(); state.camera = false; state.consent = null; }
-  const badge = $("mode-badge");
-  badge.textContent = proctored ? "🔴 Proctored" : "Unproctored";
-  badge.classList.toggle("proctored", !!proctored);
+  $("exam-title").textContent = state.topic || "Exam";
+  $("exam-side").hidden = !proctored;      // proctoring sidebar only when proctored
+  $("exam-grid").classList.toggle("solo", !proctored);
+  updateIntegrity();
   $("setup").hidden = true; $("exam").hidden = false;
   state.startTs = Date.now();
   startTimer(); armProctoring(); renderQuestion();
@@ -213,7 +225,8 @@ $("next-btn").addEventListener("click", () => { if (state.i < state.questions.le
 $("submit-btn").addEventListener("click", () => {
   const answered = state.answers.filter((a) => a && a.trim()).length;
   showConfirm(
-    `Submit your exam? You've answered ${answered} of ${state.questions.length} question${state.questions.length !== 1 ? "s" : ""}. You can't change answers after submitting.`,
+    "Are you sure?",
+    `This will end the exam and submit your answers. You've answered ${answered} of ${state.questions.length}. You cannot undo this action.`,
     submitExam
   );
 });
@@ -364,11 +377,12 @@ async function askTutor() {
 // ─────────────────────────── helpers ───────────────────────────
 function setStatus(id, msg) { const el = $(id); if (!el) return; el.hidden = !msg; el.textContent = msg || ""; }
 
-function showConfirm(message, onConfirm) {
+function showConfirm(title, message, onConfirm) {
   const scrim = document.createElement("div");
   scrim.className = "modal-scrim";
   scrim.innerHTML =
     `<div class="modal-box" role="dialog" aria-modal="true">
+       <h3>${esc(title)}</h3>
        <p>${esc(message)}</p>
        <div class="modal-actions">
          <button class="ghost" data-act="cancel">Cancel</button>
