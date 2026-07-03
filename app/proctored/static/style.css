@@ -188,3 +188,8 @@ body {
 .modal-box { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 22px; width: min(420px, 100%); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
 .modal-box p { margin: 0 0 18px; font-size: 0.98rem; line-height: 1.5; }
 .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* Tutor header + voice toggle */
+.tutor-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tutor-head h3 { margin: 0; }
+.ghost.sm { font-size: 0.8rem; padding: 6px 12px; }

@@ -11,7 +11,7 @@ const VISION_INTERVAL_MS = 8000;       // FR-6: sample a webcam frame every ~8s
 
 let state = {
   topic: "", name: "", questions: [], answers: [], i: 0,
-  camera: false, stream: null, consent: null,
+  camera: false, stream: null, consent: null, muted: false,
   events: [], startTs: 0, deadline: 0, timerId: null, visionId: null, submitted: false,
 };
 
@@ -289,8 +289,11 @@ function renderResults(g, summary) {
     <div class="card"><h3>Answers</h3>${rows}</div>
 
     <div class="card tutor-card">
-      <h3>🎓 AI tutor</h3>
-      <p class="sub">Ask about any answer — the tutor is grounded in this exam.</p>
+      <div class="tutor-head">
+        <h3>🎓 AI tutor</h3>
+        <button class="ghost sm" id="tutor-mute" title="Mute / unmute spoken answers">🔊 Voice on</button>
+      </div>
+      <p class="sub">Ask about any answer — the tutor is grounded in this exam, and reads its replies aloud.</p>
       <div class="tutor-log" id="tutor-log"></div>
       <div class="tutor-input">
         <input id="tutor-msg" type="text" placeholder="e.g. Why was question 2 wrong?" />
@@ -310,7 +313,25 @@ function renderResults(g, summary) {
   };
   $("tutor-send").addEventListener("click", askTutor);
   $("tutor-msg").addEventListener("keydown", (e) => { if (e.key === "Enter") askTutor(); });
+  // US-11: spoken tutor via the browser's built-in voice, with a mute toggle.
+  const muteBtn = $("tutor-mute");
+  if (!("speechSynthesis" in window)) { muteBtn.hidden = true; state.muted = true; }
+  muteBtn.addEventListener("click", () => {
+    state.muted = !state.muted;
+    muteBtn.textContent = state.muted ? "🔇 Voice off" : "🔊 Voice on";
+    if (state.muted) window.speechSynthesis.cancel();
+  });
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function speak(text) {
+  if (state.muted || !("speechSynthesis" in window) || !text) return;
+  try {
+    window.speechSynthesis.cancel(); // stop any prior reply
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 1.0; u.pitch = 1.0;
+    window.speechSynthesis.speak(u);
+  } catch { /* ignore */ }
 }
 
 async function askTutor() {
@@ -330,6 +351,7 @@ async function askTutor() {
     fd.set("message", msg);
     const d = await (await fetch(ROOT + "/tutor", { method: "POST", body: fd })).json();
     pending.textContent = d.ok ? d.reply : (d.error || "The tutor couldn't answer that.");
+    if (d.ok) speak(d.reply);
   } catch {
     pending.textContent = "Network error — please try again.";
   } finally {
