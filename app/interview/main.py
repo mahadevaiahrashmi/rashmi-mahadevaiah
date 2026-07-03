@@ -110,10 +110,15 @@ def generate(jd: str = Form(...), timeframe: str = Form("")):
         return {"ok": False, "error": "Paste a fuller job description to map its requirements."}
 
     prompt = f"JOB DESCRIPTION:\n{jd}\n\nPREP TIMEFRAME: {timeframe or '(none given)'}\n\nOutput the study-plan JSON now."
+    # Free models 429 intermittently; retry the whole provider chain once.
     raw = llm.complete(prompt, system=SYSTEM, max_tokens=2600)
+    if not (raw or "").strip():
+        raw = llm.complete(prompt, system=SYSTEM, max_tokens=2600)
+    if not (raw or "").strip():
+        return {"ok": False, "error": "The planner is busy right now (free models rate-limited) — please try again in a moment."}
     data = _extract_json(raw)
     if not isinstance(data, dict) or not isinstance(data.get("rows"), list):
-        return {"ok": False, "error": "Couldn't build a plan from that — try a clearer job description."}
+        return {"ok": False, "error": "The plan came back malformed — please try again."}
 
     rows = []
     for r in data["rows"][:MAX_ROWS]:
