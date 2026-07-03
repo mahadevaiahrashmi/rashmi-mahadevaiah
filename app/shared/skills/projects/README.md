@@ -14,6 +14,7 @@ and how it works. Each links to the live app.
 | [explainer-video](explainer-video.md) | Narrated Explainer Video Bot | `/explainer-bot` |
 | [product-discovery-coach](product-discovery-coach.md) | Product Discovery Guide | `/product-discovery` |
 | [ai-exam-proctor](ai-exam-proctor.md) | AI Exam Proctor | `/proctored-ai` |
+| [interview-prep-mapper](interview-prep-mapper.md) | Interview Prep Mapper | `/interview-prep` |
 
 ## Meta
 

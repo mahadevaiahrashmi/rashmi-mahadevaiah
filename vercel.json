@@ -35,6 +35,8 @@
     { "source": "/time-tracker/(.*)", "destination": "/api/index" },
     { "source": "/proctored-ai", "destination": "/api/index" },
     { "source": "/proctored-ai/(.*)", "destination": "/api/index" },
+    { "source": "/interview-prep", "destination": "/api/index" },
+    { "source": "/interview-prep/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

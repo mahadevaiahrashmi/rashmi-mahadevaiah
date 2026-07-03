@@ -39,6 +39,7 @@ const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 const GLASSCHAT_URL = "/glass-chat";
 const TIME_TRACKER_URL = "/time-tracker";
 const PROCTORED_URL = "/proctored-ai";
+const INTERVIEW_URL = "/interview-prep";
 
 // The projects. `live` = a clickable card that opens the running app in a new
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
@@ -124,6 +125,15 @@ const projects = [
     tags: ["LLM", "Computer Vision", "Proctoring"],
     live: PROCTORED_URL,
     repo: "https://github.com/mahadevaiahrashmi/ProctoredAI",
+    repoLabel: "Source",
+  },
+  {
+    title: "Interview Prep Mapper",
+    description:
+      "Maps every requirement in a job description to free courses to study for the interview, with an optional day-by-day prep schedule. Drops degree/experience requirements; exports Markdown/CSV/HTML. FastAPI + OpenRouter.",
+    tags: ["Python", "FastAPI", "LLM"],
+    live: INTERVIEW_URL,
+    repo: "https://github.com/mahadevaiahrashmi/interview_prep",
     repoLabel: "Source",
   },
 ];

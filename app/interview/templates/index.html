@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interview Prep Mapper</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Interview Prep Mapper</h1>
+      <p class="tagline">Paste a job description → get a table mapping each requirement to <b>free</b> courses to study.</p>
+    </div>
+    <a class="back" href="/#projects">← Back to portfolio</a>
+  </header>
+
+  <main class="wrap">
+    <form id="form" class="card form">
+      <label class="fld">
+        <span>Job description</span>
+        <textarea id="jd" rows="10" placeholder="Paste the full job posting here…"></textarea>
+      </label>
+      <label class="fld">
+        <span>Prep timeframe <em>(optional — e.g. “1 week”, “10 days”)</em></span>
+        <input id="timeframe" type="text" placeholder="Leave blank for a plain plan" />
+      </label>
+      <button class="btn" id="go" type="submit">Build my study plan →</button>
+      <p class="note">Degree &amp; years-of-experience requirements are dropped (you can't study those away). Only genuinely free courses are listed. Adapted from <a href="https://github.com/mahadevaiahrashmi/interview_prep" target="_blank" rel="noopener noreferrer">interview_prep</a>.</p>
+    </form>
+
+    <div id="status" class="status" hidden></div>
+
+    <section id="result" hidden>
+      <div class="result-head">
+        <div>
+          <h2 id="role"></h2>
+          <p class="guidance" id="guidance"></p>
+        </div>
+        <div class="downloads">
+          <button class="ghost" data-dl="md">⬇ Markdown</button>
+          <button class="ghost" data-dl="csv">⬇ CSV</button>
+          <button class="ghost" data-dl="html">⬇ HTML</button>
+        </div>
+      </div>
+      <div class="table-wrap"><table id="plan"></table></div>
+    </section>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/app.js"></script>
+</body>
+</html>
