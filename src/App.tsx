@@ -33,9 +33,7 @@ const FUNDED_AGENT_URL = "/funded-companies";
 const LEARN_AI_URL = "/learn-ai";
 const GTM_URL = "/gtm-videos";
 const PM_AGENT_URL = "/pm-agent";
-const OPENCLAW_FORK_URL = "https://github.com/mahadevaiahrashmi/openclaw";
 const EXPLAINER_URL = "/explainer-bot";
-const EXPLAINER_BOT_URL = "https://github.com/mahadevaiahrashmi/explainer-bot";
 const GLASSCHAT_URL = "/glass-chat";
 const TIME_TRACKER_URL = "/time-tracker";
 const PROCTORED_URL = "/proctored-ai";
@@ -92,8 +90,6 @@ const projects = [
       "Conversational PM co-pilot for PRDs, user stories, RICE prioritization, and roadmaps — grounded in a 500+ skill library via retrieval. Also shipped as an OpenClaw skill.",
     tags: ["Agentic AI", "RAG", "Product"],
     live: PM_AGENT_URL,
-    repo: OPENCLAW_FORK_URL,
-    repoLabel: "OpenClaw fork",
   },
   {
     title: "Make Explainer Videos",
@@ -101,8 +97,6 @@ const projects = [
       "Turns rough notes into a 3Blue1Brown-style explainer: AI writes and critiques the script and designs self-contained HTML slides to narrate. Python + multi-provider generative AI.",
     tags: ["Python", "Generative AI", "Video"],
     live: EXPLAINER_URL,
-    repo: EXPLAINER_BOT_URL,
-    repoLabel: "GitHub repo",
   },
   {
     title: "How AI Works",
@@ -124,8 +118,6 @@ const projects = [
       "AI-generated, AI-graded exams with opt-in webcam proctoring (vision-model checks + integrity signals), an explicit consent flow, and a post-exam voice tutor. FastAPI + OpenRouter.",
     tags: ["LLM", "Computer Vision", "Proctoring"],
     live: PROCTORED_URL,
-    repo: "https://github.com/mahadevaiahrashmi/ProctoredAI",
-    repoLabel: "Source",
   },
   {
     title: "Interview Study Plan",
@@ -133,8 +125,6 @@ const projects = [
       "Maps every requirement in a job description to free courses to study for the interview, with an optional day-by-day prep schedule. Drops degree/experience requirements; exports Markdown/CSV/HTML. FastAPI + OpenRouter.",
     tags: ["Python", "FastAPI", "LLM"],
     live: INTERVIEW_URL,
-    repo: "https://github.com/mahadevaiahrashmi/interview_prep",
-    repoLabel: "Source",
   },
 ];
 
