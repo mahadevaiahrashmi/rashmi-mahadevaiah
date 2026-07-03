@@ -422,41 +422,12 @@ function HomePage() {
             {projects.map((project, idx) => {
               const cardClass =
                 "group flex flex-col h-full border border-anthropic-text/10 rounded-2xl p-8 transition-colors";
-              // Cards that carry a `repo` link render explicit anchors instead of
-              // one big card-anchor, so the links don't nest illegally.
-              const hasRepo = Boolean(project.repo);
-              const isAnchorCard = Boolean(project.live) && !hasRepo;
-              const repoLink = project.repo ? (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={project.repoLabel || "Source"}
-                  className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-anthropic-accent transition-opacity"
-                >
-                  <Github size={14} /> {project.repoLabel || "Source"}
-                </a>
-              ) : null;
+              // The whole card is a launch anchor; "Coming soon" if there's no live URL.
+              const isAnchorCard = Boolean(project.live);
               const actions = project.live ? (
-                hasRepo ? (
-                  <div className="flex-shrink-0 flex items-center gap-4">
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 hover:opacity-100 transition-opacity"
-                    >
-                      Launch <ExternalLink size={14} />
-                    </a>
-                    {repoLink}
-                  </div>
-                ) : (
-                  <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 group-hover:opacity-100 transition-opacity">
-                    Launch <ExternalLink size={14} />
-                  </span>
-                )
-              ) : hasRepo ? (
-                <div className="flex-shrink-0 flex items-center gap-4">{repoLink}</div>
+                <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-sans uppercase tracking-widest text-anthropic-accent opacity-80 group-hover:opacity-100 transition-opacity">
+                  Launch <ExternalLink size={14} />
+                </span>
               ) : (
                 <span className="flex-shrink-0 text-[10px] font-sans uppercase tracking-widest px-2.5 py-1 rounded-full border border-anthropic-text/15 opacity-50">
                   Coming soon
@@ -504,8 +475,8 @@ function HomePage() {
                     </a>
                   ) : (
                     <div
-                      className={`${cardClass} ${project.live || hasRepo ? "hover:border-anthropic-accent/40" : "opacity-70"}`}
-                      aria-disabled={project.live || hasRepo ? undefined : "true"}
+                      className={`${cardClass} ${project.live ? "hover:border-anthropic-accent/40" : "opacity-70"}`}
+                      aria-disabled={project.live ? undefined : "true"}
                     >
                       {inner}
                     </div>
