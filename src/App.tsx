@@ -41,48 +41,14 @@ const INTERVIEW_URL = "/interview-prep";
 
 // The projects. `live` = a clickable card that opens the running app in a new
 // tab; `repo` links to source on GitHub; a card with neither renders "Coming soon".
+// Ordered most-complex first (moving parts + AI sophistication).
 const projects = [
   {
-    title: "Learn Product Discovery",
+    title: "AI Exam Proctor",
     description:
-      "Interactive product-discovery course with an LLM coach that critiques your practice answers — problem framing, user research, riskiest-assumption tests, and evidence-based decisions.",
-    tags: ["LLM", "FastAPI", "Product"],
-    live: DISCOVERY_GUIDE_URL,
-  },
-  {
-    title: "Write Like You",
-    description:
-      "Learns your writing voice from a few samples, then drafts messages that sound like you — with one-tap tone controls. An LLM personalization skill (prompting + voice profile).",
-    tags: ["LLM", "Prompt Engineering", "Personalization"],
-    live: VOICE_SKILL_URL,
-  },
-  {
-    title: "Resume Tailor",
-    description:
-      "Tailors a resume + cover letter to any job description and exports Word/PDF. Python/FastAPI with a multi-provider LLM — re-emphasizes real experience, never fabricates it.",
-    tags: ["Python", "FastAPI", "LLM"],
-    live: RESUME_TAILOR_URL,
-  },
-  {
-    title: "Find Job Leads",
-    description:
-      "Weekly agent that finds newly-funded startups and drafts a tailored way in — target role, why you fit, who to contact, and a pitch. Agentic AI with live web search.",
-    tags: ["Agentic AI", "RAG", "Web Search"],
-    live: FUNDED_AGENT_URL,
-  },
-  {
-    title: "AI Learning Game",
-    description:
-      "Gamified course teaching core AI concepts (tokens, embeddings, RAG, agents) with XP, streaks, and instant feedback — instrumented with PostHog product analytics.",
-    tags: ["EdTech", "Gamification", "PostHog"],
-    live: LEARN_AI_URL,
-  },
-  {
-    title: "AI Video Marketing",
-    description:
-      "Turns a launch into a short-form-video go-to-market plan — concepts, paste-ready Veo/Higgsfield prompts, scripts, and a 2-week posting schedule. Generative-AI GTM tooling.",
-    tags: ["Generative AI", "GTM", "Video"],
-    live: GTM_URL,
+      "AI-generated, AI-graded exams with opt-in webcam proctoring (vision-model checks + integrity signals), an explicit consent flow, and a post-exam voice tutor. FastAPI + OpenRouter.",
+    tags: ["LLM", "Computer Vision", "Proctoring"],
+    live: PROCTORED_URL,
   },
   {
     title: "AI Product Manager",
@@ -99,6 +65,20 @@ const projects = [
     live: EXPLAINER_URL,
   },
   {
+    title: "AI Video Marketing",
+    description:
+      "Turns a launch into a short-form-video go-to-market plan — concepts, paste-ready Veo/Higgsfield prompts, scripts, and a 2-week posting schedule. Generative-AI GTM tooling.",
+    tags: ["Generative AI", "GTM", "Video"],
+    live: GTM_URL,
+  },
+  {
+    title: "Find Job Leads",
+    description:
+      "Weekly agent that finds newly-funded startups and drafts a tailored way in — target role, why you fit, who to contact, and a pitch. Agentic AI with live web search.",
+    tags: ["Agentic AI", "RAG", "Web Search"],
+    live: FUNDED_AGENT_URL,
+  },
+  {
     title: "How AI Works",
     description:
       "A teaching tool that exposes how LLMs work — a per-message token/cost inspector, memory on/off toggle, and 4-model side-by-side comparison on real OpenRouter usage.",
@@ -106,25 +86,46 @@ const projects = [
     live: GLASSCHAT_URL,
   },
   {
-    title: "Time Tracker",
-    description:
-      "Fast, client-side time tracker with live start/stop timers, color-coded projects, and daily/weekly summaries. Vanilla JS + localStorage — no backend, no account.",
-    tags: ["Productivity", "Vanilla JS", "localStorage"],
-    live: TIME_TRACKER_URL,
-  },
-  {
-    title: "AI Exam Proctor",
-    description:
-      "AI-generated, AI-graded exams with opt-in webcam proctoring (vision-model checks + integrity signals), an explicit consent flow, and a post-exam voice tutor. FastAPI + OpenRouter.",
-    tags: ["LLM", "Computer Vision", "Proctoring"],
-    live: PROCTORED_URL,
-  },
-  {
     title: "Interview Study Plan",
     description:
       "Maps every requirement in a job description to free courses to study for the interview, with an optional day-by-day prep schedule. Drops degree/experience requirements; exports Markdown/CSV/HTML. FastAPI + OpenRouter.",
     tags: ["Python", "FastAPI", "LLM"],
     live: INTERVIEW_URL,
+  },
+  {
+    title: "Resume Tailor",
+    description:
+      "Tailors a resume + cover letter to any job description and exports Word/PDF. Python/FastAPI with a multi-provider LLM — re-emphasizes real experience, never fabricates it.",
+    tags: ["Python", "FastAPI", "LLM"],
+    live: RESUME_TAILOR_URL,
+  },
+  {
+    title: "Learn Product Discovery",
+    description:
+      "Interactive product-discovery course with an LLM coach that critiques your practice answers — problem framing, user research, riskiest-assumption tests, and evidence-based decisions.",
+    tags: ["LLM", "FastAPI", "Product"],
+    live: DISCOVERY_GUIDE_URL,
+  },
+  {
+    title: "AI Learning Game",
+    description:
+      "Gamified course teaching core AI concepts (tokens, embeddings, RAG, agents) with XP, streaks, and instant feedback — instrumented with PostHog product analytics.",
+    tags: ["EdTech", "Gamification", "PostHog"],
+    live: LEARN_AI_URL,
+  },
+  {
+    title: "Write Like You",
+    description:
+      "Learns your writing voice from a few samples, then drafts messages that sound like you — with one-tap tone controls. An LLM personalization skill (prompting + voice profile).",
+    tags: ["LLM", "Prompt Engineering", "Personalization"],
+    live: VOICE_SKILL_URL,
+  },
+  {
+    title: "Time Tracker",
+    description:
+      "Fast, client-side time tracker with live start/stop timers, color-coded projects, and daily/weekly summaries. Vanilla JS + localStorage — no backend, no account.",
+    tags: ["Productivity", "Vanilla JS", "localStorage"],
+    live: TIME_TRACKER_URL,
   },
 ];
 
