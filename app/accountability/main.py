@@ -13,9 +13,13 @@ import os
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+# Never let a browser or proxy cache the gated page — a stale copy is exactly
+# what breaks the unlock flow.
+_NO_CACHE = {"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"}
 
 BASE = Path(__file__).resolve().parent
 
@@ -53,19 +57,36 @@ MINISTRIES = [
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
+    """Show the passkey gate. No JavaScript — the form posts natively to /unlock."""
     return templates.TemplateResponse(
-        request, "index.html", {"root_path": request.scope.get("root_path", "")}
+        request,
+        "index.html",
+        {"root_path": request.scope.get("root_path", ""), "unlocked": False, "error": ""},
+        headers=_NO_CACHE,
     )
 
 
-@app.post("/unlock")
-def unlock(request: Request, passcode: str = Form(...)):
+@app.get("/unlock")
+def unlock_get(request: Request):
+    # A reload of the post-unlock URL lands here — send it back to the gate.
+    return RedirectResponse(request.scope.get("root_path", "") + "/", status_code=303)
+
+
+@app.post("/unlock", response_class=HTMLResponse)
+def unlock(request: Request, passcode: str = Form("")):
+    """Check the passkey server-side. On success, render the full page (content is
+    only ever included in the response for a correct passkey)."""
+    root = request.scope.get("root_path", "")
     if passcode.strip() == PASSCODE:
-        # Render the gated content to a string only now — it is never sent to
-        # visitors who haven't entered the correct passkey.
-        html = templates.env.get_template("content.html").render(
-            root_path=request.scope.get("root_path", ""),
-            ministries=MINISTRIES,
+        return templates.TemplateResponse(
+            request,
+            "index.html",
+            {"root_path": root, "unlocked": True, "ministries": MINISTRIES},
+            headers=_NO_CACHE,
         )
-        return {"ok": True, "html": html}
-    return JSONResponse({"ok": False, "error": "Wrong passkey."}, status_code=401)
+    return templates.TemplateResponse(
+        request,
+        "index.html",
+        {"root_path": root, "unlocked": False, "error": "Wrong passkey. Try again."},
+        headers=_NO_CACHE,
+    )
