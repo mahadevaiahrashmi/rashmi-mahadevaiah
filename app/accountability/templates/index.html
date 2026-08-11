@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Accountability</title>
-  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css?v=4" />
 </head>
 <body>
   <!-- Passkey gate -->
@@ -14,7 +14,8 @@
       <div class="lock-icon">🔒</div>
       <h1>Accountability</h1>
       <p class="lock-sub">Enter the passkey to view this page.</p>
-      <input id="passcode" type="password" placeholder="Passkey" autocomplete="off" autofocus />
+      <input id="passcode" type="password" placeholder="Passkey" autocomplete="off"
+             autocapitalize="off" autocorrect="off" spellcheck="false" autofocus />
       <button type="submit" class="unlock-btn">Unlock</button>
       <div id="err" class="lock-err"></div>
     </form>
@@ -25,6 +26,6 @@
   <main id="page" class="page" hidden></main>
 
   <script>window.APP_ROOT = {{ root_path | tojson }};</script>
-  <script src="{{ root_path }}/static/app.js"></script>
+  <script src="{{ root_path }}/static/app.js?v=4"></script>
 </body>
 </html>
