@@ -51,20 +51,26 @@
 </section>
 
 <section class="prop-block">
+  <h2>Accountability, ministry by ministry <span class="tag build">to build</span></h2>
+  <p>The same "ticket → responsible officer → elected representative → days-pending" model,
+  applied to <strong>every Union government department</strong> — so grievances get tracked at the
+  <strong>grassroots level</strong>, not just in Delhi. <strong>Education is the pilot</strong>
+  (the school-grievance portal above). Full scope — all {{ ministries|length }} Union
+  ministries &amp; departments:</p>
+  <div class="ministries">
+    {% for m in ministries %}
+    <span class="ministry{% if m == 'Education' %} pilot{% endif %}">{{ m }}{% if m == 'Education' %} <em>· pilot</em>{% endif %}</span>
+    {% endfor %}
+  </div>
+  <p class="note">List sourced from the official roster of Union ministries &amp; independent
+  departments — flag anything out of date and I'll fix it.</p>
+</section>
+
+<section class="prop-block">
   <h2>Policy proposals <span class="tag policy">demands</span></h2>
 
   <div class="prop">
-    <h3>4. No impunity through delay — sexual-assault cases against MPs &amp; MLAs</h3>
-    <p>Sitting MPs and MLAs facing rape charges should have their cases heard on a strict, time-bound
-    fast-track basis, so that power and endless procedural delay can't be used to escape justice.</p>
-    <p class="note">Original wording: <em>processed by the Supreme Court within 30&nbsp;days.</em> Worth
-    refining — India already has SC-mandated special fast-track courts for cases against sitting
-    legislators; the fight is to fund and actually enforce them. (Also: charged/on-trial, not merely
-    accused.) Let's debate the right number in the community.</p>
-  </div>
-
-  <div class="prop">
-    <h3>5. Roads that last — mandatory quality standards</h3>
+    <h3>4. Roads that last — mandatory quality standards</h3>
     <p>Make durable materials and a standardized, audited build process <strong>mandatory</strong> for
     all public roads — with real accountability (and warranty/defect-liability periods) when a road
     fails early.</p>
