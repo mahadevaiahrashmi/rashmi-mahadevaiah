@@ -15,7 +15,7 @@
 
 ## 🧠 Core Philosophy
 
-> "The goal is not to have the most 'digital' schools. The goal is to make corruption impossible and accountability unavoidable."
+> "The goal is to make accountability unavoidable."
 
 **First Principles:**
 - A system that requires perfect internet will fail in 60% of Indian villages
@@ -910,7 +910,7 @@ Contribution Channels:
 
 ### The Vision
 
-> "The goal is not to have the most 'digital' schools. The goal is to make corruption impossible and accountability unavoidable."
+> "The goal is to make accountability unavoidable."
 
 ### The Three Pillars
 
