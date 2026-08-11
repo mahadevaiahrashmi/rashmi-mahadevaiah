@@ -16,8 +16,11 @@ $("lock-form").addEventListener("submit", async (e) => {
     fd.set("passcode", passcode);
     const res = await fetch(ROOT + "/unlock", { method: "POST", body: fd });
     if (res.ok) {
+      const data = await res.json();
+      $("page").innerHTML = data.html || "";
       $("lock").hidden = true;
       $("page").hidden = false;
+      window.scrollTo(0, 0);
     } else {
       err.textContent = "Wrong passkey.";
       $("passcode").value = "";

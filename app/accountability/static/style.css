@@ -74,7 +74,72 @@ body {
   color: var(--err);
 }
 
-/* ---- The (empty) page ---- */
-.page { max-width: 1000px; margin: 0 auto; padding: 28px 24px; }
-.page-top { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
-.page-top h1 { margin: 0; font-size: 24px; color: var(--accent); }
+/* ---- The gated content page ---- */
+.page { max-width: 780px; margin: 0 auto; padding: 28px 24px 60px; }
+.page-top { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 22px; }
+.page-top h1 { margin: 0; font-size: 25px; color: var(--accent); }
+.page-sub { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+
+.disclaimer {
+  border: 1px solid #f3c2c2;
+  background: #fdf0f0;
+  border-radius: 12px;
+  padding: 15px 18px;
+  margin-bottom: 28px;
+}
+.disclaimer strong { color: var(--accent-deep); }
+.disclaimer p { margin: 8px 0 0; font-size: 14px; }
+
+.prop-block { margin-bottom: 30px; }
+.prop-block > h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.tag.build { background: #e6f0ff; color: #1d4ed8; }
+.tag.policy { background: #fff0e6; color: #b45309; }
+
+.prop {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.prop h3 { margin: 0 0 6px; font-size: 15px; }
+.prop p { margin: 0 0 6px; font-size: 14px; }
+.prop p:last-child { margin-bottom: 0; }
+.prop .inspo { color: var(--muted); font-size: 13px; }
+.prop .note { color: var(--muted); font-size: 12.5px; border-left: 2px solid var(--border); padding-left: 10px; margin-top: 8px; }
+.prop a, .disclaimer a { color: var(--accent); }
+
+.cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.cta {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.cta[aria-disabled="true"] { opacity: 0.55; cursor: default; }
+
+.page-foot {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}

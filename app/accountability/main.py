@@ -1,9 +1,11 @@
-# agent-notes: { ctx: "FastAPI sub-app: passkey-gated empty page", deps: [], state: active, last: "claude@2026-08-11" }
+# agent-notes: { ctx: "FastAPI sub-app: passkey-gated democracy-proposals page", deps: [], state: active, last: "claude@2026-08-11" }
 """FastAPI sub-app: Accountability.
 
-Mounted under /accountability. A passkey-gated, intentionally empty page —
-enter the passkey to view. The passkey is checked server-side against the
-ACCOUNTABILITY_PASSCODE env var (falls back to a default for local dev).
+Mounted under /accountability. A passkey-gated page of citizen proposals for a
+more effective democracy in India. The passkey is checked server-side against
+the ACCOUNTABILITY_PASSCODE env var (falls back to a default for local dev), and
+the page content itself is ONLY rendered and sent after a correct passkey — so
+it never ships in the page source to un-authed visitors.
 """
 from __future__ import annotations
 
@@ -32,7 +34,12 @@ def index(request: Request):
 
 
 @app.post("/unlock")
-def unlock(passcode: str = Form(...)):
+def unlock(request: Request, passcode: str = Form(...)):
     if passcode.strip() == PASSCODE:
-        return {"ok": True}
+        # Render the gated content to a string only now — it is never sent to
+        # visitors who haven't entered the correct passkey.
+        html = templates.env.get_template("content.html").render(
+            root_path=request.scope.get("root_path", "")
+        )
+        return {"ok": True, "html": html}
     return JSONResponse({"ok": False, "error": "Wrong passkey."}, status_code=401)

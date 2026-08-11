@@ -20,13 +20,9 @@
     </form>
   </div>
 
-  <!-- The (empty) page, revealed after a correct passkey -->
-  <main id="page" class="page" hidden>
-    <header class="page-top">
-      <h1>Accountability</h1>
-    </header>
-    <!-- intentionally empty -->
-  </main>
+  <!-- Content is injected here after a correct passkey (fetched from the server,
+       never present in this page's source for un-authed visitors). -->
+  <main id="page" class="page" hidden></main>
 
   <script>window.APP_ROOT = {{ root_path | tojson }};</script>
   <script src="{{ root_path }}/static/app.js"></script>
