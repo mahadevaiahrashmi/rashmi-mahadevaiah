@@ -1,6 +1,6 @@
 # 🚀 India Education System Overhaul
 
-## Every Rupee Tracked. Every Voice Answered to Your Satisfaction.
+## Every Rupee Tracked. Every Voice Answered by action taken to Your Satisfaction.
 
 ---
 
