@@ -1,6 +1,6 @@
 # 🚀 India Education System Overhaul
 
-## Zero-Corruption. Zero-Excuse.
+## Every Rupee Tracked. Every Voice Answered to Your Satisfaction.
 
 ---
 
