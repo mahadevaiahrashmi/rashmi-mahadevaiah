@@ -1,5 +1,5 @@
 <h1 id="india-education-system-overhaul">🚀 India Education System Overhaul</h1>
-<h2 id="zero-corruption-zero-excuse-anti-failure">Zero-Corruption. Zero-Excuse. Anti-Failure.</h2>
+<h2 id="zero-corruption-zero-excuse">Zero-Corruption. Zero-Excuse.</h2>
 <hr>
 <h3 id="document-overview">📌 Document Overview</h3>
 <p><strong>Version:</strong> 3.0<br>
@@ -26,10 +26,9 @@
 <hr>
 <h2 id="table-of-contents">📋 Table of Contents</h2>
 <ul>
-<li><a href="#the-three-pillars">The Three Pillars</a></li>
+<li><a href="#the-two-pillars">The Two Pillars</a></li>
 <li><a href="#pillar-1-zero-corruption-layer">Pillar 1: Zero-Corruption Layer</a></li>
 <li><a href="#pillar-2-no-excuse-grievance-system">Pillar 2: No-Excuse Grievance System</a></li>
-<li><a href="#pillar-3-anti-failure-hardware">Pillar 3: Anti-Failure Hardware</a></li>
 <li><a href="#tech-stack-summary">Tech Stack Summary</a></li>
 <li><a href="#mvp-vs-scaled-roadmap">MVP vs Scaled Roadmap</a></li>
 <li><a href="#team-structure">Team Structure</a></li>
@@ -38,25 +37,25 @@
 <li><a href="#open-source-contribution-model">Open-Source Contribution Model</a></li>
 </ul>
 <hr>
-<h2 id="the-three-pillars">🏛️ The Three Pillars</h2>
+<h2 id="the-two-pillars">🏛️ The Two Pillars</h2>
 <pre><code>┌─────────────────────────────────────────────────────────────┐
 │                    UNIFIED DASHBOARD                        │
 │         (Single login, single view for each school)         │
 └─────────────────────────────────────────────────────────────┘
                               │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│  PILLAR 1     │   │  PILLAR 2     │   │  PILLAR 3     │
-│  ZERO-        │   │  NO-EXCUSE    │   │  ANTI-FAILURE │
-│  CORRUPTION   │   │  GRIEVANCE    │   │  HARDWARE     │
-│               │   │               │   │               │
-│  Track Every  │   │  Teacher      │   │  Minimal &amp;    │
-│  Rupee, Every │   │  Vacancies,   │   │  Robust       │
-│  Scheme       │   │  Misbehavior, │   │               │
-│               │   │  Broken       │   │               │
-│               │   │  Toilets      │   │               │
-└───────────────┘   └───────────────┘   └───────────────┘
+              ┌───────────────┴───────────────┐
+              ▼                               ▼
+      ┌───────────────┐               ┌───────────────┐
+      │  PILLAR 1     │               │  PILLAR 2     │
+      │  ZERO-        │               │  NO-EXCUSE    │
+      │  CORRUPTION   │               │  GRIEVANCE    │
+      │               │               │               │
+      │  Track Every  │               │  Teacher      │
+      │  Rupee, Every │               │  Vacancies,   │
+      │  Scheme       │               │  Misbehavior, │
+      │               │               │  Broken       │
+      │               │               │  Toilets      │
+      └───────────────┘               └───────────────┘
 </code></pre>
 <hr>
 <h2 id="pillar-1-zero-corruption-layer">💰 Pillar 1: Zero-Corruption Layer</h2>
@@ -606,318 +605,6 @@ IVR System:
 </table>
 </div>
 <hr>
-<h2 id="pillar-3-anti-failure-hardware">🛡️ Pillar 3: Anti-Failure Hardware</h2>
-<h3 id="minimal-robust">Minimal &amp; Robust</h3>
-<p><strong>Goal:</strong> Build a hardware system that doesn't break, doesn't gather dust, and doesn't require perfect infrastructure.</p>
-<hr>
-<h3 id="tech-stack_2">Tech Stack</h3>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Technology</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hardware</td>
-<td>Rugged Android devices</td>
-<td>Survives drops, dust, heat</td>
-</tr>
-<tr>
-<td>Power</td>
-<td>Solar charging stations</td>
-<td>Works without grid power</td>
-</tr>
-<tr>
-<td>Connectivity</td>
-<td>Bluetooth mesh (bitchat-style) + offline-first</td>
-<td>One internet uplink per school syncs everyone</td>
-</tr>
-<tr>
-<td>Maintenance</td>
-<td>QR code + ticket system</td>
-<td>Auto-repair requests</td>
-</tr>
-<tr>
-<td>Tracking</td>
-<td>Asset management system</td>
-<td>Knows what exists, what works</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-<h3 id="build-steps_2">Build Steps</h3>
-<h4 id="step-1-hardware-selection-month-1-2">Step 1: Hardware Selection (Month 1-2)</h4>
-<pre><code>Hardware Requirements:
-┌─────────────────────────────────────────────────────────────┐
-│                    DEVICE SPECS                             │
-└─────────────────────────────────────────────────────────────┘
-
-For Teachers (Primary Device):
-├── Screen: 5.5-6.5 inches
-├── Battery: 5000mAh+ (lasts 2 days)
-├── Storage: 64GB+ (for offline content)
-├── RAM: 4GB+
-├── Camera: 13MP+ (for QR scanning, photos)
-├── Rugged: IP68 (dust, water, drop)
-├── OS: Android 12+ (or Go edition)
-└── Cost: ₹5,000-8,000
-
-For Schools (Shared Devices):
-├── Tablet: 10 inches
-├── Battery: 8000mAh+
-├── Storage: 128GB+
-├── Pre-loaded with content
-├── Solar charging compatible
-└── Cost: ₹10,000-15,000
-
-For Students (Where Possible):
-├── Basic Android phone
-├── Pre-loaded with learning app
-├── Offline content
-└── Cost: ₹3,000-5,000
-
-Solar Charging Stations:
-├── Capacity: 10-20 devices
-├── Battery backup: 2-3 days
-├── Cost: ₹10,000-20,000
-└── Works without grid power
-</code></pre>
-<h4 id="step-2-device-lifecycle-management-month-3-4">Step 2: Device Lifecycle Management (Month 3-4)</h4>
-<pre><code>┌─────────────────────────────────────────────────────────────┐
-│                    DEVICE LIFECYCLE                         │
-└─────────────────────────────────────────────────────────────┘
-
-Deployment:
-├── Device registered → Unique ID + QR code
-├── Assigned to teacher/school
-├── Warranty registered
-└── Training provided
-
-Usage:
-├── Daily checks (software)
-├── Monthly scans (QR code)
-├── Status: working/broken
-└── Auto-ticket if broken
-
-Maintenance:
-├── Broken device → auto-ticket created
-├── Local repair network
-├── 48-hour response guarantee
-└── Escalation if not fixed
-
-Replacement:
-├── 24-month lifecycle
-├── Pre-approved replacement budget
-├── Device returned for refurbishment
-└── New device issued
-
-Retirement:
-├── Data wiped
-├── Device recycled
-└── New device deployed
-</code></pre>
-<h4 id="step-3-local-repair-network-month-5-6">Step 3: Local Repair Network (Month 5-6)</h4>
-<pre><code>┌─────────────────────────────────────────────────────────────┐
-│                    REPAIR NETWORK                           │
-└─────────────────────────────────────────────────────────────┘
-
-Structure:
-├── District Repair Hub (1 per district)
-│   ├── 5-10 technicians
-│   ├── Spare parts inventory
-│   └── 24-hour turnaround
-├── Block Repair Points (1 per block)
-│   ├── 1-2 technicians
-│   ├── Basic parts
-│   └── 48-hour turnaround
-└── School Self-Repair
-    ├── Basic troubleshooting guide
-    ├── Contact number for help
-    └── Emergency swap device
-
-System Integration:
-├── Broken device → QR code scan
-├── Auto-ticket created
-├── Repair technician assigned
-├── Tracking dashboard
-└── Escalation if not fixed in 48 hours
-</code></pre>
-<h4 id="step-4-power-connectivity-solutions-month-7-8">Step 4: Power &amp; Connectivity Solutions (Month 7-8)</h4>
-<pre><code>Power Solutions:
-┌─────────────────────────────────────────────────────────────┐
-├── Solar Charging Station (school level)
-│   ├── 10-20 device capacity
-│   ├── 2-3 day battery backup
-│   └── ₹10,000-20,000 per school
-├── Power Bank Program
-│   ├── Teacher gets power bank
-│   ├── Solar charging compatible
-│   └── ₹2,000 per teacher
-└── No power? Paper fallback
-    └── Forms collected weekly
-
-Connectivity Solutions — the &quot;One-Connection Rule&quot;:
-┌─────────────────────────────────────────────────────────────┐
-│  Only ONE person per school needs internet — once a day.    │
-└─────────────────────────────────────────────────────────────┘
-├── Bluetooth mesh (bitchat-style)
-│   ├── Every phone/tablet is a mesh node
-│   ├── Grievances + reports queue locally (encrypted)
-│   ├── Data hops device → device over Bluetooth (store-and-forward)
-│   └── No school broadband, no SIM per device required
-├── The daily &quot;carrier&quot; node
-│   ├── ONE student/parent/teacher with any internet access
-│   ├── Comes into Bluetooth range → mesh hands them the queue
-│   ├── They go online once (home, town, market) → whole school syncs up
-│   └── Dashboard replies + updates ride back down into the mesh
-├── Offline-first design (every app works with zero connectivity)
-├── If no carrier that day → SMS / IVR / USB / SD-card hand-carry
-└── Result: 1 connection covers an entire school
-</code></pre>
-<blockquote>
-<p><strong>The one-connection rule.</strong> Assume the school has <em>no</em> reliable internet. As long as a<br>
-single student or parent gets online <strong>once a day</strong> — anywhere — every grievance, asset<br>
-scan, and fund flag queued on every phone in the school rides out on their connection,<br>
-and every dashboard reply rides back in. Think <strong>bitchat</strong>: messages hop phone-to-phone<br>
-over Bluetooth and only need one node to briefly touch the internet for the whole mesh to<br>
-sync. This drops the requirement from "broadband in 1.5 million schools" to<br>
-"one person, once a day."</p>
-<p>⚠️ <strong>Reality check.</strong> bitchat is proven for <em>small, nearby</em> message relaying — not yet<br>
-for syncing a whole school's daily queue through a single, intermittent uplink. Bluetooth<br>
-range and hop limits, reliable store-and-forward, conflict handling, and battery cost are<br>
-the hard parts. Treat this as a hypothesis to <strong>prototype small first</strong> (a handful of<br>
-phones in one school) before assuming it scales — don't build the national rollout on it<br>
-until it's proven in the field.</p>
-</blockquote>
-<h4 id="step-5-asset-tracking-system-month-9-10">Step 5: Asset Tracking System (Month 9-10)</h4>
-<pre><code>Every asset gets a QR code:
-├── Desks
-├── Computers
-├── Toilets
-├── Water filters
-├── Solar panels
-├── Books
-├── Uniforms
-└── Everything else
-
-Monthly scan:
-├── Teacher scans QR code
-├── Reports status: working/broken
-├── Photos attached
-└── Auto-ticket if broken
-
-Dashboard shows:
-├── &quot;School X has 3 broken toilets&quot;
-├── &quot;Computer lab: 5 of 10 working&quot;
-├── &quot;Solar panel: last serviced 180 days ago&quot;
-└── &quot;Books: 200 of 500 available&quot;
-</code></pre>
-<h4 id="step-6-consequence-framework-month-11-12">Step 6: Consequence Framework (Month 11-12)</h4>
-<pre><code>If a device breaks:
-├── Day 0: Auto-ticket created
-├── Day 7: Escalate to Block Officer
-├── Day 14: Escalate to District Collector
-├── Day 21: Escalate to State Secretary
-└── Day 30: Public &quot;FAILURE&quot; flag + penalties
-
-If a repair isn't done:
-├── Day 0: Ticket assigned
-├── Day 7: Technician's pay reduced
-├── Day 14: Technician replaced
-├── Day 21: District officer penalized
-└── Day 30: Public shaming + financial penalties
-</code></pre>
-<hr>
-<h3 id="key-features_2">Key Features</h3>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-<th>Why It Works</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Rugged Devices</strong></td>
-<td>Survives drops, dust, heat</td>
-<td>Less breakage</td>
-</tr>
-<tr>
-<td><strong>Bluetooth Mesh (bitchat-style)</strong></td>
-<td>One internet connection syncs the whole school</td>
-<td>Removes the per-school broadband requirement</td>
-</tr>
-<tr>
-<td><strong>Solar Charging</strong></td>
-<td>Works without grid power</td>
-<td>Covers remote areas</td>
-</tr>
-<tr>
-<td><strong>Local Repair Network</strong></td>
-<td>Fixes devices locally</td>
-<td>No shipping delays</td>
-</tr>
-<tr>
-<td><strong>Auto-Ticketing</strong></td>
-<td>Broken devices auto-report</td>
-<td>No manual tracking</td>
-</tr>
-<tr>
-<td><strong>Asset QR Codes</strong></td>
-<td>Everything tracked</td>
-<td>No theft</td>
-</tr>
-<tr>
-<td><strong>Consequence Framework</strong></td>
-<td>Penalties for inaction</td>
-<td>Forces maintenance</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-<h3 id="real-world-examples-that-prove-this-works_2">Real-World Examples That Prove This Works</h3>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Initiative</th>
-<th>What It Did</th>
-<th>Impact</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Class Saathi</strong></td>
-<td>Bluetooth clickers + analytics</td>
-<td>15K+ classrooms covered</td>
-</tr>
-<tr>
-<td><strong>Sampark TV (Ghaziabad)</strong></td>
-<td>310 smart classes with LED TVs</td>
-<td>Content delivery</td>
-</tr>
-<tr>
-<td><strong>Solar Charging (Bihar)</strong></td>
-<td>Solar-powered devices</td>
-<td>100% uptime in remote areas</td>
-</tr>
-<tr>
-<td><strong>QR Code Tracking (Telangana)</strong></td>
-<td>Asset tracking with QR</td>
-<td>100% visibility</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
 <h2 id="complete-tech-stack-summary">🔧 Complete Tech Stack Summary</h2>
 <h3 id="frontend">Frontend</h3>
 <div class="table-wrap">
@@ -1040,35 +727,6 @@ If a repair isn't done:
 </tbody>
 </table>
 </div>
-<h3 id="hardware">Hardware</h3>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Specification</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Teacher Device</td>
-<td>Rugged Android phone, ₹5,000-8,000</td>
-<td>Survives drops</td>
-</tr>
-<tr>
-<td>School Tablet</td>
-<td>10-inch, solar compatible</td>
-<td>Shared device</td>
-</tr>
-<tr>
-<td>Solar Charger</td>
-<td>10-20 devices, 2-3 day backup</td>
-<td>No grid needed</td>
-</tr>
-</tbody>
-</table>
-</div>
 <h3 id="infrastructure">Infrastructure</h3>
 <div class="table-wrap">
 <table>
@@ -1132,11 +790,6 @@ If a repair isn't done:
 <td>SMS + paper grievance reporting, manual escalation</td>
 <td>SMS gateway, Google Sheets</td>
 </tr>
-<tr>
-<td><strong>Anti-Failure</strong></td>
-<td>Rugged devices (10), solar charging, basic repair network</td>
-<td>Hardware + QR codes</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1163,11 +816,6 @@ If a repair isn't done:
 <td><strong>No-Excuse</strong></td>
 <td>PWA app, auto-routing (simple), public dashboard</td>
 <td>React + Node.js</td>
-</tr>
-<tr>
-<td><strong>Anti-Failure</strong></td>
-<td>Asset tracking (QR codes), repair ticketing</td>
-<td>QR + auto-tickets</td>
 </tr>
 </tbody>
 </table>
@@ -1196,11 +844,6 @@ If a repair isn't done:
 <td>AI-powered routing, escalation engine, IVR</td>
 <td>BERT + FastAPI + Asterisk</td>
 </tr>
-<tr>
-<td><strong>Anti-Failure</strong></td>
-<td>Full asset management, repair network</td>
-<td>QR + tickets + SLA</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1228,11 +871,6 @@ If a repair isn't done:
 <td>National grievance system, real-time dashboard</td>
 <td>Full stack + AI</td>
 </tr>
-<tr>
-<td><strong>Anti-Failure</strong></td>
-<td>National repair network, device replacement</td>
-<td>Hardware + logistics</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1259,11 +897,6 @@ If a repair isn't done:
 <td><strong>No-Excuse</strong></td>
 <td>Every grievance tracked, resolved, visible</td>
 <td>Full stack + advanced AI</td>
-</tr>
-<tr>
-<td><strong>Anti-Failure</strong></td>
-<td>Every device tracked, maintained, replaced</td>
-<td>Complete system</td>
 </tr>
 </tbody>
 </table>
@@ -1326,13 +959,6 @@ If a repair isn't done:
 <td>0</td>
 <td>1</td>
 <td>Python, BERT, FastAPI</td>
-</tr>
-<tr>
-<td><strong>Hardware Engineer</strong></td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>Device selection, repair network</td>
 </tr>
 <tr>
 <td><strong>Field Coordinator</strong></td>
@@ -1452,22 +1078,12 @@ If a repair isn't done:
 <tr>
 <td><strong>No reliable electricity</strong></td>
 <td>🔴 High</td>
-<td>Solar charging stations, power banks, paper fallback</td>
+<td>Power banks, paper fallback</td>
 </tr>
 <tr>
 <td><strong>No internet connectivity</strong></td>
 <td>🔴 High</td>
-<td>Bluetooth mesh (bitchat-style) + one-connection rule, offline-first, SMS/IVR fallback</td>
-</tr>
-<tr>
-<td><strong>Devices break</strong></td>
-<td>🔴 High</td>
-<td>Rugged devices, repair network, auto-ticketing</td>
-</tr>
-<tr>
-<td><strong>No repair budget</strong></td>
-<td>🔴 High</td>
-<td>Pre-approved replacement budget, warranty, SLA</td>
+<td>Offline-first design, SMS/IVR fallback</td>
 </tr>
 <tr>
 <td><strong>Teacher resistance</strong></td>
@@ -1582,40 +1198,6 @@ If a repair isn't done:
 </tbody>
 </table>
 </div>
-<h3 id="pillar-3-anti-failure-hardware_1">Pillar 3: Anti-Failure Hardware</h3>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Target</th>
-<th>Measurement</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Device uptime</td>
-<td>&gt; 99%</td>
-<td>System monitoring</td>
-</tr>
-<tr>
-<td>Repair time</td>
-<td>&lt; 48 hours</td>
-<td>Ticket tracking</td>
-</tr>
-<tr>
-<td>Asset visibility</td>
-<td>100%</td>
-<td>QR scan logs</td>
-</tr>
-<tr>
-<td>Device replacement</td>
-<td>&lt; 24 months</td>
-<td>Lifecycle tracking</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 <h2 id="open-source-contribution-model">🌐 Open-Source Contribution Model</h2>
 <h3 id="why-open-source">Why Open-Source?</h3>
@@ -1634,7 +1216,6 @@ If a repair isn't done:
 Repository Structure:
 ├── /zero-corruption        - Blockchain + fund tracking
 ├── /no-excuse              - Grievance system
-├── /anti-failure           - Hardware + asset management
 ├── /mobile-app             - PWA + React Native
 ├── /backend                - Node.js + GraphQL
 ├── /docs                   - Documentation
@@ -1653,11 +1234,10 @@ Contribution Channels:
 <blockquote>
 <p>"The goal is to make accountability unavoidable."</p>
 </blockquote>
-<h3 id="the-three-pillars_1">The Three Pillars</h3>
+<h3 id="the-two-pillars_1">The Two Pillars</h3>
 <ol>
 <li><strong>Zero-Corruption:</strong> Track every rupee, every scheme. Make theft impossible.</li>
 <li><strong>No-Excuse:</strong> Every grievance visible, every delay public. Make inaction impossible.</li>
-<li><strong>Anti-Failure:</strong> Hardware that works, devices that last. Make breakdowns impossible.</li>
 </ol>
 <h3 id="the-challenge">The Challenge</h3>
 <p>This is not a technology project. It's a transformation project. The technology is just the tool. The real work is in building a culture of accountability, transparency, and consequence.</p>

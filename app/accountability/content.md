@@ -1,6 +1,6 @@
 # 🚀 India Education System Overhaul
 
-## Zero-Corruption. Zero-Excuse. Anti-Failure.
+## Zero-Corruption. Zero-Excuse.
 
 ---
 
@@ -35,10 +35,9 @@
 
 ## 📋 Table of Contents
 
-- [The Three Pillars](#the-three-pillars)
+- [The Two Pillars](#the-two-pillars)
 - [Pillar 1: Zero-Corruption Layer](#pillar-1-zero-corruption-layer)
 - [Pillar 2: No-Excuse Grievance System](#pillar-2-no-excuse-grievance-system)
-- [Pillar 3: Anti-Failure Hardware](#pillar-3-anti-failure-hardware)
 - [Tech Stack Summary](#tech-stack-summary)
 - [MVP vs Scaled Roadmap](#mvp-vs-scaled-roadmap)
 - [Team Structure](#team-structure)
@@ -48,7 +47,7 @@
 
 ---
 
-## 🏛️ The Three Pillars
+## 🏛️ The Two Pillars
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -56,19 +55,19 @@
 │         (Single login, single view for each school)         │
 └─────────────────────────────────────────────────────────────┘
                               │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│  PILLAR 1     │   │  PILLAR 2     │   │  PILLAR 3     │
-│  ZERO-        │   │  NO-EXCUSE    │   │  ANTI-FAILURE │
-│  CORRUPTION   │   │  GRIEVANCE    │   │  HARDWARE     │
-│               │   │               │   │               │
-│  Track Every  │   │  Teacher      │   │  Minimal &    │
-│  Rupee, Every │   │  Vacancies,   │   │  Robust       │
-│  Scheme       │   │  Misbehavior, │   │               │
-│               │   │  Broken       │   │               │
-│               │   │  Toilets      │   │               │
-└───────────────┘   └───────────────┘   └───────────────┘
+              ┌───────────────┴───────────────┐
+              ▼                               ▼
+      ┌───────────────┐               ┌───────────────┐
+      │  PILLAR 1     │               │  PILLAR 2     │
+      │  ZERO-        │               │  NO-EXCUSE    │
+      │  CORRUPTION   │               │  GRIEVANCE    │
+      │               │               │               │
+      │  Track Every  │               │  Teacher      │
+      │  Rupee, Every │               │  Vacancies,   │
+      │  Scheme       │               │  Misbehavior, │
+      │               │               │  Broken       │
+      │               │               │  Toilets      │
+      └───────────────┘               └───────────────┘
 ```
 
 ---
@@ -433,254 +432,6 @@ Dashboard Features:
 
 ---
 
-## 🛡️ Pillar 3: Anti-Failure Hardware
-
-### Minimal & Robust
-
-**Goal:** Build a hardware system that doesn't break, doesn't gather dust, and doesn't require perfect infrastructure.
-
----
-
-### Tech Stack
-
-| Layer | Technology | Why |
-|-------|------------|-----|
-| Hardware | Rugged Android devices | Survives drops, dust, heat |
-| Power | Solar charging stations | Works without grid power |
-| Connectivity | Bluetooth mesh (bitchat-style) + offline-first | One internet uplink per school syncs everyone |
-| Maintenance | QR code + ticket system | Auto-repair requests |
-| Tracking | Asset management system | Knows what exists, what works |
-
----
-
-### Build Steps
-
-#### Step 1: Hardware Selection (Month 1-2)
-
-```
-Hardware Requirements:
-┌─────────────────────────────────────────────────────────────┐
-│                    DEVICE SPECS                             │
-└─────────────────────────────────────────────────────────────┘
-
-For Teachers (Primary Device):
-├── Screen: 5.5-6.5 inches
-├── Battery: 5000mAh+ (lasts 2 days)
-├── Storage: 64GB+ (for offline content)
-├── RAM: 4GB+
-├── Camera: 13MP+ (for QR scanning, photos)
-├── Rugged: IP68 (dust, water, drop)
-├── OS: Android 12+ (or Go edition)
-└── Cost: ₹5,000-8,000
-
-For Schools (Shared Devices):
-├── Tablet: 10 inches
-├── Battery: 8000mAh+
-├── Storage: 128GB+
-├── Pre-loaded with content
-├── Solar charging compatible
-└── Cost: ₹10,000-15,000
-
-For Students (Where Possible):
-├── Basic Android phone
-├── Pre-loaded with learning app
-├── Offline content
-└── Cost: ₹3,000-5,000
-
-Solar Charging Stations:
-├── Capacity: 10-20 devices
-├── Battery backup: 2-3 days
-├── Cost: ₹10,000-20,000
-└── Works without grid power
-```
-
-#### Step 2: Device Lifecycle Management (Month 3-4)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    DEVICE LIFECYCLE                         │
-└─────────────────────────────────────────────────────────────┘
-
-Deployment:
-├── Device registered → Unique ID + QR code
-├── Assigned to teacher/school
-├── Warranty registered
-└── Training provided
-
-Usage:
-├── Daily checks (software)
-├── Monthly scans (QR code)
-├── Status: working/broken
-└── Auto-ticket if broken
-
-Maintenance:
-├── Broken device → auto-ticket created
-├── Local repair network
-├── 48-hour response guarantee
-└── Escalation if not fixed
-
-Replacement:
-├── 24-month lifecycle
-├── Pre-approved replacement budget
-├── Device returned for refurbishment
-└── New device issued
-
-Retirement:
-├── Data wiped
-├── Device recycled
-└── New device deployed
-```
-
-#### Step 3: Local Repair Network (Month 5-6)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    REPAIR NETWORK                           │
-└─────────────────────────────────────────────────────────────┘
-
-Structure:
-├── District Repair Hub (1 per district)
-│   ├── 5-10 technicians
-│   ├── Spare parts inventory
-│   └── 24-hour turnaround
-├── Block Repair Points (1 per block)
-│   ├── 1-2 technicians
-│   ├── Basic parts
-│   └── 48-hour turnaround
-└── School Self-Repair
-    ├── Basic troubleshooting guide
-    ├── Contact number for help
-    └── Emergency swap device
-
-System Integration:
-├── Broken device → QR code scan
-├── Auto-ticket created
-├── Repair technician assigned
-├── Tracking dashboard
-└── Escalation if not fixed in 48 hours
-```
-
-#### Step 4: Power & Connectivity Solutions (Month 7-8)
-
-```
-Power Solutions:
-┌─────────────────────────────────────────────────────────────┐
-├── Solar Charging Station (school level)
-│   ├── 10-20 device capacity
-│   ├── 2-3 day battery backup
-│   └── ₹10,000-20,000 per school
-├── Power Bank Program
-│   ├── Teacher gets power bank
-│   ├── Solar charging compatible
-│   └── ₹2,000 per teacher
-└── No power? Paper fallback
-    └── Forms collected weekly
-
-Connectivity Solutions — the "One-Connection Rule":
-┌─────────────────────────────────────────────────────────────┐
-│  Only ONE person per school needs internet — once a day.    │
-└─────────────────────────────────────────────────────────────┘
-├── Bluetooth mesh (bitchat-style)
-│   ├── Every phone/tablet is a mesh node
-│   ├── Grievances + reports queue locally (encrypted)
-│   ├── Data hops device → device over Bluetooth (store-and-forward)
-│   └── No school broadband, no SIM per device required
-├── The daily "carrier" node
-│   ├── ONE student/parent/teacher with any internet access
-│   ├── Comes into Bluetooth range → mesh hands them the queue
-│   ├── They go online once (home, town, market) → whole school syncs up
-│   └── Dashboard replies + updates ride back down into the mesh
-├── Offline-first design (every app works with zero connectivity)
-├── If no carrier that day → SMS / IVR / USB / SD-card hand-carry
-└── Result: 1 connection covers an entire school
-```
-
-> **The one-connection rule.** Assume the school has *no* reliable internet. As long as a
-> single student or parent gets online **once a day** — anywhere — every grievance, asset
-> scan, and fund flag queued on every phone in the school rides out on their connection,
-> and every dashboard reply rides back in. Think **bitchat**: messages hop phone-to-phone
-> over Bluetooth and only need one node to briefly touch the internet for the whole mesh to
-> sync. This drops the requirement from "broadband in 1.5 million schools" to
-> "one person, once a day."
-
-> ⚠️ **Reality check.** bitchat is proven for *small, nearby* message relaying — not yet
-> for syncing a whole school's daily queue through a single, intermittent uplink. Bluetooth
-> range and hop limits, reliable store-and-forward, conflict handling, and battery cost are
-> the hard parts. Treat this as a hypothesis to **prototype small first** (a handful of
-> phones in one school) before assuming it scales — don't build the national rollout on it
-> until it's proven in the field.
-
-#### Step 5: Asset Tracking System (Month 9-10)
-
-```
-Every asset gets a QR code:
-├── Desks
-├── Computers
-├── Toilets
-├── Water filters
-├── Solar panels
-├── Books
-├── Uniforms
-└── Everything else
-
-Monthly scan:
-├── Teacher scans QR code
-├── Reports status: working/broken
-├── Photos attached
-└── Auto-ticket if broken
-
-Dashboard shows:
-├── "School X has 3 broken toilets"
-├── "Computer lab: 5 of 10 working"
-├── "Solar panel: last serviced 180 days ago"
-└── "Books: 200 of 500 available"
-```
-
-#### Step 6: Consequence Framework (Month 11-12)
-
-```
-If a device breaks:
-├── Day 0: Auto-ticket created
-├── Day 7: Escalate to Block Officer
-├── Day 14: Escalate to District Collector
-├── Day 21: Escalate to State Secretary
-└── Day 30: Public "FAILURE" flag + penalties
-
-If a repair isn't done:
-├── Day 0: Ticket assigned
-├── Day 7: Technician's pay reduced
-├── Day 14: Technician replaced
-├── Day 21: District officer penalized
-└── Day 30: Public shaming + financial penalties
-```
-
----
-
-### Key Features
-
-| Feature | Description | Why It Works |
-|---------|-------------|--------------|
-| **Rugged Devices** | Survives drops, dust, heat | Less breakage |
-| **Bluetooth Mesh (bitchat-style)** | One internet connection syncs the whole school | Removes the per-school broadband requirement |
-| **Solar Charging** | Works without grid power | Covers remote areas |
-| **Local Repair Network** | Fixes devices locally | No shipping delays |
-| **Auto-Ticketing** | Broken devices auto-report | No manual tracking |
-| **Asset QR Codes** | Everything tracked | No theft |
-| **Consequence Framework** | Penalties for inaction | Forces maintenance |
-
----
-
-### Real-World Examples That Prove This Works
-
-| Initiative | What It Did | Impact |
-|------------|-------------|--------|
-| **Class Saathi** | Bluetooth clickers + analytics | 15K+ classrooms covered |
-| **Sampark TV (Ghaziabad)** | 310 smart classes with LED TVs | Content delivery |
-| **Solar Charging (Bihar)** | Solar-powered devices | 100% uptime in remote areas |
-| **QR Code Tracking (Telangana)** | Asset tracking with QR | 100% visibility |
-
----
-
 ## 🔧 Complete Tech Stack Summary
 
 ### Frontend
@@ -716,14 +467,6 @@ If a repair isn't done:
 | Platform | Hyperledger Fabric | Permissioned |
 | Use Cases | Fund tracking, certificate verification | Tamper-proof |
 
-### Hardware
-
-| Component | Specification | Notes |
-|-----------|---------------|-------|
-| Teacher Device | Rugged Android phone, ₹5,000-8,000 | Survives drops |
-| School Tablet | 10-inch, solar compatible | Shared device |
-| Solar Charger | 10-20 devices, 2-3 day backup | No grid needed |
-
 ### Infrastructure
 
 | Component | Technology | Notes |
@@ -746,7 +489,6 @@ If a repair isn't done:
 |--------|--------------|------|
 | **Zero-Corruption** | Simple fund tracking (not blockchain yet), manual verification | PostgreSQL, QR codes |
 | **No-Excuse** | SMS + paper grievance reporting, manual escalation | SMS gateway, Google Sheets |
-| **Anti-Failure** | Rugged devices (10), solar charging, basic repair network | Hardware + QR codes |
 
 **Team:** 8-12 people
 
@@ -760,7 +502,6 @@ If a repair isn't done:
 |--------|--------------|------|
 | **Zero-Corruption** | Blockchain pilot (5 schools), QR code system | Hyperledger Fabric |
 | **No-Excuse** | PWA app, auto-routing (simple), public dashboard | React + Node.js |
-| **Anti-Failure** | Asset tracking (QR codes), repair ticketing | QR + auto-tickets |
 
 **Team:** 12-16 people
 
@@ -774,7 +515,6 @@ If a repair isn't done:
 |--------|--------------|------|
 | **Zero-Corruption** | Full blockchain deployment, public dashboard | Hyperledger + Metabase |
 | **No-Excuse** | AI-powered routing, escalation engine, IVR | BERT + FastAPI + Asterisk |
-| **Anti-Failure** | Full asset management, repair network | QR + tickets + SLA |
 
 **Team:** 18-24 people
 
@@ -788,7 +528,6 @@ If a repair isn't done:
 |--------|-----------------|------|
 | **Zero-Corruption** | National blockchain, every fund tracked | Hyperledger + API |
 | **No-Excuse** | National grievance system, real-time dashboard | Full stack + AI |
-| **Anti-Failure** | National repair network, device replacement | Hardware + logistics |
 
 **Team:** 45-60 people
 
@@ -802,7 +541,6 @@ If a repair isn't done:
 |--------|---------------------|------|
 | **Zero-Corruption** | Complete fund visibility, public audit | Full blockchain + API |
 | **No-Excuse** | Every grievance tracked, resolved, visible | Full stack + advanced AI |
-| **Anti-Failure** | Every device tracked, maintained, replaced | Complete system |
 
 **Team:** 100-150+ people
 
@@ -822,7 +560,6 @@ If a repair isn't done:
 | **SMS/IVR Developer** | 1 | 1 | 1 | Twilio, Asterisk |
 | **Blockchain Developer** | 0 | 1 | 2 | Hyperledger Fabric |
 | **AI/ML Engineer** | 0 | 0 | 1 | Python, BERT, FastAPI |
-| **Hardware Engineer** | 1 | 1 | 2 | Device selection, repair network |
 | **Field Coordinator** | 2 | 3 | 5 | Training, on-ground support |
 | **Training Manager** | 0 | 1 | 2 | Large-scale training |
 | **UI/UX Designer** | 1 | 1 | 1 | User research, design |
@@ -850,10 +587,8 @@ If a repair isn't done:
 
 | Risk | Severity | Mitigation |
 |------|----------|------------|
-| **No reliable electricity** | 🔴 High | Solar charging stations, power banks, paper fallback |
-| **No internet connectivity** | 🔴 High | Bluetooth mesh (bitchat-style) + one-connection rule, offline-first, SMS/IVR fallback |
-| **Devices break** | 🔴 High | Rugged devices, repair network, auto-ticketing |
-| **No repair budget** | 🔴 High | Pre-approved replacement budget, warranty, SLA |
+| **No reliable electricity** | 🔴 High | Power banks, paper fallback |
+| **No internet connectivity** | 🔴 High | Offline-first design, SMS/IVR fallback |
 | **Teacher resistance** | 🔴 High | Teacher-first design, make it reduce workload |
 | **Inadequate training** | 🔴 High | Continuous peer-to-peer training, not one-off |
 | **Government non-cooperation** | 🔴 High | Build to work despite government, citizen demand |
@@ -885,15 +620,6 @@ If a repair isn't done:
 | Vacancy fill rate | < 60 days | System tracking |
 | Grievance reporting rate | > 10/month/school | System logs |
 
-### Pillar 3: Anti-Failure Hardware
-
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| Device uptime | > 99% | System monitoring |
-| Repair time | < 48 hours | Ticket tracking |
-| Asset visibility | 100% | QR scan logs |
-| Device replacement | < 24 months | Lifecycle tracking |
-
 ---
 
 ## 🌐 Open-Source Contribution Model
@@ -916,7 +642,6 @@ If a repair isn't done:
 Repository Structure:
 ├── /zero-corruption        - Blockchain + fund tracking
 ├── /no-excuse              - Grievance system
-├── /anti-failure           - Hardware + asset management
 ├── /mobile-app             - PWA + React Native
 ├── /backend                - Node.js + GraphQL
 ├── /docs                   - Documentation
@@ -938,11 +663,10 @@ Contribution Channels:
 
 > "The goal is to make accountability unavoidable."
 
-### The Three Pillars
+### The Two Pillars
 
 1. **Zero-Corruption:** Track every rupee, every scheme. Make theft impossible.
 2. **No-Excuse:** Every grievance visible, every delay public. Make inaction impossible.
-3. **Anti-Failure:** Hardware that works, devices that last. Make breakdowns impossible.
 
 ### The Challenge
 
