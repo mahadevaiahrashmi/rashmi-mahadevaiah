@@ -15,7 +15,7 @@
 
 ## 🧠 Core Philosophy
 
-> "The goal is to make accountability unavoidable."
+> "The goal is to make accountability automatic."
 
 **First Principles:**
 - A system that requires perfect internet will fail in 60% of Indian villages
@@ -661,7 +661,7 @@ Contribution Channels:
 
 ### The Vision
 
-> "The goal is to make accountability unavoidable."
+> "The goal is to make accountability automatic."
 
 ### The Two Pillars
 
