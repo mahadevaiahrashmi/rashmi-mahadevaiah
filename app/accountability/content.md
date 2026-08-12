@@ -603,6 +603,13 @@ Connectivity Solutions — the "One-Connection Rule":
 > sync. This drops the requirement from "broadband in 1.5 million schools" to
 > "one person, once a day."
 
+> ⚠️ **Reality check.** bitchat is proven for *small, nearby* message relaying — not yet
+> for syncing a whole school's daily queue through a single, intermittent uplink. Bluetooth
+> range and hop limits, reliable store-and-forward, conflict handling, and battery cost are
+> the hard parts. Treat this as a hypothesis to **prototype small first** (a handful of
+> phones in one school) before assuming it scales — don't build the national rollout on it
+> until it's proven in the field.
+
 #### Step 5: Asset Tracking System (Month 9-10)
 
 ```
