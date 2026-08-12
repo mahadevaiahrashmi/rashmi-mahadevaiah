@@ -633,8 +633,8 @@ IVR System:
 </tr>
 <tr>
 <td>Connectivity</td>
-<td>Offline-first sync</td>
-<td>Works without internet</td>
+<td>Bluetooth mesh (bitchat-style) + offline-first</td>
+<td>One internet uplink per school syncs everyone</td>
 </tr>
 <tr>
 <td>Maintenance</td>
@@ -761,14 +761,33 @@ System Integration:
 └── No power? Paper fallback
     └── Forms collected weekly
 
-Connectivity Solutions:
+Connectivity Solutions — the &quot;One-Connection Rule&quot;:
 ┌─────────────────────────────────────────────────────────────┐
-├── Offline-first design (all apps)
-├── Sync when available
-├── P2P sync (Bluetooth/WiFi Direct)
-├── USB drive content distribution
-└── SD card content packs
+│  Only ONE person per school needs internet — once a day.    │
+└─────────────────────────────────────────────────────────────┘
+├── Bluetooth mesh (bitchat-style)
+│   ├── Every phone/tablet is a mesh node
+│   ├── Grievances + reports queue locally (encrypted)
+│   ├── Data hops device → device over Bluetooth (store-and-forward)
+│   └── No school broadband, no SIM per device required
+├── The daily &quot;carrier&quot; node
+│   ├── ONE student/parent/teacher with any internet access
+│   ├── Comes into Bluetooth range → mesh hands them the queue
+│   ├── They go online once (home, town, market) → whole school syncs up
+│   └── Dashboard replies + updates ride back down into the mesh
+├── Offline-first design (every app works with zero connectivity)
+├── If no carrier that day → SMS / IVR / USB / SD-card hand-carry
+└── Result: 1 connection covers an entire school
 </code></pre>
+<blockquote>
+<p><strong>The one-connection rule.</strong> Assume the school has <em>no</em> reliable internet. As long as a<br>
+single student or parent gets online <strong>once a day</strong> — anywhere — every grievance, asset<br>
+scan, and fund flag queued on every phone in the school rides out on their connection,<br>
+and every dashboard reply rides back in. Think <strong>bitchat</strong>: messages hop phone-to-phone<br>
+over Bluetooth and only need one node to briefly touch the internet for the whole mesh to<br>
+sync. This drops the requirement from "broadband in 1.5 million schools" to<br>
+"one person, once a day."</p>
+</blockquote>
 <h4 id="step-5-asset-tracking-system-month-9-10">Step 5: Asset Tracking System (Month 9-10)</h4>
 <pre><code>Every asset gets a QR code:
 ├── Desks
@@ -823,6 +842,11 @@ If a repair isn't done:
 <td><strong>Rugged Devices</strong></td>
 <td>Survives drops, dust, heat</td>
 <td>Less breakage</td>
+</tr>
+<tr>
+<td><strong>Bluetooth Mesh (bitchat-style)</strong></td>
+<td>One internet connection syncs the whole school</td>
+<td>Removes the per-school broadband requirement</td>
 </tr>
 <tr>
 <td><strong>Solar Charging</strong></td>
@@ -1427,7 +1451,7 @@ If a repair isn't done:
 <tr>
 <td><strong>No internet connectivity</strong></td>
 <td>🔴 High</td>
-<td>Offline-first design, P2P sync, SMS/IVR fallback</td>
+<td>Bluetooth mesh (bitchat-style) + one-connection rule, offline-first, SMS/IVR fallback</td>
 </tr>
 <tr>
 <td><strong>Devices break</strong></td>

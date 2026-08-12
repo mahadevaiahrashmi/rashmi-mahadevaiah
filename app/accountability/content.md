@@ -447,7 +447,7 @@ Dashboard Features:
 |-------|------------|-----|
 | Hardware | Rugged Android devices | Survives drops, dust, heat |
 | Power | Solar charging stations | Works without grid power |
-| Connectivity | Offline-first sync | Works without internet |
+| Connectivity | Bluetooth mesh (bitchat-style) + offline-first | One internet uplink per school syncs everyone |
 | Maintenance | QR code + ticket system | Auto-repair requests |
 | Tracking | Asset management system | Knows what exists, what works |
 
@@ -576,14 +576,32 @@ Power Solutions:
 └── No power? Paper fallback
     └── Forms collected weekly
 
-Connectivity Solutions:
+Connectivity Solutions — the "One-Connection Rule":
 ┌─────────────────────────────────────────────────────────────┐
-├── Offline-first design (all apps)
-├── Sync when available
-├── P2P sync (Bluetooth/WiFi Direct)
-├── USB drive content distribution
-└── SD card content packs
+│  Only ONE person per school needs internet — once a day.    │
+└─────────────────────────────────────────────────────────────┘
+├── Bluetooth mesh (bitchat-style)
+│   ├── Every phone/tablet is a mesh node
+│   ├── Grievances + reports queue locally (encrypted)
+│   ├── Data hops device → device over Bluetooth (store-and-forward)
+│   └── No school broadband, no SIM per device required
+├── The daily "carrier" node
+│   ├── ONE student/parent/teacher with any internet access
+│   ├── Comes into Bluetooth range → mesh hands them the queue
+│   ├── They go online once (home, town, market) → whole school syncs up
+│   └── Dashboard replies + updates ride back down into the mesh
+├── Offline-first design (every app works with zero connectivity)
+├── If no carrier that day → SMS / IVR / USB / SD-card hand-carry
+└── Result: 1 connection covers an entire school
 ```
+
+> **The one-connection rule.** Assume the school has *no* reliable internet. As long as a
+> single student or parent gets online **once a day** — anywhere — every grievance, asset
+> scan, and fund flag queued on every phone in the school rides out on their connection,
+> and every dashboard reply rides back in. Think **bitchat**: messages hop phone-to-phone
+> over Bluetooth and only need one node to briefly touch the internet for the whole mesh to
+> sync. This drops the requirement from "broadband in 1.5 million schools" to
+> "one person, once a day."
 
 #### Step 5: Asset Tracking System (Month 9-10)
 
@@ -636,6 +654,7 @@ If a repair isn't done:
 | Feature | Description | Why It Works |
 |---------|-------------|--------------|
 | **Rugged Devices** | Survives drops, dust, heat | Less breakage |
+| **Bluetooth Mesh (bitchat-style)** | One internet connection syncs the whole school | Removes the per-school broadband requirement |
 | **Solar Charging** | Works without grid power | Covers remote areas |
 | **Local Repair Network** | Fixes devices locally | No shipping delays |
 | **Auto-Ticketing** | Broken devices auto-report | No manual tracking |
@@ -825,7 +844,7 @@ If a repair isn't done:
 | Risk | Severity | Mitigation |
 |------|----------|------------|
 | **No reliable electricity** | 🔴 High | Solar charging stations, power banks, paper fallback |
-| **No internet connectivity** | 🔴 High | Offline-first design, P2P sync, SMS/IVR fallback |
+| **No internet connectivity** | 🔴 High | Bluetooth mesh (bitchat-style) + one-connection rule, offline-first, SMS/IVR fallback |
 | **Devices break** | 🔴 High | Rugged devices, repair network, auto-ticketing |
 | **No repair budget** | 🔴 High | Pre-approved replacement budget, warranty, SLA |
 | **Teacher resistance** | 🔴 High | Teacher-first design, make it reduce workload |
