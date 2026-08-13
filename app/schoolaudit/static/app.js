@@ -510,5 +510,29 @@ $("submit-audit").onclick = () => {
   if (saveAudits(list)) { renderReport(draft.id); renderHome(); }
 };
 
+// ---- Demo seed: one "Test School" so the app isn't empty on first visit ----
+const SEED_FLAG = "school-audits-seeded-v1";
+function buildTestSchool() {
+  return {
+    id: "seed-test-school",
+    createdAt: Date.now() - 9 * 86400000, // 9 days ago -> shows the escalation clock
+    demo: true,
+    school: { name: "Test School", code: "", area: "Demo location, Bengaluru", lat: 12.9716, lng: 77.5946 },
+    auditor: { name: "Demo" },
+    answers: {
+      water_toilets: { water: { status: "good" }, toilets_work: { status: "poor" }, toilets_girls: { status: "missing" }, handwash: { status: "good" } },
+      electricity_classrooms: { power: { status: "good" }, fans_lights: { status: "good" }, rooms_safe: { status: "poor" }, rooms_enough: { status: "good" } },
+      boundary_safety: { wall: { status: "missing" }, gate: { status: "poor" }, grounds: { status: "good" }, hazards: { status: "good" } },
+      meals_attendance: { meal_served: { status: "good" }, meal_quality: { status: "good" }, teachers: { status: "poor" }, classes: { status: "good" } },
+    },
+  };
+}
+function seedIfNeeded() {
+  if (localStorage.getItem(SEED_FLAG)) return;          // only ever seed once
+  if (loadAudits().length === 0) saveAudits([buildTestSchool()]);
+  localStorage.setItem(SEED_FLAG, "1");
+}
+
 // ---- Boot ----
+seedIfNeeded();
 renderHome();
