@@ -510,27 +510,50 @@ $("submit-audit").onclick = () => {
   if (saveAudits(list)) { renderReport(draft.id); renderHome(); }
 };
 
-// ---- Demo seed: one "Test School" so the app isn't empty on first visit ----
-const SEED_FLAG = "school-audits-seeded-v1";
-function buildTestSchool() {
+// ---- Demo seed: a few sample schools so the app (and map) isn't empty ----
+const SEED_FLAG = "school-audits-seeded";
+const SEED_VERSION = "2";
+const KEYMAP = [
+  ["water_toilets", ["water", "toilets_work", "toilets_girls", "handwash"]],
+  ["electricity_classrooms", ["power", "fans_lights", "rooms_safe", "rooms_enough"]],
+  ["boundary_safety", ["wall", "gate", "grounds", "hazards"]],
+  ["meals_attendance", ["meal_served", "meal_quality", "teachers", "classes"]],
+];
+function mkDemo(id, name, area, lat, lng, daysAgo, statuses) {
+  const answers = {};
+  let i = 0;
+  for (const [ck, keys] of KEYMAP) {
+    answers[ck] = {};
+    for (const k of keys) answers[ck][k] = { status: statuses[i++] };
+  }
   return {
-    id: "seed-test-school",
-    createdAt: Date.now() - 9 * 86400000, // 9 days ago -> shows the escalation clock
-    demo: true,
-    school: { name: "Test School", code: "", area: "Demo location, Bengaluru", lat: 12.9716, lng: 77.5946 },
-    auditor: { name: "Demo" },
-    answers: {
-      water_toilets: { water: { status: "good" }, toilets_work: { status: "poor" }, toilets_girls: { status: "missing" }, handwash: { status: "good" } },
-      electricity_classrooms: { power: { status: "good" }, fans_lights: { status: "good" }, rooms_safe: { status: "poor" }, rooms_enough: { status: "good" } },
-      boundary_safety: { wall: { status: "missing" }, gate: { status: "poor" }, grounds: { status: "good" }, hazards: { status: "good" } },
-      meals_attendance: { meal_served: { status: "good" }, meal_quality: { status: "good" }, teachers: { status: "poor" }, classes: { status: "good" } },
-    },
+    id, demo: true, createdAt: Date.now() - daysAgo * 86400000,
+    school: { name, code: "", area, lat, lng }, auditor: { name: "Demo" }, answers,
   };
 }
+function buildDemoSchools() {
+  const G = "good", P = "poor", M = "missing"; // 16 statuses per school, in KEYMAP order
+  return [
+    // Bengaluru — "Needs work" (~75), escalated to Block (9d)
+    mkDemo("seed-test-school", "Test School", "Demo location, Bengaluru", 12.9716, 77.5946, 9,
+      [G, P, M, G,  G, G, P, G,  M, P, G, G,  G, G, P, G]),
+    // Delhi — "Good shape" (~97), fresh (2d)
+    mkDemo("seed-delhi", "GSSS Rohini, Delhi", "Rohini, Delhi", 28.7361, 77.1170, 2,
+      [G, G, G, G,  G, G, G, P,  G, G, G, G,  G, G, G, G]),
+    // Mumbai — "Needs work" (~56), escalated to District (16d)
+    mkDemo("seed-mumbai", "Municipal School, Dharavi", "Dharavi, Mumbai", 19.0410, 72.8500, 16,
+      [G, P, M, G,  P, G, M, M,  G, P, P, G,  P, G, M, P]),
+    // Rural Bihar — "Critical" (~16), PUBLIC FLAG (35d)
+    mkDemo("seed-bihar", "Govt Primary School", "Gaya district, Bihar", 24.7955, 85.0002, 35,
+      [M, M, M, P,  M, M, P, M,  M, M, P, M,  P, M, M, P]),
+  ];
+}
 function seedIfNeeded() {
-  if (localStorage.getItem(SEED_FLAG)) return;          // only ever seed once
-  if (loadAudits().length === 0) saveAudits([buildTestSchool()]);
-  localStorage.setItem(SEED_FLAG, "1");
+  if (localStorage.getItem(SEED_FLAG) === SEED_VERSION) return;
+  const existing = loadAudits();
+  // Seed (or refresh the demo) only when there's no real user data to disturb.
+  if (existing.length === 0 || existing.every(a => a.demo)) saveAudits(buildDemoSchools());
+  localStorage.setItem(SEED_FLAG, SEED_VERSION);
 }
 
 // ---- Boot ----
