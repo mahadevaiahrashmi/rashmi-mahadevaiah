@@ -179,6 +179,57 @@ function renderHome() {
         <span class="fi-arrow">›</span>
       </button>`;
   }).join("");
+
+  // keep the map in sync if the user is currently on the Map tab
+  if ($("tab-map").classList.contains("on")) plotMap();
+}
+
+// ---- Map view ----
+let map = null, markerLayer = null;
+const BAND_COLOR = { good: "#008a05", poor: "#b45309", missing: "#c13515", none: "#717171" };
+
+function ensureMap() {
+  if (map || typeof L === "undefined") return;
+  map = L.map("feed-map", { scrollWheelZoom: true }).setView([22.5, 79], 4); // India
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  markerLayer = L.layerGroup().addTo(map);
+}
+
+function plotMap() {
+  ensureMap();
+  if (!map) return;
+  markerLayer.clearLayers();
+  const geo = loadAudits().filter(a => a.school && a.school.lat != null);
+  const pts = [];
+  for (const a of geo) {
+    const s = scoreAudit(a), band = scoreBand(s);
+    const m = L.circleMarker([a.school.lat, a.school.lng], {
+      radius: 11, color: "#fff", weight: 2, fillColor: BAND_COLOR[band.cls] || "#717171", fillOpacity: 0.92,
+    }).addTo(markerLayer);
+    m.bindPopup(
+      `<b>${esc0(a.school.name)}</b><br>Score: ${s === null ? "—" : s}/100 · ${band.label}` +
+      `<br>${issuesOf(a).length} open issue(s)` +
+      `<br><a href="#" class="popup-link" data-report="${a.id}">View report ›</a>`
+    );
+    pts.push([a.school.lat, a.school.lng]);
+  }
+  $("map-empty").classList.toggle("hidden", geo.length > 0);
+  if (pts.length) map.fitBounds(pts, { padding: [40, 40], maxZoom: 15 });
+  setTimeout(() => map.invalidateSize(), 60); // container was hidden -> recompute size
+}
+
+function setFeedView(v) {
+  const list = v === "list";
+  $("feed-list").classList.toggle("hidden", !list);
+  $("feed-map").classList.toggle("hidden", list);
+  $("tab-list").classList.toggle("on", list);
+  $("tab-map").classList.toggle("on", !list);
+  $("feed-sort").classList.toggle("hidden", !list); // sort only applies to the list
+  if (list) $("map-empty").classList.add("hidden");
+  else plotMap();
 }
 
 // ---- Audit form ----
@@ -375,6 +426,14 @@ function downloadJSON(name, obj) {
 // ---- Events ----
 $("start-audit").onclick = () => { newDraft(); renderChecklist(); show("audit"); };
 $("feed-sort").onchange = renderHome;
+$("tab-list").onclick = () => setFeedView("list");
+$("tab-map").onclick = () => setFeedView("map");
+
+// popup "View report" link (Leaflet renders popups into the DOM)
+document.addEventListener("click", (e) => {
+  const link = e.target.closest(".popup-link");
+  if (link) { e.preventDefault(); renderReport(link.dataset.report); }
+});
 $("export-all").onclick = () => {
   const all = loadAudits();
   if (!all.length) return alert("No audits to export yet.");

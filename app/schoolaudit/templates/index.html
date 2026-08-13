@@ -4,7 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Government School Audit</title>
-  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css?v=2" />
 </head>
 <body>
   <header class="topbar">
@@ -40,6 +44,10 @@
       <div class="feed-head">
         <h3>Reported schools <span class="muted" id="feed-count"></span></h3>
         <div class="feed-controls">
+          <div class="view-toggle">
+            <button id="tab-list" class="vtab on">☰ List</button>
+            <button id="tab-map" class="vtab">🗺 Map</button>
+          </div>
           <select id="feed-sort">
             <option value="worst">Worst first</option>
             <option value="recent">Most recent</option>
@@ -49,6 +57,8 @@
         </div>
       </div>
       <div id="feed-list" class="feed-list"></div>
+      <div id="feed-map" class="feed-map hidden"></div>
+      <div id="map-empty" class="empty hidden">No geo-tagged schools yet — tap “📍 Capture location” while auditing to put a school on the map.</div>
       <p class="prototype-note">
         ⚠️ <strong>Prototype.</strong> Audits are saved on <em>this device</em> (localStorage).
         A real deployment would sync every report to a shared public store — the way

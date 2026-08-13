@@ -76,6 +76,13 @@ body {
 .feed-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .feed-controls { display: flex; gap: 8px; align-items: center; }
 .feed-controls select { border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font: inherit; font-size: 0.82rem; background: #fff; }
+.view-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.vtab { border: none; background: #fff; padding: 7px 12px; font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; color: var(--muted); }
+.vtab:not(.on):hover { color: var(--accent); }
+.vtab.on { background: var(--accent); color: #fff; }
+.feed-map { height: 440px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 12px 0 16px; z-index: 0; }
+.feed-map .popup-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+.leaflet-popup-content { font-size: 0.85rem; line-height: 1.4; }
 .feed-list { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 16px; }
 .empty { color: var(--muted); background: var(--panel-2); border: 1px dashed var(--border); border-radius: 12px; padding: 22px; text-align: center; }
 .feed-item {
