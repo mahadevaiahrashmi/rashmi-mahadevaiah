@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Government School Audit</title>
+  <link rel="stylesheet" href="{{ root_path }}/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🏫</span>
+      <div>
+        <h1>School Audit</h1>
+        <p class="tagline">Citizen audits of government schools — with photos, GPS, and a clock on every fix.</p>
+      </div>
+    </div>
+    <a class="back" href="/#projects">← Portfolio</a>
+  </header>
+
+  <!-- ============ HOME / FEED ============ -->
+  <main id="view-home" class="wrap">
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Is your government school actually working?</h2>
+        <p>Walk in, check four things, snap a photo. Every audit becomes a public,
+        time-stamped record — routed to the officer responsible, with a
+        <strong>days-pending clock</strong> that never stops.</p>
+        <button id="start-audit" class="btn primary big">＋ Start a school audit</button>
+      </div>
+      <div class="hero-stats" id="hero-stats"></div>
+    </section>
+
+    <section class="categories-preview">
+      <h3>What you check</h3>
+      <div class="cat-grid" id="cat-grid"></div>
+    </section>
+
+    <section class="feed">
+      <div class="feed-head">
+        <h3>Reported schools <span class="muted" id="feed-count"></span></h3>
+        <div class="feed-controls">
+          <select id="feed-sort">
+            <option value="worst">Worst first</option>
+            <option value="recent">Most recent</option>
+            <option value="pending">Longest pending</option>
+          </select>
+          <button id="export-all" class="btn ghost sm">⬇ Export data</button>
+        </div>
+      </div>
+      <div id="feed-list" class="feed-list"></div>
+      <p class="prototype-note">
+        ⚠️ <strong>Prototype.</strong> Audits are saved on <em>this device</em> (localStorage).
+        A real deployment would sync every report to a shared public store — the way
+        <a href="https://github.com/warlockdn/open-urban-eyesore" target="_blank" rel="noopener noreferrer">open-urban-eyesore</a>
+        (blr-potholes) uses public GitHub Issues — so the whole city sees the same map.
+      </p>
+    </section>
+  </main>
+
+  <!-- ============ AUDIT FORM ============ -->
+  <main id="view-audit" class="wrap hidden">
+    <button class="link-back" data-goto="home">← Cancel</button>
+    <h2>New school audit</h2>
+
+    <section class="card">
+      <h3>1. Which school?</h3>
+      <div class="field">
+        <label for="s-name">School name <span class="req">*</span></label>
+        <input id="s-name" type="text" placeholder="e.g. Government Higher Primary School, Jayanagar" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="s-code">UDISE code / ID <span class="opt">(optional)</span></label>
+          <input id="s-code" type="text" placeholder="e.g. 29280412345" />
+        </div>
+        <div class="field">
+          <label for="s-area">Area / village <span class="opt">(optional)</span></label>
+          <input id="s-area" type="text" placeholder="e.g. Jayanagar, Bengaluru" />
+        </div>
+      </div>
+      <div class="geo-row">
+        <button id="get-gps" class="btn ghost sm">📍 Capture location</button>
+        <span id="geo-status" class="geo-status muted">No location captured yet.</span>
+      </div>
+      <div class="field">
+        <label for="a-name">Your name <span class="opt">(optional)</span></label>
+        <input id="a-name" type="text" placeholder="Shown on the public report; leave blank for Anonymous" />
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>2. The checklist</h3>
+      <p class="hint">For each item: mark it, and add a photo or note where you can. Skip anything you couldn't see.</p>
+      <div id="checklist"></div>
+    </section>
+
+    <div class="score-bar" id="live-score">
+      <div class="score-num"><span id="score-val">—</span></div>
+      <div class="score-meta">
+        <div class="score-label" id="score-label">School health score</div>
+        <div class="score-sub muted" id="score-sub">Answer items to build the score.</div>
+      </div>
+      <button id="submit-audit" class="btn primary">Submit audit</button>
+    </div>
+  </main>
+
+  <!-- ============ REPORT ============ -->
+  <main id="view-report" class="wrap hidden">
+    <button class="link-back" data-goto="home">← Back to all schools</button>
+    <div id="report-body"></div>
+  </main>
+
+  <script>window.APP_ROOT = {{ root_path | tojson }};</script>
+  <script src="{{ root_path }}/static/app.js"></script>
+  <p class="hpm-credit" style="text-align:center;font-size:12px;color:#9a9a9a;padding:16px;margin:0;">Inspired by open-urban-eyesore (blr-potholes) · Part of the “An Accountable India” idea</p>
+</body>
+</html>

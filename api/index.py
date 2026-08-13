@@ -43,6 +43,7 @@ from app.timetracker.main import app as timetracker_app  # noqa: E402
 from app.proctored.main import app as proctored_app  # noqa: E402
 from app.interview.main import app as interview_app  # noqa: E402
 from app.accountability.main import app as accountability_app  # noqa: E402
+from app.schoolaudit.main import app as schoolaudit_app  # noqa: E402
 
 app = FastAPI()
 _MOUNTS = {
@@ -59,6 +60,7 @@ _MOUNTS = {
     "proctored-ai": proctored_app,
     "interview-prep": interview_app,
     "accountability": accountability_app,
+    "school-audit": schoolaudit_app,
 }
 for _prefix, _sub in _MOUNTS.items():
     app.mount("/" + _prefix, _sub)

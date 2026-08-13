@@ -39,6 +39,8 @@
     { "source": "/interview-prep/(.*)", "destination": "/api/index" },
     { "source": "/accountability", "destination": "/api/index" },
     { "source": "/accountability/(.*)", "destination": "/api/index" },
+    { "source": "/school-audit", "destination": "/api/index" },
+    { "source": "/school-audit/(.*)", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
